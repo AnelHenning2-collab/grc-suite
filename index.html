@@ -164,6 +164,26 @@
             .stats-grid, .phase-timeline, .quick-actions, .templates-grid, .intake-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
         }
+
+        /* GUIDED DEMO */
+        .demo-spotlight { position:fixed; z-index:9000; border-radius:10px; box-shadow:0 0 0 9999px rgba(10,18,40,0.72); pointer-events:none; transition:all 0.38s cubic-bezier(0.4,0,0.2,1); }
+        .demo-bubble { position:fixed; z-index:9001; background:white; border-radius:14px; padding:1.4rem 1.5rem; width:340px; box-shadow:0 12px 40px rgba(0,0,0,0.28); border-top:4px solid #2563eb; transition:all 0.38s cubic-bezier(0.4,0,0.2,1); }
+        .demo-bubble h3 { color:#0f2557; font-size:1rem; font-weight:700; margin-bottom:0.6rem; }
+        .demo-bubble p { font-size:0.875rem; color:#374151; line-height:1.6; margin-bottom:1rem; }
+        .demo-bubble-footer { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; flex-wrap:wrap; }
+        .demo-progress { font-size:0.75rem; color:#94a3b8; font-weight:600; }
+        .demo-btn { padding:0.45rem 1rem; border:none; border-radius:7px; font-size:0.85rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
+        .demo-btn-next { background:#2563eb; color:white; }
+        .demo-btn-next:hover { background:#1d4ed8; }
+        .demo-btn-skip { background:#f1f5f9; color:#64748b; }
+        .demo-btn-skip:hover { background:#e2e8f0; }
+        .demo-banner { background:linear-gradient(135deg,#0f2557,#1e40af); border-radius:12px; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+        .demo-banner-text h3 { color:white; font-size:1rem; font-weight:700; margin-bottom:0.25rem; }
+        .demo-banner-text p { color:#93c5fd; font-size:0.85rem; }
+        .demo-banner-btn { background:white; color:#0f2557; border:none; padding:0.6rem 1.3rem; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer; font-family:'Inter',sans-serif; white-space:nowrap; flex-shrink:0; }
+        .demo-banner-btn:hover { background:#f0f4ff; }
+        .demo-fill-flash { animation: flashFill 0.6s ease; }
+        @keyframes flashFill { 0%{background:#dbeafe;} 100%{background:transparent;} }
     </style>
 </head>
 <body>
@@ -195,6 +215,13 @@
             <span class="hero-badge">SOC 2</span>
             <span class="hero-badge">FedRAMP</span>
         </div>
+    </div>
+    <div class="demo-banner">
+        <div class="demo-banner-text">
+            <h3>▶ Interactive Guided Demo — Sunrise Dental Group</h3>
+            <p>Walk through a complete HIPAA GRC engagement step by step. Each field is explained as it's filled in.</p>
+        </div>
+        <button class="demo-banner-btn" onclick="DEMO.start()">Start Guided Demo</button>
     </div>
     <div class="stats-grid">
         <div class="stat-card"><div class="stat-number" id="dash-risks">0</div><div class="stat-label">Active Risk Items</div></div>
@@ -517,6 +544,20 @@
 
 </main>
 
+<!-- GUIDED DEMO OVERLAY -->
+<div id="demo-spotlight" class="demo-spotlight" style="display:none;"></div>
+<div id="demo-bubble" class="demo-bubble" style="display:none;">
+    <h3 id="demo-title"></h3>
+    <p id="demo-explain"></p>
+    <div class="demo-bubble-footer">
+        <span class="demo-progress" id="demo-progress"></span>
+        <div style="display:flex;gap:0.5rem;">
+            <button class="demo-btn demo-btn-skip" onclick="DEMO.skip()">Exit Demo</button>
+            <button class="demo-btn demo-btn-next" id="demo-next-btn" onclick="DEMO.next()">Next →</button>
+        </div>
+    </div>
+</div>
+
 <footer>
     <div>GRC Governance Suite by <span>Logical Coders</span> &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
     <div style="margin-top:0.5rem;font-size:0.75rem;opacity:0.7;">Frameworks: NIST CSF 2.0 · ISO 27001:2022 · HIPAA · SOC 2 · FedRAMP Moderate · FISMA</div>
@@ -699,6 +740,264 @@ function submitIntake(){
         alert('Could not send — please email logicalcoders@outlook.com directly.');
     });
 }
+
+// GUIDED DEMO
+const DEMO = {
+    current: 0,
+    active: false,
+    steps: [
+        {
+            section: null, target: null,
+            title: '👋 Welcome — Sunrise Dental Group',
+            explain: 'We\'re walking through a real HIPAA engagement for <strong>Sunrise Dental Group</strong> — an 8-person dental office in Tampa, FL. They handle patient PHI, have no formal security program, and have an OCR audit coming in 90 days.<br><br>This is a typical client for Logical Coders. Follow along to see exactly how the GRC process works from first assessment to audit-ready documentation.',
+            fill: null, action: null
+        },
+        {
+            section: 'risk-mapper', target: null,
+            title: '🗺️ Step 1 — Start with Risk',
+            explain: '<strong>HIPAA §164.308(a)(1)</strong> requires every covered entity to conduct a formal Security Risk Analysis. This is not optional — it is the single most-cited deficiency in OCR audits.<br><br>We always begin here. You cannot select the right controls until you know what threats your client actually faces.',
+            fill: null, action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-asset',
+            title: 'Identify the Asset',
+            explain: 'The EHR system is priority #1 for any dental or medical practice. It contains <strong>Protected Health Information (PHI)</strong> — patient names, dates of service, diagnoses, x-rays, billing records.<br><br>A breach of this system triggers mandatory patient notification, HHS reporting, and potential fines of $100–$50,000 per violation under HIPAA.',
+            fill: {id:'risk-asset', value:'Electronic Health Records (EHR) System'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-threat',
+            title: 'Identify the Threat',
+            explain: 'Ransomware is the #1 cyber threat to small healthcare practices. 46% of ransomware victims in 2023 were organizations with fewer than 100 employees.<br><br>One phishing email to a front-desk staff member is all it takes. The attacker encrypts all patient records — the practice cannot see patients, bill insurance, or access clinical notes without paying the ransom.',
+            fill: {id:'risk-threat', value:'Ransomware attack encrypting all patient records and billing data'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-likelihood',
+            title: 'Score the Likelihood — 4 (Likely)',
+            explain: 'We rate this <strong>4 — Likely</strong> because small dental offices are actively targeted. Without email filtering, endpoint protection, or security training, a phishing link in a fake insurance email reaches a staff member with no technical defenses.<br><br>HIPAA requires likelihood to be assessed as part of every risk analysis.',
+            fill: {id:'risk-likelihood', value:'4', type:'select'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-impact',
+            title: 'Score the Impact — 5 (Catastrophic)',
+            explain: 'Impact is <strong>5 — Catastrophic</strong>. A ransomware attack on an EHR means: complete operational shutdown, breach notification to every affected patient, mandatory HHS reporting within 60 days, OCR investigation, potential fines, and permanent reputational damage in a tight-knit community where patients talk.<br><br>The 2024 Change Healthcare attack caused multi-week outages across thousands of small practices.',
+            fill: {id:'risk-impact', value:'5', type:'select'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-owner',
+            title: 'Assign the Risk Owner',
+            explain: 'HIPAA §164.308(a)(2) requires a designated <strong>Security Official</strong> — one person responsible for security policies and procedures. In a small practice, this is typically the Practice Manager or the lead dentist.<br><br>Assigning ownership means there is a named person accountable when OCR asks "who is responsible for this risk?"',
+            fill: {id:'risk-owner', value:'Practice Manager — HIPAA Security Official'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: 'risk-controls',
+            title: 'Document Existing Controls',
+            explain: 'Documenting current controls is how we identify gaps. This practice has no verified backup, no endpoint protection, and staff sharing login credentials — three of the most common HIPAA deficiencies found in small offices.<br><br>Shared logins make audit logs useless because you cannot tell which individual accessed patient records.',
+            fill: {id:'risk-controls', value:'No verified backup; no endpoint protection; staff sharing EHR login credentials; no security training on record'},
+            action: null
+        },
+        {
+            section: 'risk-mapper', target: null,
+            title: '🔴 Risk Score: 20 — Critical',
+            explain: 'Likelihood 4 × Impact 5 = <strong>Score 20 — Critical</strong>. This risk requires immediate treatment, not just monitoring.<br><br>A Critical finding on the primary PHI system with no effective controls in place is exactly what justifies the engagement. You present this to the dentist and say: "This is your biggest exposure. Here is a 90-day plan to fix it."',
+            fill: null, action: 'addDemoRisk'
+        },
+        {
+            section: 'evidence', target: null,
+            title: '📋 Step 2 — Build the Evidence Plan',
+            explain: 'Identifying the risk tells us what to fix. The Evidence Builder defines <strong>what proof we will collect</strong> to show the controls are actually working — not just documented on paper.<br><br>HIPAA auditors ask: "Show me the evidence." Policies alone fail audits. Evidence wins them.',
+            fill: null, action: 'selectHIPAA'
+        },
+        {
+            section: 'evidence', target: null,
+            title: 'Framework: HIPAA Security Rule',
+            explain: 'For any dental or medical practice, HIPAA Security Rule is the non-negotiable starting point — it is <strong>federal law for all covered entities</strong>.<br><br>We layer NIST CSF on top later for structure, but we always lead with HIPAA for healthcare clients. The 5 controls shown are the highest-priority requirements for a small practice with a gap in their security program.',
+            fill: null, action: null
+        },
+        {
+            section: 'evidence', target: null,
+            title: 'Control 1 — Security Risk Analysis',
+            explain: '<strong>§164.308(a)(1)</strong> is the foundation. OCR has cited this requirement in over 90% of investigated breaches. Without a written, dated, signed risk analysis — you fail.<br><br>Evidence = this risk register + a signed attestation from the Security Official. We are collecting it right now in this engagement.',
+            fill: {query:'#controls-container .control-row:nth-child(1) textarea', value:'Written Security Risk Analysis (this risk register); signed by Practice Manager; dated and reviewed annually per HIPAA requirement'},
+            action: null
+        },
+        {
+            section: 'evidence', target: null,
+            title: 'Set Status — In Progress',
+            explain: 'The risk analysis is being performed right now as part of this engagement. We mark it <strong>In Progress</strong>. By Day 30 it will be Complete with a signed PDF in the evidence folder.<br><br>Tracking status lets us show the client a clear before-and-after at the 90-day review.',
+            fill: {query:'#controls-container .control-row:nth-child(1) .status-select', value:'progress', type:'select'},
+            action: 'updateEvidence'
+        },
+        {
+            section: 'evidence', target: null,
+            title: 'Control 3 — Access Control',
+            explain: '<strong>§164.312(a)(1)</strong> requires unique user IDs for every person accessing the EHR — no shared logins, ever. This practice is currently violating this requirement.<br><br>Evidence = screenshot of unique user accounts in the EHR, MFA enrollment confirmation, and a role-based access list showing who can see what.',
+            fill: {query:'#controls-container .control-row:nth-child(3) textarea', value:'Unique user ID report exported from EHR system; MFA enrollment screenshot; role-based access list by job function'},
+            action: null
+        },
+        {
+            section: 'evidence', target: null,
+            title: 'Flag the Gap',
+            explain: 'Access Control is marked <strong>Gap — Evidence Missing</strong> because the practice is actively sharing credentials. This is a priority remediation item.<br><br>In the proposal, this gap becomes a deliverable: "By Day 30, all staff will have individual EHR logins with MFA enabled." The evidence we collect proves the fix was made.',
+            fill: {query:'#controls-container .control-row:nth-child(3) .status-select', value:'gap', type:'select'},
+            action: 'updateEvidence'
+        },
+        {
+            section: 'playbook', target: null,
+            title: '🚀 Step 3 — Launch the 90-Day Playbook',
+            explain: 'The Playbook converts everything we found into a structured delivery plan with three phases and clear milestones.<br><br>For Sunrise Dental Group, Phase 1 priorities are: fix shared logins, verify backup integrity, complete the signed risk analysis, and present findings to the dentist as the Security Official.',
+            fill: null, action: null
+        },
+        {
+            section: 'playbook', target: 'cb1',
+            title: 'Phase 1 — Asset Inventory',
+            explain: 'The asset inventory is always the first task. You cannot protect what you do not know exists.<br><br>For a dental practice, the inventory includes: the EHR system, digital x-ray software, billing platform, patient portal, front-desk computers, the dentist\'s tablet, and any USB drives or external storage — all of which may store or transmit PHI and fall under HIPAA\'s scope.',
+            fill: null, action: 'checkCB1'
+        },
+        {
+            section: 'playbook', target: 'cb3',
+            title: 'Phase 1 — Map Threats to Assets',
+            explain: 'We just built this map in the Risk Mapper. Now we check it off as a completed Phase 1 deliverable.<br><br>The threat map becomes part of the client\'s permanent documentation file. When OCR asks "did you assess your risks?" — this is the document you hand them.',
+            fill: null, action: 'checkCB3'
+        },
+        {
+            section: null, target: null,
+            title: '✅ That\'s the Complete GRC Process',
+            explain: 'In 90 days, Sunrise Dental Group goes from <strong>zero security program</strong> to:<br><br>✅ Signed Security Risk Analysis (HIPAA required)<br>✅ Evidence file for all 5 critical controls<br>✅ Individual EHR logins with MFA enforced<br>✅ Verified backup system with tested restoration<br>✅ Signed workforce security policies<br>✅ Audit-ready documentation package<br><br><strong>This is exactly what Logical Coders delivers.</strong>',
+            fill: null, action: null
+        }
+    ],
+
+    start() {
+        this.current = 0;
+        this.active = true;
+        document.getElementById('demo-spotlight').style.display = 'block';
+        document.getElementById('demo-bubble').style.display = 'block';
+        this.goToStep(0);
+    },
+
+    skip() {
+        this.active = false;
+        document.getElementById('demo-spotlight').style.display = 'none';
+        document.getElementById('demo-bubble').style.display = 'none';
+        showSection('dashboard');
+    },
+
+    next() {
+        if (this.current < this.steps.length - 1) {
+            this.current++;
+            this.goToStep(this.current);
+        } else {
+            this.skip();
+        }
+    },
+
+    goToStep(n) {
+        const step = this.steps[n];
+        const isLast = n === this.steps.length - 1;
+
+        if (step.section) showSection(step.section);
+
+        if (step.action) {
+            setTimeout(() => { this.runAction(step.action); }, 300);
+        }
+
+        if (step.fill) {
+            setTimeout(() => { this.fillField(step.fill); }, 350);
+        }
+
+        document.getElementById('demo-title').textContent = step.title;
+        document.getElementById('demo-explain').innerHTML = step.explain;
+        document.getElementById('demo-progress').textContent = `Step ${n + 1} of ${this.steps.length}`;
+        document.getElementById('demo-next-btn').textContent = isLast ? 'Finish ✓' : 'Next →';
+
+        setTimeout(() => {
+            if (step.target) {
+                const el = document.getElementById(step.target);
+                if (el) { this.spotlight(el); this.positionBubble(el); return; }
+            }
+            this.clearSpotlight();
+            this.centerBubble();
+        }, 320);
+    },
+
+    fillField(fill) {
+        let el = fill.id ? document.getElementById(fill.id) : document.querySelector(fill.query);
+        if (!el) return;
+        el.value = fill.value;
+        el.classList.add('demo-fill-flash');
+        el.dispatchEvent(new Event('change'));
+        setTimeout(() => el.classList.remove('demo-fill-flash'), 700);
+    },
+
+    runAction(action) {
+        if (action === 'addDemoRisk') {
+            document.getElementById('risk-likelihood').value = '4';
+            document.getElementById('risk-impact').value = '5';
+            addRisk();
+        }
+        if (action === 'selectHIPAA') {
+            const btns = document.querySelectorAll('.framework-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            btns[2].classList.add('active');
+            selectFramework('hipaa', btns[2]);
+        }
+        if (action === 'updateEvidence') {
+            updateEvidenceSummary();
+        }
+        if (action === 'checkCB1') {
+            const cb = document.getElementById('cb1');
+            if (cb) { cb.checked = true; updateProgress(); }
+        }
+        if (action === 'checkCB3') {
+            const cb = document.getElementById('cb3');
+            if (cb) { cb.checked = true; updateProgress(); }
+        }
+    },
+
+    spotlight(el) {
+        const r = el.getBoundingClientRect();
+        const pad = 8;
+        const s = document.getElementById('demo-spotlight');
+        s.style.left   = (r.left - pad) + 'px';
+        s.style.top    = (r.top - pad) + 'px';
+        s.style.width  = (r.width + pad * 2) + 'px';
+        s.style.height = (r.height + pad * 2) + 'px';
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    },
+
+    clearSpotlight() {
+        const s = document.getElementById('demo-spotlight');
+        s.style.left = '50%'; s.style.top = '50%';
+        s.style.width = '0'; s.style.height = '0';
+    },
+
+    positionBubble(el) {
+        const r = el.getBoundingClientRect();
+        const b = document.getElementById('demo-bubble');
+        const bw = 340, bh = 260, pad = 16;
+        let left = r.right + pad;
+        let top  = r.top;
+        if (left + bw > window.innerWidth) left = r.left - bw - pad;
+        if (left < pad) left = pad;
+        if (top + bh > window.innerHeight) top = window.innerHeight - bh - pad;
+        if (top < pad) top = pad;
+        b.style.left = left + 'px';
+        b.style.top  = top + 'px';
+    },
+
+    centerBubble() {
+        const b = document.getElementById('demo-bubble');
+        b.style.left = '50%';
+        b.style.top  = '50%';
+        b.style.transform = 'translate(-50%, -50%)';
+        setTimeout(() => { b.style.transform = ''; }, 400);
+    }
+};
 
 // INIT
 renderControls();updateProgress();updateDashboard();
