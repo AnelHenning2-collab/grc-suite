@@ -168,6 +168,16 @@
         /* REPORTS */
         .reports-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
         .report-card { background:white; border-radius:12px; padding:1.5rem; box-shadow:0 1px 4px rgba(0,0,0,0.08); border-top:4px solid #cbd5e1; transition:all 0.2s; }
+        .wf-step { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0.85rem; text-align:center; border-top:3px solid #cbd5e1; transition:all 0.2s; }
+        .wf-step.done { border-top-color:#059669; background:#f0fdf4; }
+        .wf-icon { font-size:1.5rem; margin-bottom:0.35rem; }
+        .wf-label { font-size:0.78rem; font-weight:700; color:#0f2557; margin-bottom:0.2rem; }
+        .wf-status { font-size:0.75rem; color:#64748b; margin-bottom:0.5rem; min-height:1rem; }
+        .wf-step.done .wf-status { color:#15803d; font-weight:600; }
+        .wf-btn { background:none; border:1px solid #cbd5e1; border-radius:6px; font-size:0.75rem; font-weight:600; color:#2563eb; cursor:pointer; padding:0.25rem 0.6rem; transition:all 0.15s; }
+        .wf-btn:hover { background:#2563eb; color:white; border-color:#2563eb; }
+        .wf-step.done .wf-btn { border-color:#059669; color:#059669; }
+        .wf-step.done .wf-btn:hover { background:#059669; color:white; }
         .report-card:hover { box-shadow:0 4px 16px rgba(37,99,235,0.12); transform:translateY(-2px); }
         .report-card.ready { border-top-color:#059669; }
         .report-card.waiting { border-top-color:#f59e0b; }
@@ -421,6 +431,49 @@
 <!-- REPORTS -->
 <div id="reports" class="section">
     <div class="section-header"><h1>📊 Report Generator</h1><p>Generate professional, audit-ready reports from your assessment data. Each report pulls directly from the tools you have completed and opens as a printable PDF.</p></div>
+
+    <!-- Workflow progress bar -->
+    <div class="card" style="margin-bottom:1.5rem;padding:1.25rem 1.5rem;">
+        <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.85rem;">Report Readiness — Data Sources</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;" id="workflow-steps">
+            <div class="wf-step" id="wf-intake">
+                <div class="wf-icon">📬</div>
+                <div class="wf-label">Client Intake</div>
+                <div class="wf-status" id="wfs-intake">Not submitted</div>
+                <button class="wf-btn" onclick="showSection('intake')">Go →</button>
+            </div>
+            <div class="wf-step" id="wf-risk">
+                <div class="wf-icon">🗺️</div>
+                <div class="wf-label">Risk Mapper</div>
+                <div class="wf-status" id="wfs-risk">No risks added</div>
+                <button class="wf-btn" onclick="showSection('risk-mapper')">Go →</button>
+            </div>
+            <div class="wf-step" id="wf-evidence">
+                <div class="wf-icon">📋</div>
+                <div class="wf-label">Evidence Builder</div>
+                <div class="wf-status" id="wfs-evidence">No statuses set</div>
+                <button class="wf-btn" onclick="showSection('evidence')">Go →</button>
+            </div>
+            <div class="wf-step" id="wf-playbook">
+                <div class="wf-icon">✅</div>
+                <div class="wf-label">90-Day Playbook</div>
+                <div class="wf-status" id="wfs-playbook">No tasks checked</div>
+                <button class="wf-btn" onclick="showSection('playbook')">Go →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Proposal pricing inputs -->
+    <div class="card" style="margin-bottom:1.5rem;padding:1.25rem 1.5rem;" id="proposal-pricing-card">
+        <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Proposal Pricing — Enter before generating the Engagement Proposal</div>
+        <p style="font-size:0.82rem;color:#94a3b8;margin-bottom:0.85rem;">These figures appear in the Investment section of the client proposal. Leave blank to omit a line.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem;">90-Day Pilot Investment</label><input type="text" id="fee-pilot" placeholder="e.g. $3,500"></div>
+            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem;">Monthly Retainer (post-pilot)</label><input type="text" id="fee-retainer" placeholder="e.g. $750/month"></div>
+            <div class="form-group" style="margin:0;"><label style="font-size:0.8rem;">Template Package</label><input type="text" id="fee-templates" placeholder="e.g. $197"></div>
+        </div>
+    </div>
+
     <div class="reports-grid">
         <div class="report-card waiting" id="rc-risk">
             <div class="report-icon">🔍</div>
@@ -573,12 +626,33 @@
                 </div>
 
                 <div class="success-box" id="success-box">
-                    <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
-                    <h3>Thank you — we received your intake!</h3>
-                    <p>Anél Henning will follow up at the email you provided within one business day.<br><br>
-                    In the meantime, explore the GRC tools above — the Threat Risk Mapper and 90-Day Playbook are great places to start.<br><br>
-                    <strong>Direct contact:</strong> logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</p>
-                    <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="showSection('dashboard')">Explore the GRC Suite →</button>
+                    <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
+                    <h3>Intake submitted — Anél will follow up within 1 business day</h3>
+                    <p style="margin-bottom:1.25rem;"><strong>Direct contact:</strong> logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</p>
+                    <div style="background:white;border:1px solid #d1fae5;border-radius:10px;padding:1.25rem;text-align:left;margin-bottom:1.25rem;">
+                        <div style="font-size:0.78rem;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.85rem;">Complete these steps to generate your reports</div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+                            <span style="background:#059669;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;">1</span>
+                            <span style="font-size:0.85rem;color:#15803d;font-weight:600;flex:1;">Intake form submitted</span>
+                            <span style="font-size:0.75rem;color:#059669;font-weight:700;">DONE</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+                            <span style="background:#2563eb;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;">2</span>
+                            <span style="font-size:0.85rem;color:#374151;flex:1;">Add your client's risks in the <strong>Risk Mapper</strong> — generates the Risk Analysis report</span>
+                            <button class="btn btn-primary" style="font-size:0.75rem;padding:0.3rem 0.7rem;flex-shrink:0;" onclick="showSection('risk-mapper')">Go →</button>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+                            <span style="background:#7c3aed;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;">3</span>
+                            <span style="font-size:0.85rem;color:#374151;flex:1;">Set control statuses in the <strong>Evidence Builder</strong> — generates the Gap Analysis report</span>
+                            <button class="btn" style="background:#7c3aed;color:white;font-size:0.75rem;padding:0.3rem 0.7rem;flex-shrink:0;" onclick="showSection('evidence')">Go →</button>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:0.75rem;">
+                            <span style="background:#059669;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;flex-shrink:0;">4</span>
+                            <span style="font-size:0.85rem;color:#374151;flex:1;">Check completed tasks in the <strong>90-Day Playbook</strong> — generates the Outcomes report</span>
+                            <button class="btn" style="background:#059669;color:white;font-size:0.75rem;padding:0.3rem 0.7rem;flex-shrink:0;" onclick="showSection('playbook')">Go →</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top:0.25rem;" onclick="showSection('reports')">Go to Report Generator →</button>
                 </div>
             </div>
         </div>
@@ -771,9 +845,13 @@ function askQuestion(q){document.getElementById('chat-input').value=q;sendMessag
 let savedIntake={};
 function updateReportStatus(){
     const riskReady=risks.length>0;
-    const evReady=Array.from(document.querySelectorAll('#controls-container .status-select')).some(s=>s.value);
-    const intakeReady=savedIntake.org||false;
-    const playbookReady=Array.from(document.querySelectorAll('#playbook input[type="checkbox"]')).some(c=>c.checked);
+    const evSelects=Array.from(document.querySelectorAll('#controls-container .status-select'));
+    const evReady=evSelects.some(s=>s.value);
+    const intakeReady=!!(savedIntake.org);
+    const playbookBoxes=Array.from(document.querySelectorAll('#playbook input[type="checkbox"]'));
+    const playbookReady=playbookBoxes.some(c=>c.checked);
+
+    // Report cards
     const setStatus=(cardId,statusId,ready,readyMsg,waitMsg)=>{
         const card=document.getElementById(cardId);
         const line=document.getElementById(statusId);
@@ -786,7 +864,22 @@ function updateReportStatus(){
     setStatus('rc-risk','rs-risk',riskReady,`${risks.length} risk(s) ready to report`,'Add risks in Risk Mapper to generate');
     setStatus('rc-gap','rs-gap',evReady,'Evidence data ready to report','Set control statuses in Evidence Builder to generate');
     setStatus('rc-proposal','rs-proposal',intakeReady,`Proposal ready for ${savedIntake.org}`,'Submit intake form to generate');
-    setStatus('rc-outcomes','rs-outcomes',playbookReady,'Playbook data ready to report','Complete playbook tasks to generate');
+    setStatus('rc-outcomes','rs-outcomes',playbookReady,`${playbookBoxes.filter(c=>c.checked).length} of ${playbookBoxes.length} tasks complete`,'Complete playbook tasks to generate');
+
+    // Workflow steps
+    const setWf=(stepId,statusId,done,msg)=>{
+        const step=document.getElementById(stepId);
+        const stat=document.getElementById(statusId);
+        if(!step||!stat)return;
+        step.className='wf-step'+(done?' done':'');
+        stat.textContent=msg;
+    };
+    setWf('wf-intake','wfs-intake',intakeReady,intakeReady?`${savedIntake.org} — ready`:'Not submitted');
+    setWf('wf-risk','wfs-risk',riskReady,riskReady?`${risks.length} risk(s) added`:'No risks added');
+    const evDone=evSelects.filter(s=>s.value).length;
+    setWf('wf-evidence','wfs-evidence',evReady,evReady?`${evDone} control(s) with status`:'No statuses set');
+    const pbDone=playbookBoxes.filter(c=>c.checked).length;
+    setWf('wf-playbook','wfs-playbook',playbookReady,playbookReady?`${pbDone} of ${playbookBoxes.length} tasks done`:'No tasks checked');
 }
 
 // REPORT GENERATORS
@@ -963,6 +1056,9 @@ function generateProposal(){
     const challenge=savedIntake.challenge||document.getElementById('f-challenge').value||'No formal security program in place';
     const framework=savedIntake.framework||document.getElementById('f-framework').value||'HIPAA Security Rule';
     const timeline=savedIntake.timeline||document.getElementById('f-timeline').value||'Within 30 days';
+    const feePilot=(document.getElementById('fee-pilot')&&document.getElementById('fee-pilot').value.trim())||'[Contact us for pricing]';
+    const feeRetainer=(document.getElementById('fee-retainer')&&document.getElementById('fee-retainer').value.trim())||'[Contact us for pricing]';
+    const feeTemplates=(document.getElementById('fee-templates')&&document.getElementById('fee-templates').value.trim())||'[Contact us for pricing]';
     const riskSummary=risks.length?`<p>Initial threat mapping identified <strong>${risks.length} risk(s)</strong> including ${risks.filter(r=>r.score>=17).length} Critical and ${risks.filter(r=>r.score>=10&&r.score<17).length} High severity items requiring immediate attention.</p>`:'';
     openReport(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Engagement Proposal</title><style>${RPT_STYLE}
 .phase-box{border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:12px;border-left:5px solid #2563eb;}
@@ -1006,11 +1102,10 @@ ${riskSummary}
 <h2>4. Investment</h2>
 <table class="invest-table"><thead><tr><th>Option</th><th>Scope</th><th>Investment</th></tr></thead>
 <tbody>
-<tr><td>90-Day Governance Pilot</td><td>Full three-phase engagement as described above</td><td>[Insert fee]</td></tr>
-<tr><td>Monthly Retainer (post-pilot)</td><td>Ongoing compliance monitoring, evidence maintenance, policy updates</td><td>[Insert fee]/month</td></tr>
-<tr><td>Template Package</td><td>7 audit-ready GRC templates customized for your organization</td><td>[Insert fee]</td></tr>
+<tr><td>90-Day Governance Pilot</td><td>Full three-phase engagement as described above — all deliverables included</td><td><strong>${feePilot}</strong></td></tr>
+<tr><td>Monthly Retainer (post-pilot)</td><td>Ongoing compliance monitoring, evidence maintenance, policy updates, audit prep support</td><td>${feeRetainer}</td></tr>
+<tr><td>Template Package</td><td>Audit-ready GRC templates customized for your organization — no engagement required</td><td>${feeTemplates}</td></tr>
 </tbody></table>
-<div class="highlight">Note: Investment figures are placeholders. Edit before sending to client.</div>
 <h2>5. Next Steps</h2>
 <ol><li>Review this proposal and confirm the scope meets your needs.</li><li>Schedule a 30-minute discovery call: logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</li><li>Upon agreement, Logical Coders will issue a formal engagement letter and begin Phase 1 within 5 business days.</li></ol>
 <div class="approval-box"><h2 style="margin-top:0;">Agreement</h2>
