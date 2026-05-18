@@ -346,7 +346,29 @@
                 </select>
             </div>
         </div>
-        <div class="form-group"><label>Current Controls in Place</label><textarea id="risk-controls" rows="2" placeholder="e.g., Role-based access control, quarterly access reviews"></textarea></div>
+        <div class="form-group">
+            <label>Current Controls in Place</label>
+            <select class="quick-add" onchange="appendControl(this)" style="margin-bottom:0.4rem;">
+                <option value="">+ Quick-add a control →</option>
+                <option>No formal controls currently in place</option>
+                <option>Multi-Factor Authentication (MFA) — enforced for all users</option>
+                <option>Role-Based Access Control (RBAC) — least privilege applied</option>
+                <option>Data Encryption at Rest (AES-256 or equivalent)</option>
+                <option>Data Encryption in Transit (TLS enforced)</option>
+                <option>Endpoint Detection and Response (EDR) / Anti-malware deployed</option>
+                <option>Automated Data Backup with Verified Restore Testing</option>
+                <option>Security Awareness Training — documented completion records</option>
+                <option>Email Filtering and Anti-phishing Controls</option>
+                <option>Firewall and Network Perimeter Controls</option>
+                <option>Audit Logging — user activity logged and retained</option>
+                <option>Patch Management — regular patch cycle documented</option>
+                <option>Physical Access Controls — restricted areas, visitor log</option>
+                <option>Business Associate Agreements (BAAs) — executed and on file</option>
+                <option>Incident Response Plan — documented and tested</option>
+                <option>Mobile Device Management (MDM) — enrolled or policy enforced</option>
+            </select>
+            <textarea id="risk-controls" rows="2" placeholder="Selected controls appear here — or type your own"></textarea>
+        </div>
         <button class="btn btn-primary" onclick="addRisk()">+ Add Risk Item</button>
     </div>
     <div class="card" id="risk-table-card" style="display:none">
@@ -587,7 +609,27 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group"><label>Organization Name <span class="required">*</span></label><input type="text" id="f-org" placeholder="Company or organization name"></div>
-                        <div class="form-group"><label>Your Title / Role</label><input type="text" id="f-title" placeholder="e.g., IT Manager, CISO, Owner"></div>
+                        <div class="form-group">
+                            <label>Your Title / Role</label>
+                            <select id="f-title">
+                                <option value="">Select your role</option>
+                                <option>Practice Owner / CEO</option>
+                                <option>Chief Executive Officer (CEO)</option>
+                                <option>Chief Information Officer (CIO)</option>
+                                <option>CISO / Chief Information Security Officer</option>
+                                <option>Chief Privacy Officer (CPO)</option>
+                                <option>IT Manager / IT Director</option>
+                                <option>Compliance Officer</option>
+                                <option>Privacy Officer</option>
+                                <option>HIPAA Security Official</option>
+                                <option>Practice Manager / Office Manager</option>
+                                <option>Risk Manager</option>
+                                <option>System / Network Administrator</option>
+                                <option>Operations Manager / COO</option>
+                                <option>Billing Manager</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -774,6 +816,22 @@ function showSection(id) {
 // RISK MAPPER
 let risks=[];
 function getRiskLevel(s){if(s<=4)return{level:'Low',cls:'badge-low',cellCls:'cell-low'};if(s<=9)return{level:'Medium',cls:'badge-medium',cellCls:'cell-medium'};if(s<=16)return{level:'High',cls:'badge-high',cellCls:'cell-high'};return{level:'Critical',cls:'badge-critical',cellCls:'cell-critical'};}
+function appendControl(sel){
+    if(!sel.value)return;
+    const ta=document.getElementById('risk-controls');
+    ta.value=ta.value?ta.value+'; '+sel.value:sel.value;
+    sel.value='';
+}
+
+function appendEvidence(sel){
+    if(!sel.value)return;
+    const ta=sel.closest('.form-group').querySelector('textarea');
+    if(!ta)return;
+    ta.value=ta.value?ta.value+'\n'+sel.value:sel.value;
+    sel.value='';
+    ta.dispatchEvent(new Event('change'));
+}
+
 function addRisk(){
     const asset=document.getElementById('risk-asset').value.trim(),threat=document.getElementById('risk-threat').value.trim();
     if(!asset||!threat){alert('Please enter both an asset and a threat description.');return;}
@@ -806,7 +864,7 @@ let currentFramework='nist';
 function selectFramework(key,btn){currentFramework=key;document.querySelectorAll('.framework-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderControls();}
 function renderControls(){
     const fw=frameworks[currentFramework];
-    document.getElementById('controls-container').innerHTML=fw.controls.map((c,i)=>`<div class="control-row"><h4>${c.name}</h4><div class="control-id">${c.id} &mdash; ${fw.name}</div><div class="control-desc">${c.desc}</div><div class="form-row"><div class="form-group"><label>Evidence Description</label><textarea rows="2" placeholder="What evidence exists or will be collected?" onchange="updateEvidenceSummary()"></textarea></div><div class="form-group"><label>Evidence Owner</label><select onchange="updateEvidenceSummary()"><option value="">Select role</option><option>CISO / Chief Information Security Officer</option><option>IT Manager / IT Director</option><option>Privacy Officer</option><option>HIPAA Security Official</option><option>Compliance Officer</option><option>Practice Manager / Office Manager</option><option>System / Network Administrator</option><option>Cloud / Infrastructure Team</option><option>HR / People Operations</option><option>Security Operations Center (SOC)</option><option>Third-Party / Managed Service Provider</option></select></div></div><div class="form-row-3"><div class="form-group"><label>Collection Method</label><select onchange="updateEvidenceSummary()"><option value="">Select method</option><option>Inspection (Review document)</option><option>Interview (Question staff)</option><option>Observation (Watch process)</option><option>Re-performance (Test control)</option></select></div><div class="form-group"><label>Frequency</label><select onchange="updateEvidenceSummary()"><option value="">Select frequency</option><option>Continuous</option><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div><div class="form-group"><label>Status</label><select class="status-select" onchange="updateEvidenceSummary()"><option value="">Select status</option><option value="complete">Complete</option><option value="progress">In Progress</option><option value="notstarted">Not Started</option><option value="gap">Gap — Evidence Missing</option></select></div></div></div>`).join('');
+    document.getElementById('controls-container').innerHTML=fw.controls.map((c,i)=>`<div class="control-row"><h4>${c.name}</h4><div class="control-id">${c.id} &mdash; ${fw.name}</div><div class="control-desc">${c.desc}</div><div class="form-row"><div class="form-group"><label>Evidence Description</label><select class="quick-add" onchange="appendEvidence(this)" style="margin-bottom:0.4rem;"><option value="">+ Quick-add evidence type →</option><option>Written and signed Security Risk Analysis (HIPAA §164.308(a)(1))</option><option>Access control policy — approved, signed, and in effect</option><option>User access review report — quarterly, dated and signed</option><option>MFA enrollment report — showing coverage by user account</option><option>Audit log sample — user activity for the review period</option><option>Security awareness training completion records</option><option>Backup verification log — successful restore test on record</option><option>Business Associate Agreement (BAA) — executed with vendor</option><option>System configuration screenshot — security setting confirmed</option><option>Incident Response Plan — written, approved, tabletop-tested</option><option>Penetration test or vulnerability scan report</option><option>Encryption configuration evidence (at rest and in transit)</option><option>Termination / offboarding checklist — access revoked on record</option><option>Vendor SOC 2 report or security questionnaire response</option><option>Written and signed policy — effective date and approver on record</option></select><textarea rows="2" placeholder="Selected evidence types appear here — or type your own" onchange="updateEvidenceSummary()"></textarea></div><div class="form-group"><label>Evidence Owner</label><select onchange="updateEvidenceSummary()"><option value="">Select role</option><option>CISO / Chief Information Security Officer</option><option>IT Manager / IT Director</option><option>Privacy Officer</option><option>HIPAA Security Official</option><option>Compliance Officer</option><option>Practice Manager / Office Manager</option><option>System / Network Administrator</option><option>Cloud / Infrastructure Team</option><option>HR / People Operations</option><option>Security Operations Center (SOC)</option><option>Third-Party / Managed Service Provider</option></select></div></div><div class="form-row-3"><div class="form-group"><label>Collection Method</label><select onchange="updateEvidenceSummary()"><option value="">Select method</option><option>Inspection (Review document)</option><option>Interview (Question staff)</option><option>Observation (Watch process)</option><option>Re-performance (Test control)</option></select></div><div class="form-group"><label>Frequency</label><select onchange="updateEvidenceSummary()"><option value="">Select frequency</option><option>Continuous</option><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div><div class="form-group"><label>Status</label><select class="status-select" onchange="updateEvidenceSummary()"><option value="">Select status</option><option value="complete">Complete</option><option value="progress">In Progress</option><option value="notstarted">Not Started</option><option value="gap">Gap — Evidence Missing</option></select></div></div></div>`).join('');
     document.getElementById('evidence-summary').style.display='none';updateDashboard();
 }
 function updateEvidenceSummary(){
@@ -826,7 +884,7 @@ function exportEvidence(){
     const data=Array.from(rows).map((row,i)=>{
         const c=fw.controls[i];
         const textareas=row.querySelectorAll('textarea');
-        const selects=row.querySelectorAll('select');
+        const selects=Array.from(row.querySelectorAll('select')).filter(s=>!s.classList.contains('quick-add'));
         return[c.id,c.name,fw.name,
             textareas[0]?textareas[0].value:'',
             selects[0]?selects[0].value:'',
@@ -1044,7 +1102,7 @@ function generateGapReport(){
     const controlRows=Array.from(rows).map((row,i)=>{
         const c=fw.controls[i];
         const desc=row.querySelector('textarea')?row.querySelector('textarea').value:'';
-        const selects=row.querySelectorAll('select');
+        const selects=Array.from(row.querySelectorAll('select')).filter(s=>!s.classList.contains('quick-add'));
         const owner=selects[0]?selects[0].value:'';
         const method=selects[1]?selects[1].value:'';
         const freq=selects[2]?selects[2].value:'';
