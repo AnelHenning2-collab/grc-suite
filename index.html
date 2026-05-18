@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRC Governance Suite | Logical Coders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: #f0f4ff; color: #1e293b; }
+
+        nav { background: #0f2557; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .nav-brand { color: white; font-size: 1rem; font-weight: 700; padding: 1rem 0; white-space: nowrap; }
+        .nav-brand span { color: #60a5fa; }
+        .nav-links { display: flex; gap: 0; }
+        .nav-link { color: #cbd5e1; padding: 1.2rem 0.75rem; cursor: pointer; font-size: 0.78rem; font-weight: 500; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
+        .nav-link:hover, .nav-link.active { color: white; border-bottom-color: #60a5fa; background: rgba(255,255,255,0.05); }
+        .nav-link.cta { background: #2563eb; color: white; border-radius: 6px; margin: 0.6rem 0 0.6rem 0.5rem; padding: 0.5rem 0.9rem; border-bottom: none; }
+        .nav-link.cta:hover { background: #1d4ed8; }
+
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+        .card h2 { color: #0f2557; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .card p.subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: white; border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-top: 4px solid #2563eb; }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: #0f2557; }
+        .stat-label { font-size: 0.78rem; color: #64748b; margin-top: 0.25rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .quick-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
+        .quick-card:hover { border-color: #2563eb; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.15); }
+        .quick-card .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+        .quick-card h3 { color: #0f2557; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .quick-card p { color: #64748b; font-size: 0.85rem; line-height: 1.5; }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #374151; margin-bottom: 0.35rem; }
+        input[type="text"], input[type="email"], input[type="tel"], select, textarea { width: 100%; padding: 0.6rem 0.85rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; font-family: 'Inter', sans-serif; color: #1e293b; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .btn { padding: 0.6rem 1.2rem; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .btn-primary { background: #2563eb; color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-secondary { background: #f1f5f9; color: #0f2557; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .btn-danger { background: #dc2626; color: white; font-size: 0.78rem; padding: 0.3rem 0.65rem; border-radius: 6px; }
+        .btn-danger:hover { background: #b91c1c; }
+        .btn-lg { padding: 0.85rem 2rem; font-size: 1rem; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th { background: #f8fafc; padding: 0.75rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 0.85rem 1rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8fafc; }
+
+        .badge { display: inline-block; padding: 0.25rem 0.65rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+        .badge-low { background: #dcfce7; color: #166534; }
+        .badge-medium { background: #fef9c3; color: #854d0e; }
+        .badge-high { background: #fed7aa; color: #9a3412; }
+        .badge-critical { background: #fecaca; color: #991b1b; }
+        .badge-complete { background: #dcfce7; color: #166534; }
+        .badge-progress { background: #dbeafe; color: #1e40af; }
+        .badge-notstarted { background: #f1f5f9; color: #64748b; }
+        .badge-gap { background: #fecaca; color: #991b1b; }
+
+        .matrix-label-y { font-size: 0.7rem; color: #64748b; font-weight: 600; display: flex; align-items: center; justify-content: center; height: 60px; width: 40px; }
+        .matrix-label-x { font-size: 0.7rem; color: #64748b; font-weight: 600; text-align: center; display: flex; align-items: center; justify-content: center; height: 28px; width: 80px; }
+        .cell-low { background: #dcfce7; } .cell-medium { background: #fef9c3; } .cell-high { background: #fed7aa; } .cell-critical { background: #fecaca; }
+        .risk-dot { width: 26px; height: 26px; border-radius: 50%; background: #0f2557; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.3); margin: 2px; flex-shrink: 0; }
+
+        .phase-timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+        .phase-card { border-radius: 12px; padding: 1.5rem; border: 2px solid #e2e8f0; background: white; }
+        .phase-card.phase-1 { border-top: 4px solid #2563eb; } .phase-card.phase-2 { border-top: 4px solid #7c3aed; } .phase-card.phase-3 { border-top: 4px solid #059669; }
+        .phase-number { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+        .phase-1 .phase-number { color: #2563eb; } .phase-2 .phase-number { color: #7c3aed; } .phase-3 .phase-number { color: #059669; }
+        .phase-title { font-size: 1rem; font-weight: 700; color: #0f2557; }
+        .phase-days { font-size: 0.8rem; color: #64748b; margin-top: 0.25rem; margin-bottom: 1rem; }
+        .task-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #f1f5f9; }
+        .task-item:last-child { border-bottom: none; }
+        .task-item input[type="checkbox"] { margin-top: 3px; width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; accent-color: #2563eb; }
+        .task-item label { font-size: 0.84rem; color: #374151; cursor: pointer; line-height: 1.45; }
+        .task-item.checked label { text-decoration: line-through; color: #9ca3af; }
+
+        .progress-bar-bg { background: #e2e8f0; border-radius: 10px; height: 12px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, #2563eb, #7c3aed); transition: width 0.5s ease; }
+        .progress-label { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+
+        .chat-wrap { display: flex; height: 520px; }
+        .chat-sidebar { width: 220px; flex-shrink: 0; padding: 1.25rem; border-right: 1px solid #e2e8f0; overflow-y: auto; }
+        .chat-main { flex: 1; display: flex; flex-direction: column; }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #f8fafc; }
+        .chat-input-area { padding: 1rem; border-top: 1px solid #e2e8f0; background: white; display: flex; gap: 0.75rem; }
+        .chat-input-area input { flex: 1; }
+        .message { display: flex; gap: 0.75rem; max-width: 88%; }
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
+        .message-bubble { padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.88rem; line-height: 1.55; }
+        .message.bot .message-bubble { background: white; border: 1px solid #e2e8f0; color: #1e293b; border-radius: 4px 12px 12px 12px; }
+        .message.user .message-bubble { background: #2563eb; color: white; border-radius: 12px 4px 12px 12px; }
+        .message-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .bot-avatar { background: #0f2557; } .user-avatar { background: #e2e8f0; }
+        .suggested-q { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.8rem; color: #0f2557; cursor: pointer; text-align: left; transition: all 0.2s; font-family: 'Inter', sans-serif; font-weight: 500; width: 100%; margin-bottom: 0.4rem; }
+        .suggested-q:hover { border-color: #2563eb; background: #eff6ff; }
+
+        .templates-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .template-card { background: white; border-radius: 12px; padding: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+        .template-card .template-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+        .template-card h3 { font-size: 0.95rem; font-weight: 700; color: #0f2557; margin-bottom: 0.35rem; }
+        .template-card p { font-size: 0.82rem; color: #64748b; line-height: 1.5; margin-bottom: 0.75rem; flex: 1; }
+        .template-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .template-tag { background: #eff6ff; color: #1e40af; font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        .framework-selector { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .framework-btn { padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; background: white; color: #374151; font-family: 'Inter', sans-serif; }
+        .framework-btn:hover { border-color: #2563eb; color: #2563eb; }
+        .framework-btn.active { border-color: #2563eb; background: #2563eb; color: white; }
+        .control-row { background: white; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; }
+        .control-row h4 { font-size: 0.9rem; font-weight: 700; color: #0f2557; margin-bottom: 0.2rem; }
+        .control-id { font-size: 0.75rem; color: #64748b; font-family: monospace; margin-bottom: 0.35rem; }
+        .control-desc { font-size: 0.84rem; color: #64748b; margin-bottom: 1rem; line-height: 1.5; }
+
+        .section-header { margin-bottom: 1.5rem; }
+        .section-header h1 { font-size: 1.6rem; font-weight: 800; color: #0f2557; margin-bottom: 0.35rem; }
+        .section-header p { color: #64748b; font-size: 0.95rem; }
+
+        .hero { background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 100%); border-radius: 16px; padding: 2.5rem; color: white; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .hero p { color: #93c5fd; font-size: 1rem; max-width: 600px; line-height: 1.6; }
+        .hero-badges { display: flex; gap: 0.5rem; margin-top: 1.25rem; flex-wrap: wrap; }
+        .hero-badge { background: rgba(255,255,255,0.15); padding: 0.35rem 0.85rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+        /* INTAKE FORM */
+        .intake-hero { background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 100%); border-radius: 16px; padding: 2.5rem; color: white; margin-bottom: 1.5rem; text-align: center; }
+        .intake-hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .intake-hero p { color: #93c5fd; font-size: 1rem; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+        .intake-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .intake-step { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: #f8fafc; border-radius: 10px; margin-bottom: 0.75rem; }
+        .step-num { width: 32px; height: 32px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+        .step-text h4 { color: #0f2557; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .step-text p { color: #64748b; font-size: 0.82rem; line-height: 1.4; }
+        .success-box { background: #f0fdf4; border: 2px solid #16a34a; border-radius: 12px; padding: 2rem; text-align: center; display: none; }
+        .success-box h3 { color: #15803d; font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .success-box p { color: #374151; font-size: 0.9rem; line-height: 1.6; }
+        .required { color: #dc2626; }
+
+        .flex { display: flex; } .items-center { align-items: center; } .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; } .mb-4 { margin-bottom: 1rem; } .mt-4 { margin-top: 1rem; }
+
+        footer { background: #0f2557; color: #93c5fd; text-align: center; padding: 1.5rem; font-size: 0.85rem; margin-top: 3rem; }
+        footer span { color: white; font-weight: 700; }
+
+        @media (max-width: 900px) {
+            .stats-grid, .phase-timeline, .quick-actions, .templates-grid, .intake-grid { grid-template-columns: 1fr 1fr; }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .stats-grid, .phase-timeline, .quick-actions, .templates-grid, .intake-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-brand">Logical <span>Coders</span> | GRC Suite</div>
+    <div class="nav-links">
+        <div class="nav-link active" onclick="showSection('dashboard')">Dashboard</div>
+        <div class="nav-link" onclick="showSection('risk-mapper')">Risk Mapper</div>
+        <div class="nav-link" onclick="showSection('evidence')">Evidence Builder</div>
+        <div class="nav-link" onclick="showSection('playbook')">90-Day Playbook</div>
+        <div class="nav-link" onclick="showSection('assistant')">GRC Assistant</div>
+        <div class="nav-link" onclick="showSection('templates')">Templates</div>
+        <div class="nav-link cta" onclick="showSection('intake')">Get Started</div>
+    </div>
+</nav>
+
+<main>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section active">
+    <div class="hero">
+        <h1>GRC Governance Suite</h1>
+        <p>Structured cybersecurity governance tools for small and mid-size organizations. Map threats, build evidence, run your 90-day modernization pilot — all in one place.</p>
+        <div class="hero-badges">
+            <span class="hero-badge">NIST CSF 2.0</span>
+            <span class="hero-badge">ISO 27001</span>
+            <span class="hero-badge">HIPAA</span>
+            <span class="hero-badge">SOC 2</span>
+            <span class="hero-badge">FedRAMP</span>
+        </div>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number" id="dash-risks">0</div><div class="stat-label">Active Risk Items</div></div>
+        <div class="stat-card"><div class="stat-number" id="dash-controls">0</div><div class="stat-label">Controls Tracked</div></div>
+        <div class="stat-card"><div class="stat-number" id="dash-progress">0%</div><div class="stat-label">Playbook Progress</div></div>
+        <div class="stat-card"><div class="stat-number">8</div><div class="stat-label">Templates Available</div></div>
+    </div>
+    <div class="quick-actions">
+        <div class="quick-card" onclick="showSection('risk-mapper')"><div class="icon">🗺️</div><h3>Threat Risk Mapper</h3><p>Map threats to assets. Score likelihood and impact. Generate a visual risk matrix aligned to your security priorities.</p></div>
+        <div class="quick-card" onclick="showSection('evidence')"><div class="icon">📋</div><h3>Evidence Builder</h3><p>Define and track evidence for your top 5 controls across NIST CSF, ISO 27001, HIPAA, SOC 2, or FedRAMP.</p></div>
+        <div class="quick-card" onclick="showSection('playbook')"><div class="icon">🚀</div><h3>90-Day Playbook</h3><p>Launch your governance modernization pilot. Three phases. Track progress in real time.</p></div>
+        <div class="quick-card" onclick="showSection('assistant')"><div class="icon">🤖</div><h3>GRC Assistant</h3><p>Ask questions about frameworks, evidence, risk scoring, and control implementation.</p></div>
+        <div class="quick-card" onclick="showSection('templates')"><div class="icon">📁</div><h3>Template Library</h3><p>8 audit-ready templates — risk registers, policies, incident response, vendor risk, and more.</p></div>
+        <div class="quick-card" onclick="showSection('intake')"><div class="icon">🤝</div><h3>Work With Us</h3><p>Ready to start? Complete our intake form and we will follow up within one business day.</p></div>
+    </div>
+</div>
+
+<!-- THREAT RISK MAPPER -->
+<div id="risk-mapper" class="section">
+    <div class="section-header"><h1>🗺️ Threat-Aligned Risk Mapper</h1><p>Identify threats, score by likelihood and impact, and generate a visual risk matrix.</p></div>
+    <div class="card">
+        <h2>Add a Risk Item</h2><p class="subtitle">Enter each threat-asset pair and score it. The matrix updates automatically.</p>
+        <div class="form-row">
+            <div class="form-group"><label>Asset or System</label><input type="text" id="risk-asset" placeholder="e.g., Patient records database"></div>
+            <div class="form-group"><label>Threat Description</label><input type="text" id="risk-threat" placeholder="e.g., Unauthorized access by insider"></div>
+        </div>
+        <div class="form-row-3">
+            <div class="form-group"><label>Likelihood (1–5)</label><select id="risk-likelihood"><option value="1">1 — Rare</option><option value="2">2 — Unlikely</option><option value="3" selected>3 — Possible</option><option value="4">4 — Likely</option><option value="5">5 — Almost Certain</option></select></div>
+            <div class="form-group"><label>Impact (1–5)</label><select id="risk-impact"><option value="1">1 — Negligible</option><option value="2">2 — Minor</option><option value="3" selected>3 — Moderate</option><option value="4">4 — Major</option><option value="5">5 — Catastrophic</option></select></div>
+            <div class="form-group"><label>Risk Owner</label><input type="text" id="risk-owner" placeholder="e.g., IT Manager"></div>
+        </div>
+        <div class="form-group"><label>Current Controls in Place</label><textarea id="risk-controls" rows="2" placeholder="e.g., Role-based access control, quarterly access reviews"></textarea></div>
+        <button class="btn btn-primary" onclick="addRisk()">+ Add Risk Item</button>
+    </div>
+    <div class="card" id="risk-table-card" style="display:none">
+        <div class="flex items-center justify-between mb-4"><h2>Risk Register</h2><button class="btn btn-secondary" onclick="exportRisks()">Export CSV</button></div>
+        <table><thead><tr><th>#</th><th>Asset</th><th>Threat</th><th>L</th><th>I</th><th>Score</th><th>Level</th><th>Owner</th><th></th></tr></thead>
+        <tbody id="risk-table-body"></tbody></table>
+    </div>
+    <div class="card" id="risk-matrix-card" style="display:none">
+        <h2>Risk Matrix</h2><p class="subtitle">Each dot represents a risk item plotted by likelihood (vertical) and impact (horizontal).</p>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;margin-top:1rem;flex-wrap:wrap;">
+            <div>
+                <div style="font-size:0.72rem;color:#64748b;font-weight:700;text-align:center;margin-bottom:4px;letter-spacing:0.05em;">LIKELIHOOD ↕</div>
+                <div style="display:flex;gap:4px;">
+                    <div style="display:flex;flex-direction:column;gap:3px;"><div class="matrix-label-y">5</div><div class="matrix-label-y">4</div><div class="matrix-label-y">3</div><div class="matrix-label-y">2</div><div class="matrix-label-y">1</div></div>
+                    <div>
+                        <div id="risk-matrix-grid" style="display:grid;grid-template-columns:repeat(5,80px);gap:3px;"></div>
+                        <div style="display:grid;grid-template-columns:repeat(5,80px);gap:3px;margin-top:3px;"><div class="matrix-label-x">1</div><div class="matrix-label-x">2</div><div class="matrix-label-x">3</div><div class="matrix-label-x">4</div><div class="matrix-label-x">5</div></div>
+                        <div style="font-size:0.72rem;color:#64748b;font-weight:700;text-align:center;margin-top:2px;letter-spacing:0.05em;">IMPACT →</div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:1.5rem;">
+                <div style="font-size:0.75rem;font-weight:700;color:#64748b;margin-bottom:0.75rem;text-transform:uppercase;">Legend</div>
+                <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                    <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:18px;height:18px;background:#dcfce7;border-radius:4px;display:inline-block;flex-shrink:0;"></span><span style="font-size:0.82rem;">Low (1–4)</span></div>
+                    <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:18px;height:18px;background:#fef9c3;border-radius:4px;display:inline-block;flex-shrink:0;"></span><span style="font-size:0.82rem;">Medium (5–9)</span></div>
+                    <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:18px;height:18px;background:#fed7aa;border-radius:4px;display:inline-block;flex-shrink:0;"></span><span style="font-size:0.82rem;">High (10–16)</span></div>
+                    <div style="display:flex;align-items:center;gap:0.5rem;"><span style="width:18px;height:18px;background:#fecaca;border-radius:4px;display:inline-block;flex-shrink:0;"></span><span style="font-size:0.82rem;">Critical (17–25)</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EVIDENCE BUILDER -->
+<div id="evidence" class="section">
+    <div class="section-header"><h1>📋 Top 5 Controls Evidence Builder</h1><p>Select your framework. Define evidence for your five highest-priority controls.</p></div>
+    <div class="card">
+        <h2>Select Compliance Framework</h2><p class="subtitle">Choose the framework your organization is working toward.</p>
+        <div class="framework-selector">
+            <button class="framework-btn active" onclick="selectFramework('nist',this)">NIST CSF 2.0</button>
+            <button class="framework-btn" onclick="selectFramework('iso',this)">ISO 27001</button>
+            <button class="framework-btn" onclick="selectFramework('hipaa',this)">HIPAA</button>
+            <button class="framework-btn" onclick="selectFramework('soc2',this)">SOC 2</button>
+            <button class="framework-btn" onclick="selectFramework('fedramp',this)">FedRAMP</button>
+        </div>
+    </div>
+    <div id="controls-container"></div>
+    <div class="card" id="evidence-summary" style="display:none"><h2>Evidence Summary</h2><div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem;" id="evidence-stats"></div></div>
+</div>
+
+<!-- 90-DAY PLAYBOOK -->
+<div id="playbook" class="section">
+    <div class="section-header"><h1>🚀 90-Day Security Governance Playbook</h1><p>Three phases. Measurable outcomes. Clear next steps.</p></div>
+    <div class="card"><div class="progress-label"><span>Overall Playbook Progress</span><span id="progress-pct">0% complete</span></div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div></div>
+    <div class="phase-timeline">
+        <div class="phase-card phase-1">
+            <div class="phase-number">Phase 1 — Days 1–30</div><div class="phase-title">Inventory &amp; Threat Map</div><div class="phase-days">Build your asset inventory. Identify and map your threats.</div>
+            <div class="task-item"><input type="checkbox" id="cb1" onchange="updateProgress()"><label for="cb1">Complete asset inventory (systems, data, people, vendors)</label></div>
+            <div class="task-item"><input type="checkbox" id="cb2" onchange="updateProgress()"><label for="cb2">Identify top 10 threats relevant to your industry</label></div>
+            <div class="task-item"><input type="checkbox" id="cb3" onchange="updateProgress()"><label for="cb3">Map threats to assets using the Threat Risk Mapper</label></div>
+            <div class="task-item"><input type="checkbox" id="cb4" onchange="updateProgress()"><label for="cb4">Score all risks (likelihood × impact)</label></div>
+            <div class="task-item"><input type="checkbox" id="cb5" onchange="updateProgress()"><label for="cb5">Identify top 5 controls to address priority risks</label></div>
+            <div class="task-item"><input type="checkbox" id="cb6" onchange="updateProgress()"><label for="cb6">Present initial risk map to leadership / stakeholders</label></div>
+        </div>
+        <div class="phase-card phase-2">
+            <div class="phase-number">Phase 2 — Days 31–60</div><div class="phase-title">Prioritize &amp; Define Evidence</div><div class="phase-days">Select controls. Define evidence. Find your gaps.</div>
+            <div class="task-item"><input type="checkbox" id="cb7" onchange="updateProgress()"><label for="cb7">Select compliance framework aligned to your business</label></div>
+            <div class="task-item"><input type="checkbox" id="cb8" onchange="updateProgress()"><label for="cb8">Use Evidence Builder to define evidence for top 5 controls</label></div>
+            <div class="task-item"><input type="checkbox" id="cb9" onchange="updateProgress()"><label for="cb9">Assign evidence owners to each control</label></div>
+            <div class="task-item"><input type="checkbox" id="cb10" onchange="updateProgress()"><label for="cb10">Conduct gap analysis — document missing evidence</label></div>
+            <div class="task-item"><input type="checkbox" id="cb11" onchange="updateProgress()"><label for="cb11">Draft or update at least 2 policies to support controls</label></div>
+            <div class="task-item"><input type="checkbox" id="cb12" onchange="updateProgress()"><label for="cb12">Deliver Phase 2 status report to stakeholders</label></div>
+        </div>
+        <div class="phase-card phase-3">
+            <div class="phase-number">Phase 3 — Days 61–90</div><div class="phase-title">Embedded Support &amp; Validate</div><div class="phase-days">Implement. Measure. Plan the next wave.</div>
+            <div class="task-item"><input type="checkbox" id="cb13" onchange="updateProgress()"><label for="cb13">Implement controls with embedded cybersecurity support</label></div>
+            <div class="task-item"><input type="checkbox" id="cb14" onchange="updateProgress()"><label for="cb14">Collect and organize evidence for all 5 controls</label></div>
+            <div class="task-item"><input type="checkbox" id="cb15" onchange="updateProgress()"><label for="cb15">Validate evidence quality (complete, accurate, timely)</label></div>
+            <div class="task-item"><input type="checkbox" id="cb16" onchange="updateProgress()"><label for="cb16">Measure outcomes against initial risk scores</label></div>
+            <div class="task-item"><input type="checkbox" id="cb17" onchange="updateProgress()"><label for="cb17">Document lessons learned and remaining gaps</label></div>
+            <div class="task-item"><input type="checkbox" id="cb18" onchange="updateProgress()"><label for="cb18">Present final report and recommend next wave priorities</label></div>
+        </div>
+    </div>
+    <div class="card"><h2>Playbook Notes</h2><p class="subtitle">Document key decisions, blockers, and findings as you progress.</p><textarea style="width:100%;font-family:'Inter',sans-serif;font-size:0.9rem;" rows="5" placeholder="Enter your notes here..."></textarea></div>
+</div>
+
+<!-- GRC ASSISTANT -->
+<div id="assistant" class="section">
+    <div class="section-header"><h1>🤖 GRC Assistant</h1><p>Ask questions about cybersecurity governance, risk management, and compliance.</p></div>
+    <div class="card" style="padding:0;overflow:hidden;">
+        <div class="chat-wrap">
+            <div class="chat-sidebar">
+                <div style="font-size:0.78rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">Suggested Questions</div>
+                <button class="suggested-q" onclick="askQuestion('What framework should a small healthcare organization use?')">Framework for small healthcare org?</button>
+                <button class="suggested-q" onclick="askQuestion('What are the top 5 controls I should implement first?')">Top 5 controls to implement first?</button>
+                <button class="suggested-q" onclick="askQuestion('How do I collect evidence for access control?')">Evidence for access control?</button>
+                <button class="suggested-q" onclick="askQuestion('How do I score risk using likelihood and impact?')">How do I score risk?</button>
+                <button class="suggested-q" onclick="askQuestion('What is a risk register and what should it include?')">What is a risk register?</button>
+                <button class="suggested-q" onclick="askQuestion('How do I explain GRC to a non-technical executive?')">Explaining GRC to executives?</button>
+                <button class="suggested-q" onclick="askQuestion('What is the difference between SOC 2 and ISO 27001?')">SOC 2 vs ISO 27001?</button>
+                <button class="suggested-q" onclick="askQuestion('What evidence do I need for HIPAA compliance?')">Evidence needed for HIPAA?</button>
+            </div>
+            <div class="chat-main">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot"><div class="message-avatar bot-avatar">🛡️</div><div class="message-bubble">Hello! I'm your GRC Assistant. I can help with cybersecurity governance, risk management, compliance frameworks, evidence collection, and control implementation. What would you like to know?</div></div>
+                </div>
+                <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Ask a GRC question..." onkeydown="if(event.key==='Enter') sendMessage()"><button class="btn btn-primary" onclick="sendMessage()">Send</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TEMPLATES -->
+<div id="templates" class="section">
+    <div class="section-header"><h1>📁 Template Library</h1><p>Audit-ready templates for governance, risk, compliance, and documentation. Fill out online and print as PDF.</p></div>
+    <div class="templates-grid">
+        <div class="template-card"><div class="template-icon">📊</div><h3>Risk Register</h3><p>Track threats, assets, likelihood, impact, risk scores, owners, and remediation status.</p><div class="template-tags"><span class="template-tag">NIST CSF</span><span class="template-tag">ISO 27001</span><span class="template-tag">SOC 2</span></div><a href="templates/risk-register.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">📋</div><h3>Evidence Collection Log</h3><p>Document evidence for each control: type, owner, collection date, frequency, and status.</p><div class="template-tags"><span class="template-tag">All Frameworks</span><span class="template-tag">Audit Ready</span></div><a href="templates/evidence-log.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">🚨</div><h3>Incident Response Plan</h3><p>Six-phase response template: preparation through post-incident review. HIPAA breach notification included.</p><div class="template-tags"><span class="template-tag">NIST 800-61</span><span class="template-tag">HIPAA</span><span class="template-tag">SOC 2</span></div><a href="templates/incident-response.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">🏢</div><h3>Vendor Risk Assessment</h3><p>Five-section questionnaire: company info, access control, data protection, compliance, and incident response.</p><div class="template-tags"><span class="template-tag">SOC 2</span><span class="template-tag">ISO 27001</span><span class="template-tag">HIPAA</span></div><a href="templates/vendor-risk.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">📄</div><h3>Information Security Policy</h3><p>Editable core policy covering acceptable use, access control, data handling, incident reporting, and training.</p><div class="template-tags"><span class="template-tag">HIPAA</span><span class="template-tag">NIST CSF</span><span class="template-tag">ISO 27001</span></div><a href="templates/security-policy.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">🗂️</div><h3>Data Classification Policy</h3><p>Define Public, Internal, Confidential, and Restricted tiers with handling requirements and data inventory.</p><div class="template-tags"><span class="template-tag">HIPAA</span><span class="template-tag">FedRAMP</span><span class="template-tag">ISO 27001</span></div><a href="templates/data-classification.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">✅</div><h3>Control Assessment Worksheet</h3><p>Evaluate design and operating effectiveness. Document test procedures, samples, findings, and sign-off.</p><div class="template-tags"><span class="template-tag">SOC 2</span><span class="template-tag">ISO 27001</span><span class="template-tag">FedRAMP</span></div><a href="templates/control-assessment.html" target="_blank"><button class="btn btn-primary" style="width:100%;font-size:0.85rem;">Open Template</button></a></div>
+        <div class="template-card"><div class="template-icon">🤝</div><h3>Need a Custom Template?</h3><p>Don't see what you need? Logical Coders builds custom GRC documentation tailored to your industry and framework.</p><div class="template-tags"><span class="template-tag">Custom</span><span class="template-tag">Any Framework</span></div><button class="btn btn-primary" style="width:100%;font-size:0.85rem;" onclick="showSection('intake')">Request Custom Template</button></div>
+    </div>
+</div>
+
+<!-- CLIENT INTAKE FORM -->
+<div id="intake" class="section">
+    <div class="intake-hero">
+        <h1>🤝 Let's Get Started</h1>
+        <p>Tell us about your organization and governance goals. We'll follow up within one business day with a tailored plan.</p>
+    </div>
+
+    <div class="intake-grid">
+        <div>
+            <div class="card">
+                <h2>Client Intake Form</h2>
+                <p class="subtitle">All fields marked <span class="required">*</span> are required.</p>
+
+                <div id="intake-form">
+                    <div class="form-row">
+                        <div class="form-group"><label>First Name <span class="required">*</span></label><input type="text" id="f-firstname" placeholder="Your first name"></div>
+                        <div class="form-group"><label>Last Name <span class="required">*</span></label><input type="text" id="f-lastname" placeholder="Your last name"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Email Address <span class="required">*</span></label><input type="email" id="f-email" placeholder="you@company.com"></div>
+                        <div class="form-group"><label>Phone Number</label><input type="tel" id="f-phone" placeholder="(813) 000-0000"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Organization Name <span class="required">*</span></label><input type="text" id="f-org" placeholder="Company or organization name"></div>
+                        <div class="form-group"><label>Your Title / Role</label><input type="text" id="f-title" placeholder="e.g., IT Manager, CISO, Owner"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Industry <span class="required">*</span></label>
+                            <select id="f-industry">
+                                <option value="">Select your industry</option>
+                                <option>Healthcare / Medical</option>
+                                <option>Financial Services / Banking</option>
+                                <option>Insurance</option>
+                                <option>Government / Public Sector</option>
+                                <option>Defense / Government Contractor</option>
+                                <option>Technology / SaaS</option>
+                                <option>Legal / Law Firm</option>
+                                <option>Non-Profit</option>
+                                <option>Retail / E-Commerce</option>
+                                <option>Manufacturing</option>
+                                <option>Education</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Organization Size</label>
+                            <select id="f-size">
+                                <option value="">Select size</option>
+                                <option>1–10 employees</option>
+                                <option>11–50 employees</option>
+                                <option>51–200 employees</option>
+                                <option>201–500 employees</option>
+                                <option>500+ employees</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Framework(s) of Interest</label>
+                        <select id="f-framework">
+                            <option value="">Select primary framework</option>
+                            <option>NIST CSF 2.0</option>
+                            <option>HIPAA Security Rule</option>
+                            <option>SOC 2 Type I or II</option>
+                            <option>ISO 27001:2022</option>
+                            <option>FedRAMP Moderate</option>
+                            <option>PCI DSS</option>
+                            <option>Not sure — need guidance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Challenge <span class="required">*</span></label>
+                        <select id="f-challenge">
+                            <option value="">What is your biggest governance challenge?</option>
+                            <option>No formal security program in place</option>
+                            <option>Upcoming audit or compliance deadline</option>
+                            <option>Need documentation and policy development</option>
+                            <option>Evidence collection and audit preparation</option>
+                            <option>Risk assessment and risk register</option>
+                            <option>Vendor risk management</option>
+                            <option>Incident response planning</option>
+                            <option>Staff training and security awareness</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Timeline</label>
+                        <select id="f-timeline">
+                            <option value="">When do you need to get started?</option>
+                            <option>Immediately — within 2 weeks</option>
+                            <option>Within 30 days</option>
+                            <option>Within 60–90 days</option>
+                            <option>Planning for next quarter</option>
+                            <option>Just exploring options</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tell Us More</label>
+                        <textarea id="f-notes" placeholder="Describe your situation, goals, or any specific requirements. The more detail you share, the better we can prepare for our first conversation." rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>How did you hear about Logical Coders?</label>
+                        <select id="f-source">
+                            <option value="">Select one</option>
+                            <option>LinkedIn</option>
+                            <option>Google Search</option>
+                            <option>Referral from colleague</option>
+                            <option>ISC2 / ISACA Chapter</option>
+                            <option>GitHub Portfolio</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-lg" onclick="submitIntake()" style="width:100%;margin-top:0.5rem;">Submit — We'll Be in Touch Within 1 Business Day</button>
+                </div>
+
+                <div class="success-box" id="success-box">
+                    <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+                    <h3>Thank you — we received your intake!</h3>
+                    <p>Anél Henning will follow up at the email you provided within one business day.<br><br>
+                    In the meantime, explore the GRC tools above — the Threat Risk Mapper and 90-Day Playbook are great places to start.<br><br>
+                    <strong>Direct contact:</strong> logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</p>
+                    <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="showSection('dashboard')">Explore the GRC Suite →</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <h2>What Happens Next</h2>
+                <p class="subtitle" style="margin-bottom:1rem;">Our simple four-step process to get your governance program on track.</p>
+                <div class="intake-step"><div class="step-num">1</div><div class="step-text"><h4>Discovery Call</h4><p>30-minute conversation to understand your environment, risks, and compliance obligations. No pressure, all clarity.</p></div></div>
+                <div class="intake-step"><div class="step-num">2</div><div class="step-text"><h4>Tailored Proposal</h4><p>We deliver a written scope of work aligned to your framework, timeline, and budget within 3 business days.</p></div></div>
+                <div class="intake-step"><div class="step-num">3</div><div class="step-text"><h4>90-Day Pilot Launch</h4><p>We begin with inventory, threat mapping, and evidence building — structured, documented, and stakeholder-ready.</p></div></div>
+                <div class="intake-step"><div class="step-num">4</div><div class="step-num" style="background:#059669;">✓</div><div class="step-text"><h4>Validate &amp; Plan Next Wave</h4><p>Measurable outcomes at day 90, with a clear roadmap for your next phase of governance maturity.</p></div></div>
+            </div>
+
+            <div class="card" style="background:linear-gradient(135deg,#0f2557,#1e3a8a);color:white;">
+                <h2 style="color:white;">Why Logical Coders?</h2>
+                <div style="margin-top:1rem;display:flex;flex-direction:column;gap:0.75rem;">
+                    <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">🎯</span><div><strong>Governance-first approach.</strong><span style="color:#93c5fd;"> Structured, auditable, framework-aligned from day one.</span></div></div>
+                    <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">📄</span><div><strong>Documentation you can use.</strong><span style="color:#93c5fd;"> Clear, audit-ready materials your team can actually follow.</span></div></div>
+                    <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">🔒</span><div><strong>Multi-framework expertise.</strong><span style="color:#93c5fd;"> NIST CSF, HIPAA, SOC 2, ISO 27001, FedRAMP.</span></div></div>
+                    <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">📊</span><div><strong>Design clarity.</strong><span style="color:#93c5fd;"> 20 years of design experience applied to compliance documentation.</span></div></div>
+                    <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">🤝</span><div><strong>Embedded support.</strong><span style="color:#93c5fd;"> We work alongside your team, not just hand over a report.</span></div></div>
+                </div>
+                <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.2);font-size:0.85rem;color:#93c5fd;">
+                    Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+                    MS Cybersecurity Management · Purdue Global · ISC2 · ISACA
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<footer>
+    <div>GRC Governance Suite by <span>Logical Coders</span> &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
+    <div style="margin-top:0.5rem;font-size:0.75rem;opacity:0.7;">Frameworks: NIST CSF 2.0 · ISO 27001:2022 · HIPAA · SOC 2 · FedRAMP Moderate · FISMA</div>
+</footer>
+
+<script>
+// NAVIGATION
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const map={dashboard:0,'risk-mapper':1,evidence:2,playbook:3,assistant:4,templates:5,intake:6};
+    if(document.querySelectorAll('.nav-link')[map[id]]) document.querySelectorAll('.nav-link')[map[id]].classList.add('active');
+    updateDashboard(); window.scrollTo(0,0);
+}
+
+// RISK MAPPER
+let risks=[];
+function getRiskLevel(s){if(s<=4)return{level:'Low',cls:'badge-low',cellCls:'cell-low'};if(s<=9)return{level:'Medium',cls:'badge-medium',cellCls:'cell-medium'};if(s<=16)return{level:'High',cls:'badge-high',cellCls:'cell-high'};return{level:'Critical',cls:'badge-critical',cellCls:'cell-critical'};}
+function addRisk(){
+    const asset=document.getElementById('risk-asset').value.trim(),threat=document.getElementById('risk-threat').value.trim();
+    if(!asset||!threat){alert('Please enter both an asset and a threat description.');return;}
+    const l=parseInt(document.getElementById('risk-likelihood').value),i=parseInt(document.getElementById('risk-impact').value);
+    risks.push({id:risks.length+1,asset,threat,likelihood:l,impact:i,score:l*i,owner:document.getElementById('risk-owner').value.trim(),controls:document.getElementById('risk-controls').value.trim()});
+    ['risk-asset','risk-threat','risk-owner','risk-controls'].forEach(id=>document.getElementById(id).value='');
+    renderRiskTable();renderRiskMatrix();updateDashboard();
+}
+function removeRisk(idx){risks.splice(idx,1);risks.forEach((r,i)=>r.id=i+1);renderRiskTable();renderRiskMatrix();updateDashboard();}
+function renderRiskTable(){
+    document.getElementById('risk-table-card').style.display=risks.length?'':'none';
+    document.getElementById('risk-matrix-card').style.display=risks.length?'':'none';
+    document.getElementById('risk-table-body').innerHTML=risks.map((r,i)=>{const rl=getRiskLevel(r.score);return`<tr><td><strong>${r.id}</strong></td><td>${r.asset}</td><td>${r.threat}</td><td style="text-align:center">${r.likelihood}</td><td style="text-align:center">${r.impact}</td><td style="text-align:center"><strong>${r.score}</strong></td><td><span class="badge ${rl.cls}">${rl.level}</span></td><td>${r.owner||'—'}</td><td><button class="btn btn-danger" onclick="removeRisk(${i})">Remove</button></td></tr>`;}).join('');
+}
+function renderRiskMatrix(){
+    const grid=document.getElementById('risk-matrix-grid');grid.innerHTML='';
+    for(let l=5;l>=1;l--){for(let imp=1;imp<=5;imp++){const rl=getRiskLevel(l*imp);const cell=document.createElement('div');cell.style.cssText='height:60px;width:80px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:2px;padding:4px;';cell.className=rl.cellCls;risks.filter(r=>r.likelihood===l&&r.impact===imp).forEach(r=>{const dot=document.createElement('div');dot.className='risk-dot';dot.title=`#${r.id}: ${r.asset} — ${r.threat} (Score: ${r.score})`;dot.textContent=r.id;cell.appendChild(dot);});grid.appendChild(cell);}}
+}
+function exportRisks(){if(!risks.length)return;const h=['#','Asset','Threat','Likelihood','Impact','Score','Level','Owner','Controls'];const rows=risks.map(r=>{const rl=getRiskLevel(r.score);return[r.id,r.asset,r.threat,r.likelihood,r.impact,r.score,rl.level,r.owner,r.controls].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',');});const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent([h.join(','),...rows].join('\n'));a.download='risk_register.csv';a.click();}
+
+// EVIDENCE BUILDER
+const frameworks={
+    nist:{name:'NIST CSF 2.0',controls:[{id:'GV.OC-01',name:'Organizational Context',desc:'The organizational mission is understood and informs cybersecurity risk management decisions.'},{id:'ID.AM-01',name:'Asset Management — Inventory',desc:'Inventories of hardware managed by the organization are maintained and reviewed.'},{id:'PR.AA-01',name:'Identity Management & Authentication',desc:'Identities and credentials for authorized users, services, and hardware are managed.'},{id:'PR.DS-01',name:'Data Security — Protection at Rest',desc:'The confidentiality, integrity, and availability of data-at-rest are protected.'},{id:'DE.CM-01',name:'Continuous Monitoring',desc:'Networks and services are monitored to find potentially adverse events.'}]},
+    iso:{name:'ISO 27001:2022',controls:[{id:'A.5.1',name:'Policies for Information Security',desc:'Information security policies defined, approved, published, and communicated to staff.'},{id:'A.8.3',name:'Information Access Restriction',desc:'Access to information and systems restricted in accordance with access control policy.'},{id:'A.8.5',name:'Secure Authentication',desc:'Secure authentication technologies and procedures implemented across all systems.'},{id:'A.8.15',name:'Logging',desc:'Logs recording activities, exceptions, faults, and events produced, stored, and protected.'},{id:'A.5.24',name:'Incident Management Planning',desc:'Responsibilities and procedures for information security incident management planned.'}]},
+    hipaa:{name:'HIPAA Security Rule',controls:[{id:'§164.308(a)(1)',name:'Security Management Process',desc:'Implement policies to prevent, detect, contain, and correct security violations of ePHI.'},{id:'§164.308(a)(3)',name:'Workforce Authorization',desc:'Implement procedures to authorize workforce access to ePHI based on job function.'},{id:'§164.312(a)(1)',name:'Access Control',desc:'Implement technical policies to allow only authorized persons to access ePHI systems.'},{id:'§164.312(b)',name:'Audit Controls',desc:'Implement hardware, software, and procedural mechanisms to track ePHI system activity.'},{id:'§164.312(e)(1)',name:'Transmission Security',desc:'Implement technical security to guard against unauthorized access to ePHI in transit.'}]},
+    soc2:{name:'SOC 2 (Trust Services)',controls:[{id:'CC6.1',name:'Logical Access Security',desc:'Logical access security software, infrastructure, and architectures implemented to protect data.'},{id:'CC6.2',name:'User Access Provisioning',desc:'Prior to issuing credentials, entities register and authorize users based on role.'},{id:'CC7.2',name:'System Monitoring',desc:'The entity monitors system components for anomalies that may indicate malicious acts.'},{id:'CC9.1',name:'Risk Mitigation Activities',desc:'The entity identifies, selects, and develops risk mitigation activities for identified risks.'},{id:'CC2.2',name:'Internal Communication of Controls',desc:'Internal communication of information necessary to support the functioning of internal controls.'}]},
+    fedramp:{name:'FedRAMP Moderate',controls:[{id:'AC-2',name:'Account Management',desc:'Manage information system accounts: establishing, activating, modifying, reviewing, and removing.'},{id:'AU-2',name:'Audit Events',desc:'Determine events to be audited within the information system on an ongoing basis.'},{id:'IA-2',name:'User Identification & Authentication',desc:'Uniquely identify and authenticate organizational users accessing the information system.'},{id:'SC-28',name:'Protection of Information at Rest',desc:'The information system protects confidentiality and integrity of information at rest.'},{id:'IR-4',name:'Incident Handling',desc:'Implement incident handling capability for security incidents including preparation and analysis.'}]}
+};
+let currentFramework='nist';
+function selectFramework(key,btn){currentFramework=key;document.querySelectorAll('.framework-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderControls();}
+function renderControls(){
+    const fw=frameworks[currentFramework];
+    document.getElementById('controls-container').innerHTML=fw.controls.map((c,i)=>`<div class="control-row"><h4>${c.name}</h4><div class="control-id">${c.id} &mdash; ${fw.name}</div><div class="control-desc">${c.desc}</div><div class="form-row"><div class="form-group"><label>Evidence Description</label><textarea rows="2" placeholder="What evidence exists or will be collected?" onchange="updateEvidenceSummary()"></textarea></div><div class="form-group"><label>Evidence Owner</label><input type="text" placeholder="e.g., IT Manager, CISO" onchange="updateEvidenceSummary()"></div></div><div class="form-row-3"><div class="form-group"><label>Collection Method</label><select onchange="updateEvidenceSummary()"><option value="">Select method</option><option>Inspection (Review document)</option><option>Interview (Question staff)</option><option>Observation (Watch process)</option><option>Re-performance (Test control)</option></select></div><div class="form-group"><label>Frequency</label><select onchange="updateEvidenceSummary()"><option value="">Select frequency</option><option>Continuous</option><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div><div class="form-group"><label>Status</label><select class="status-select" onchange="updateEvidenceSummary()"><option value="">Select status</option><option value="complete">Complete</option><option value="progress">In Progress</option><option value="notstarted">Not Started</option><option value="gap">Gap — Evidence Missing</option></select></div></div></div>`).join('');
+    document.getElementById('evidence-summary').style.display='none';updateDashboard();
+}
+function updateEvidenceSummary(){
+    const selects=document.querySelectorAll('#controls-container .status-select');
+    let counts={complete:0,progress:0,notstarted:0,gap:0};
+    selects.forEach(s=>{if(s.value&&counts[s.value]!==undefined)counts[s.value]++;});
+    const total=Object.values(counts).reduce((a,b)=>a+b,0);if(!total)return;
+    document.getElementById('evidence-summary').style.display='';
+    document.getElementById('evidence-stats').innerHTML=`<span class="badge badge-complete" style="font-size:0.85rem;padding:0.4rem 1rem;">✓ Complete: ${counts.complete}</span><span class="badge badge-progress" style="font-size:0.85rem;padding:0.4rem 1rem;">⟳ In Progress: ${counts.progress}</span><span class="badge badge-notstarted" style="font-size:0.85rem;padding:0.4rem 1rem;">○ Not Started: ${counts.notstarted}</span><span class="badge badge-gap" style="font-size:0.85rem;padding:0.4rem 1rem;">⚠ Gaps: ${counts.gap}</span>`;
+    updateDashboard();
+}
+
+// PLAYBOOK
+function updateProgress(){
+    const boxes=document.querySelectorAll('#playbook input[type="checkbox"]');
+    const checked=Array.from(boxes).filter(c=>c.checked).length;
+    const pct=Math.round((checked/boxes.length)*100);
+    document.getElementById('progress-bar').style.width=pct+'%';
+    document.getElementById('progress-pct').textContent=`${pct}% complete (${checked}/${boxes.length} tasks)`;
+    boxes.forEach(cb=>{cb.closest('.task-item').classList.toggle('checked',cb.checked);});
+    updateDashboard();
+}
+
+// DASHBOARD
+function updateDashboard(){
+    document.getElementById('dash-risks').textContent=risks.length;
+    const boxes=document.querySelectorAll('#playbook input[type="checkbox"]');
+    const checked=Array.from(boxes).filter(c=>c.checked).length;
+    document.getElementById('dash-progress').textContent=boxes.length?Math.round((checked/boxes.length)*100)+'%':'0%';
+    const tracked=Array.from(document.querySelectorAll('#controls-container .status-select')).filter(s=>s.value).length;
+    document.getElementById('dash-controls').textContent=tracked;
+}
+
+// CHATBOT
+const responses={
+    healthcare:`For a small healthcare organization, start with <strong>HIPAA Security Rule</strong> — it is legally required.<br><br>Recommended layered approach:<br>• <strong>HIPAA</strong> → Required baseline for PHI protection<br>• <strong>NIST CSF 2.0</strong> → Structure your overall security program<br>• <strong>HICP</strong> → Practical implementation guidance<br><br>Top 3 controls to start: Access Control (§164.312(a)(1)), Audit Controls (§164.312(b)), and Security Risk Analysis (§164.308(a)(1)).`,
+    top5:`The top 5 controls to implement first:<br><br>1. <strong>Access Control</strong> — Least privilege, MFA, account management<br>2. <strong>Asset Inventory</strong> — You cannot protect what you do not know exists<br>3. <strong>Patch Management</strong> — Unpatched systems are the #1 exploit vector<br>4. <strong>Security Logging &amp; Monitoring</strong> — Detect threats before they become incidents<br>5. <strong>Incident Response Plan</strong> — A tested plan reduces breach damage by 60–70%<br><br>Use the Evidence Builder to define what evidence looks like for each.`,
+    access:`Evidence for access control includes:<br><br><strong>Documentation:</strong> Access control policy, user access request forms, quarterly review reports, termination checklists<br><br><strong>Technical:</strong> Role-based permission screenshots, MFA enrollment reports, IAM exports, privileged access logs<br><br>Collection method: Inspection + Observation &nbsp;|&nbsp; Frequency: Quarterly reviews, continuous logging`,
+    risk:`Risk scoring: <strong>Risk Score = Likelihood × Impact</strong><br><br><strong>Likelihood (1–5):</strong> 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain<br><strong>Impact (1–5):</strong> 1=Negligible, 3=Moderate, 5=Catastrophic<br><br><strong>Levels:</strong> 1–4 Low &nbsp;·&nbsp; 5–9 Medium &nbsp;·&nbsp; 10–16 High &nbsp;·&nbsp; 17–25 Critical<br><br>Use the Threat Risk Mapper to score and visualize automatically.`,
+    register:`A risk register should include:<br><br>• <strong>Risk ID</strong> (R001, R002...)<br>• <strong>Asset/System</strong> — what is at risk<br>• <strong>Threat</strong> — what could go wrong<br>• <strong>Likelihood &amp; Impact</strong> — scored 1–5<br>• <strong>Risk Score</strong> — L × I<br>• <strong>Risk Level</strong> — Low/Medium/High/Critical<br>• <strong>Current Controls</strong><br>• <strong>Risk Owner</strong><br>• <strong>Treatment</strong> — Accept/Mitigate/Transfer/Avoid<br>• <strong>Review Date</strong>`,
+    executive:`To explain GRC to an executive:<br><br><strong>"GRC is how we make sure we follow the rules, know what could go wrong, and are prepared when something does."</strong><br><br>• Governance = Who decides how we handle security?<br>• Risk = What are our biggest threats?<br>• Compliance = Are we meeting our legal obligations?<br><br><strong>Business case:</strong> Average breach cost in 2024: $4.88M. Organizations with formal GRC reduce breach costs by 40%.`,
+    soc2:`<strong>SOC 2 vs ISO 27001:</strong><br><br><strong>SOC 2:</strong> AICPA (US) · Audit report, not certification · Flexible scope · Best for US SaaS · 6–12 month audit<br><br><strong>ISO 27001:</strong> International standard · Formal certification · Full ISMS · Best for global clients · Ongoing cycle<br><br>US SaaS clients → Start with <strong>SOC 2 Type I</strong><br>International/enterprise → <strong>ISO 27001</strong><br>Both → ISO 27001 first maps well to SOC 2`,
+    hipaa:`<strong>HIPAA Evidence — Top 5:</strong><br><br>1. <strong>Risk Analysis (§164.308(a)(1))</strong> — Written, dated, signed annually<br>2. <strong>Access Control (§164.312(a)(1))</strong> — Unique user IDs, logoff, encryption docs<br>3. <strong>Audit Controls (§164.312(b))</strong> — System logs, 6-year retention<br>4. <strong>Training (§164.308(a)(5))</strong> — Attendance records, completion dates<br>5. <strong>Breach Notification (§164.404)</strong> — Breach log, HHS reports, notification letters<br><br><strong>Key rule:</strong> All HIPAA policies retained for <strong>6 years</strong>.`
+};
+function getResponse(msg){
+    const m=msg.toLowerCase();
+    if(m.includes('healthcare')||(m.includes('hipaa')&&m.includes('framework')))return responses.healthcare;
+    if(m.includes('top 5')||(m.includes('first')&&m.includes('control')))return responses.top5;
+    if(m.includes('access control')||(m.includes('evidence')&&m.includes('access')))return responses.access;
+    if(m.includes('score')||m.includes('likelihood')||m.includes('how do i score'))return responses.risk;
+    if(m.includes('risk register'))return responses.register;
+    if(m.includes('executive')||m.includes('non-technical')||m.includes('explain'))return responses.executive;
+    if(m.includes('soc 2')||m.includes('iso 27001')||m.includes('difference'))return responses.soc2;
+    if(m.includes('hipaa')&&(m.includes('evidence')||m.includes('compliance')))return responses.hipaa;
+    return`Great question about <strong>"${msg}"</strong>.<br><br>For a tailored answer, use the tools above — or contact <strong>Anél Henning</strong> directly:<br>logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661`;
+}
+function addMessage(text,isUser){
+    const msgs=document.getElementById('chat-messages');
+    const div=document.createElement('div');div.className=`message ${isUser?'user':'bot'}`;
+    div.innerHTML=`<div class="message-avatar ${isUser?'user-avatar':'bot-avatar'}">${isUser?'👤':'🛡️'}</div><div class="message-bubble">${text}</div>`;
+    msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+function sendMessage(){const input=document.getElementById('chat-input');const msg=input.value.trim();if(!msg)return;addMessage(msg,true);input.value='';setTimeout(()=>addMessage(getResponse(msg),false),500);}
+function askQuestion(q){document.getElementById('chat-input').value=q;sendMessage();}
+
+// INTAKE FORM
+function submitIntake(){
+    const first=document.getElementById('f-firstname').value.trim();
+    const last=document.getElementById('f-lastname').value.trim();
+    const email=document.getElementById('f-email').value.trim();
+    const org=document.getElementById('f-org').value.trim();
+    const industry=document.getElementById('f-industry').value;
+    const challenge=document.getElementById('f-challenge').value;
+    if(!first||!last||!email||!org||!industry||!challenge){alert('Please complete all required fields (marked with *).');return;}
+    if(!email.includes('@')){alert('Please enter a valid email address.');return;}
+    document.getElementById('intake-form').style.display='none';
+    document.getElementById('success-box').style.display='block';
+    window.scrollTo(0,0);
+}
+
+// INIT
+renderControls();updateProgress();updateDashboard();
+</script>
+</body>
+</html>

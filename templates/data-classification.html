@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data Classification Policy | Logical Coders GRC Suite</title>
+<style>
+  @media print{.no-print{display:none;}body{margin:0;}}
+  body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;line-height:1.6;}
+  h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+  h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+  .subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+  .meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+  .meta-item input{border:none;border-bottom:1px solid #cbd5e1;width:100%;font-size:10pt;font-family:Arial;padding:2px 0;background:transparent;}
+  table{width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:16px;}
+  th{background:#0f2557;color:white;padding:8px 10px;text-align:left;font-size:8pt;text-transform:uppercase;}
+  td{padding:8px 10px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+  tr:nth-child(even) td{background:#f8fafc;}
+  .tier-public{background:#dcfce7;color:#166534;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:9pt;}
+  .tier-internal{background:#dbeafe;color:#1e40af;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:9pt;}
+  .tier-confidential{background:#fef9c3;color:#854d0e;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:9pt;}
+  .tier-restricted{background:#fecaca;color:#991b1b;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:9pt;}
+  .matrix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+  .matrix-card{border-radius:10px;padding:14px;border-top:5px solid;}
+  .card-public{background:#f0fdf4;border-color:#16a34a;}
+  .card-internal{background:#eff6ff;border-color:#2563eb;}
+  .card-confidential{background:#fffbeb;border-color:#d97706;}
+  .card-restricted{background:#fef2f2;border-color:#dc2626;}
+  .card-title{font-weight:bold;font-size:11pt;margin-bottom:6px;}
+  .card-examples{font-size:8.5pt;color:#64748b;margin-bottom:8px;}
+  .card-req{font-size:8.5pt;line-height:1.5;}
+  input[type="text"],textarea{border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;font-family:Arial;font-size:9pt;width:100%;}
+  .approval-box{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:20px;background:#f8fafc;}
+  .sig-line{border-bottom:1px solid #1e293b;height:40px;margin-bottom:4px;}
+  .footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+  .btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;font-family:Arial;margin-right:8px;margin-bottom:16px;}
+</style>
+</head>
+<body>
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — Data Classification Policy</span>
+  <div>
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" style="background:white;color:#0f2557;" onclick="window.history.back()">← Back</button>
+  </div>
+</div>
+
+<h1>Data Classification Policy</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Aligned: HIPAA · ISO 27001 A.5.12 · NIST CSF PR.DS · FedRAMP</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><input type="text" placeholder="Company name"></div>
+  <div class="meta-item"><label>Policy Owner</label><input type="text" placeholder="CISO / Compliance Officer"></div>
+  <div class="meta-item"><label>Version</label><input type="text" placeholder="1.0"></div>
+  <div class="meta-item"><label>Effective Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Review Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Approved By</label><input type="text" placeholder="Name / Title"></div>
+</div>
+
+<h2>1. Purpose</h2>
+<p>This policy establishes a framework for classifying organizational data based on sensitivity and regulatory requirements, and defines handling requirements for each classification tier to ensure appropriate protection.</p>
+
+<h2>2. Classification Tiers</h2>
+<div class="matrix-grid">
+  <div class="matrix-card card-public">
+    <div class="card-title" style="color:#15803d;">🟢 Public</div>
+    <div class="card-examples"><strong>Examples:</strong> Website content, press releases, marketing materials, published reports</div>
+    <div class="card-req"><strong>Requirements:</strong> No access restrictions. May be freely shared internally and externally.</div>
+  </div>
+  <div class="matrix-card card-internal">
+    <div class="card-title" style="color:#1d4ed8;">🔵 Internal</div>
+    <div class="card-examples"><strong>Examples:</strong> Policies, procedures, org charts, internal memos, meeting notes</div>
+    <div class="card-req"><strong>Requirements:</strong> Not for external distribution without approval. Store on internal systems only.</div>
+  </div>
+  <div class="matrix-card card-confidential">
+    <div class="card-title" style="color:#b45309;">🟡 Confidential</div>
+    <div class="card-examples"><strong>Examples:</strong> Employee records, contracts, financial data, vendor agreements, audit reports</div>
+    <div class="card-req"><strong>Requirements:</strong> Encrypt in transit and at rest. Limit access to authorized roles. Log access.</div>
+  </div>
+  <div class="matrix-card card-restricted">
+    <div class="card-title" style="color:#991b1b;">🔴 Restricted</div>
+    <div class="card-examples"><strong>Examples:</strong> PHI, PII, passwords, encryption keys, cardholder data, SSNs</div>
+    <div class="card-req"><strong>Requirements:</strong> Strict need-to-know. Encrypt always. Audit all access. Regulatory requirements apply.</div>
+  </div>
+</div>
+
+<h2>3. Handling Requirements by Tier</h2>
+<table>
+  <thead>
+    <tr><th>Requirement</th><th><span class="tier-public">Public</span></th><th><span class="tier-internal">Internal</span></th><th><span class="tier-confidential">Confidential</span></th><th><span class="tier-restricted">Restricted</span></th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Encryption at rest</strong></td><td>Not required</td><td>Recommended</td><td>Required</td><td>Required (AES-256)</td></tr>
+    <tr><td><strong>Encryption in transit</strong></td><td>Not required</td><td>Recommended</td><td>Required (TLS 1.2+)</td><td>Required (TLS 1.3)</td></tr>
+    <tr><td><strong>Access control</strong></td><td>Open</td><td>Employees only</td><td>Role-based</td><td>Strict need-to-know</td></tr>
+    <tr><td><strong>Access logging</strong></td><td>Not required</td><td>Recommended</td><td>Required</td><td>Required + reviewed</td></tr>
+    <tr><td><strong>Email transmission</strong></td><td>Allowed</td><td>Internal email only</td><td>Encrypted email only</td><td>Prohibited via standard email</td></tr>
+    <tr><td><strong>Cloud storage</strong></td><td>Any approved tool</td><td>Approved tools only</td><td>Approved + encrypted</td><td>Approved + encrypted + MFA</td></tr>
+    <tr><td><strong>Retention period</strong></td><td><input type="text" placeholder="e.g., 1 year"></td><td><input type="text" placeholder="e.g., 3 years"></td><td><input type="text" placeholder="e.g., 7 years"></td><td><input type="text" placeholder="Per regulation (HIPAA: 6 yr)"></td></tr>
+    <tr><td><strong>Disposal method</strong></td><td>Standard deletion</td><td>Secure delete</td><td>Secure delete + log</td><td>DoD 5220.22-M wipe or shred</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Data Inventory</h2>
+<table>
+  <thead><tr><th>Data Type</th><th>Classification</th><th>Location / System</th><th>Owner</th><th>Regulation</th><th>Retention</th></tr></thead>
+  <tbody>
+    <tr><td><input type="text" placeholder="e.g., Patient records"></td>
+        <td><select style="width:auto;"><option>Public</option><option>Internal</option><option>Confidential</option><option selected>Restricted</option></select></td>
+        <td><input type="text" placeholder="System / folder"></td>
+        <td><input type="text" placeholder="Owner name"></td>
+        <td><input type="text" placeholder="HIPAA / PCI / GDPR"></td>
+        <td><input type="text" placeholder="6 years"></td></tr>
+    <tr><td><input type="text"></td>
+        <td><select style="width:auto;"><option>Public</option><option>Internal</option><option selected>Confidential</option><option>Restricted</option></select></td>
+        <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td><input type="text"></td>
+        <td><select style="width:auto;"><option>Public</option><option selected>Internal</option><option>Confidential</option><option>Restricted</option></select></td>
+        <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td><input type="text"></td>
+        <td><select style="width:auto;"><option>Public</option><option>Internal</option><option>Confidential</option><option>Restricted</option></select></td>
+        <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<h2>5. Roles &amp; Responsibilities</h2>
+<table>
+  <thead><tr><th>Role</th><th>Responsibility</th><th>Assigned To</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Data Owner</strong></td><td>Classify data, approve access, ensure proper handling</td><td><input type="text" placeholder="Name / Department"></td></tr>
+    <tr><td><strong>Data Custodian</strong></td><td>Implement controls, maintain storage, perform backups</td><td><input type="text" placeholder="IT Manager / System Admin"></td></tr>
+    <tr><td><strong>Compliance Officer</strong></td><td>Monitor compliance, conduct audits, update policy</td><td><input type="text" placeholder="Name / Title"></td></tr>
+    <tr><td><strong>All Staff</strong></td><td>Handle data per classification, report violations</td><td>All employees and contractors</td></tr>
+  </tbody>
+</table>
+
+<div class="approval-box">
+  <h2 style="margin-top:0;">Approval</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;">
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Policy Owner — Name &amp; Title</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Executive Approver — Name &amp; Title</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  </div>
+</div>
+
+<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+Aligned: ISO 27001 A.5.12 · NIST CSF PR.DS-01 · HIPAA §164.312(a)(1) · FedRAMP SC-28 &nbsp;|&nbsp; Review annually or upon significant data environment change.</div>
+</body></html>

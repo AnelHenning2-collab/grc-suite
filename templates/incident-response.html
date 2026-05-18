@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Incident Response Plan | Logical Coders GRC Suite</title>
+<style>
+  @media print{.no-print{display:none;}body{margin:0;}}
+  body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;}
+  h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+  h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+  h3{color:#374151;font-size:11pt;margin:14px 0 6px;}
+  .subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+  .meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+  .meta-item input{border:none;border-bottom:1px solid #cbd5e1;width:100%;font-size:10pt;font-family:Arial;padding:2px 0;background:transparent;}
+  .phase-box{border-radius:8px;padding:14px;margin-bottom:14px;border-left:5px solid;}
+  .phase-1{background:#eff6ff;border-color:#2563eb;}
+  .phase-2{background:#fef3c7;border-color:#d97706;}
+  .phase-3{background:#fef2f2;border-color:#dc2626;}
+  .phase-4{background:#f0fdf4;border-color:#16a34a;}
+  .phase-5{background:#f5f3ff;border-color:#7c3aed;}
+  .phase-6{background:#f8fafc;border-color:#64748b;}
+  .phase-label{font-size:8pt;font-weight:bold;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .phase-title{font-size:12pt;font-weight:bold;color:#0f2557;margin-bottom:8px;}
+  table{width:100%;border-collapse:collapse;font-size:9pt;margin-bottom:12px;}
+  th{background:#0f2557;color:white;padding:6px 8px;text-align:left;font-size:8pt;text-transform:uppercase;}
+  td{padding:6px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+  input[type="text"],textarea{border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;font-family:Arial;font-size:9pt;width:100%;}
+  textarea{resize:none;height:36px;}
+  .checklist-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:9.5pt;}
+  .checklist-item:last-child{border-bottom:none;}
+  .checklist-item input[type="checkbox"]{margin-top:2px;flex-shrink:0;}
+  .severity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;}
+  .sev-card{border-radius:6px;padding:10px;text-align:center;font-size:9pt;}
+  .sev-1{background:#dcfce7;}.sev-2{background:#fef9c3;}.sev-3{background:#fed7aa;}.sev-4{background:#fecaca;}
+  .sev-title{font-weight:bold;font-size:10pt;margin-bottom:4px;}
+  .contact-table td:first-child{font-weight:bold;width:120px;color:#0f2557;}
+  .footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+  .btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;font-family:Arial;margin-right:8px;margin-bottom:16px;}
+</style>
+</head>
+<body>
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — Incident Response Plan</span>
+  <div>
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" style="background:white;color:#0f2557;" onclick="window.history.back()">← Back</button>
+  </div>
+</div>
+
+<h1>Incident Response Plan</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Template v1.0 &nbsp;|&nbsp; Aligned: NIST 800-61 · HIPAA · SOC 2</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><input type="text" placeholder="Company name"></div>
+  <div class="meta-item"><label>Plan Owner</label><input type="text" placeholder="CISO / IT Manager"></div>
+  <div class="meta-item"><label>Version</label><input type="text" placeholder="1.0"></div>
+  <div class="meta-item"><label>Effective Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Review Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Approved By</label><input type="text" placeholder="Name / Title"></div>
+</div>
+
+<h2>Incident Severity Levels</h2>
+<div class="severity-grid">
+  <div class="sev-card sev-4"><div class="sev-title">SEV 1 — Critical</div>Active breach, ransomware, PHI exposure, system-wide outage. Respond immediately.</div>
+  <div class="sev-card sev-3"><div class="sev-title">SEV 2 — High</div>Suspected breach, privileged account compromise, major service disruption.</div>
+  <div class="sev-card sev-2"><div class="sev-title">SEV 3 — Medium</div>Policy violation, malware on isolated system, failed phishing attempt.</div>
+  <div class="sev-card sev-1"><div class="sev-title">SEV 4 — Low</div>Suspicious activity, minor policy violation, unconfirmed alert.</div>
+</div>
+
+<h2>Incident Response Team — Contacts</h2>
+<table class="contact-table">
+  <thead><tr><th>Role</th><th>Name</th><th>Phone</th><th>Email</th><th>Backup</th></tr></thead>
+  <tbody>
+    <tr><td>Incident Commander</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>IT Lead</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Legal / Compliance</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Communications / PR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Executive Sponsor</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<h2>Response Phases</h2>
+
+<div class="phase-box phase-1">
+  <div class="phase-label" style="color:#1d4ed8;">Phase 1</div>
+  <div class="phase-title">Preparation</div>
+  <div class="checklist-item"><input type="checkbox"><span>Incident response team identified and trained</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Contact list maintained and tested quarterly</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Logging and monitoring tools configured and active</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Backup and recovery procedures documented and tested</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Tabletop exercise conducted within last 12 months</span></div>
+</div>
+
+<div class="phase-box phase-2">
+  <div class="phase-label" style="color:#b45309;">Phase 2</div>
+  <div class="phase-title">Detection &amp; Analysis</div>
+  <table><thead><tr><th>Field</th><th>Entry</th></tr></thead>
+  <tbody>
+    <tr><td style="width:200px;font-weight:bold;">Incident ID</td><td><input type="text" placeholder="INC-2026-001"></td></tr>
+    <tr><td style="font-weight:bold;">Date / Time Detected</td><td><input type="text" placeholder="MM/DD/YYYY HH:MM"></td></tr>
+    <tr><td style="font-weight:bold;">Detected By</td><td><input type="text" placeholder="Name or system"></td></tr>
+    <tr><td style="font-weight:bold;">Detection Method</td><td><input type="text" placeholder="Alert / User report / Audit log / External notification"></td></tr>
+    <tr><td style="font-weight:bold;">Systems Affected</td><td><input type="text" placeholder="List affected systems"></td></tr>
+    <tr><td style="font-weight:bold;">Severity Level</td><td><input type="text" placeholder="SEV 1 / SEV 2 / SEV 3 / SEV 4"></td></tr>
+    <tr><td style="font-weight:bold;">Initial Description</td><td><textarea placeholder="Describe what was observed"></textarea></td></tr>
+  </tbody></table>
+</div>
+
+<div class="phase-box phase-3">
+  <div class="phase-label" style="color:#b91c1c;">Phase 3</div>
+  <div class="phase-title">Containment</div>
+  <div class="checklist-item"><input type="checkbox"><span>Incident Commander notified and assumes lead</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Affected systems isolated from network</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Compromised accounts disabled or password reset</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Evidence preserved (logs, screenshots, disk images)</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Legal / compliance notified if PHI or PII involved</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Containment actions documented with timestamps</span></div>
+  <h3>Containment Actions Log</h3>
+  <table><thead><tr><th>Timestamp</th><th>Action Taken</th><th>By Whom</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+  </tbody></table>
+</div>
+
+<div class="phase-box phase-4">
+  <div class="phase-label" style="color:#15803d;">Phase 4</div>
+  <div class="phase-title">Eradication &amp; Recovery</div>
+  <div class="checklist-item"><input type="checkbox"><span>Root cause identified and documented</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Malware removed / vulnerability patched</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Systems restored from clean backup</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Systems returned to production with monitoring</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Recovery verified and tested by IT lead</span></div>
+  <table style="margin-top:10px;"><thead><tr><th>Field</th><th>Entry</th></tr></thead>
+  <tbody>
+    <tr><td style="width:200px;font-weight:bold;">Root Cause</td><td><textarea placeholder="Describe root cause"></textarea></td></tr>
+    <tr><td style="font-weight:bold;">Recovery Date / Time</td><td><input type="text" placeholder="MM/DD/YYYY HH:MM"></td></tr>
+    <tr><td style="font-weight:bold;">Total Downtime</td><td><input type="text" placeholder="e.g., 4 hours 22 minutes"></td></tr>
+  </tbody></table>
+</div>
+
+<div class="phase-box phase-5">
+  <div class="phase-label" style="color:#6d28d9;">Phase 5</div>
+  <div class="phase-title">Notification &amp; Reporting</div>
+  <table><thead><tr><th>Notification Required</th><th>Required?</th><th>Deadline</th><th>Sent By</th><th>Date Sent</th></tr></thead>
+  <tbody>
+    <tr><td>HHS / OCR (HIPAA breach &gt;500 individuals)</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>TBD</option></select></td><td>60 days</td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Affected individuals (HIPAA)</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>TBD</option></select></td><td>60 days</td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>State attorney general</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>TBD</option></select></td><td>Per state law</td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Cyber insurance carrier</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>TBD</option></select></td><td>Per policy</td><td><input type="text"></td><td><input type="text"></td></tr>
+    <tr><td>Business partners / BAAs</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>TBD</option></select></td><td>As required</td><td><input type="text"></td><td><input type="text"></td></tr>
+  </tbody></table>
+</div>
+
+<div class="phase-box phase-6">
+  <div class="phase-label" style="color:#475569;">Phase 6</div>
+  <div class="phase-title">Post-Incident Review (Complete within 2 weeks)</div>
+  <div class="checklist-item"><input type="checkbox"><span>Post-incident meeting held with all response team members</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Incident timeline documented from detection to recovery</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Lessons learned documented</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>IRP updated based on findings</span></div>
+  <div class="checklist-item"><input type="checkbox"><span>Corrective action plan created and assigned</span></div>
+  <table style="margin-top:10px;"><thead><tr><th>Field</th><th>Entry</th></tr></thead>
+  <tbody>
+    <tr><td style="width:200px;font-weight:bold;">Lessons Learned</td><td><textarea placeholder="What worked? What failed? What needs to change?" style="height:60px;"></textarea></td></tr>
+    <tr><td style="font-weight:bold;">Corrective Actions</td><td><textarea placeholder="List specific actions, owners, and due dates" style="height:60px;"></textarea></td></tr>
+    <tr><td style="font-weight:bold;">IRP Updated?</td><td><select style="width:auto;"><option>Yes</option><option>No</option><option>In Progress</option></select></td></tr>
+  </tbody></table>
+</div>
+
+<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+Aligned with NIST SP 800-61 Rev. 2 · HIPAA §164.308(a)(6) · SOC 2 CC7.3 &nbsp;|&nbsp; Review annually and after every SEV 1 or SEV 2 incident.</div>
+</body></html>

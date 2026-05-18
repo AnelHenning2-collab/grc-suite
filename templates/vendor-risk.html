@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vendor Risk Assessment | Logical Coders GRC Suite</title>
+<style>
+  @media print{.no-print{display:none;}body{margin:0;}}
+  body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;}
+  h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+  h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+  .subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+  .meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+  .meta-item input,.meta-item select{border:none;border-bottom:1px solid #cbd5e1;width:100%;font-size:10pt;font-family:Arial;padding:2px 0;background:transparent;}
+  table{width:100%;border-collapse:collapse;font-size:9pt;margin-bottom:16px;}
+  th{background:#0f2557;color:white;padding:7px 8px;text-align:left;font-size:8pt;text-transform:uppercase;}
+  td{padding:7px 8px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+  tr:nth-child(even) td{background:#f8fafc;}
+  input[type="text"],select,textarea{border:1px solid #cbd5e1;border-radius:4px;padding:4px 6px;font-family:Arial;font-size:9pt;width:100%;}
+  textarea{resize:none;height:36px;}
+  .q-row td:first-child{font-weight:600;color:#374151;width:55%;}
+  .risk-score{text-align:center;font-weight:bold;}
+  .footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+  .btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;font-family:Arial;margin-right:8px;margin-bottom:16px;}
+  .section-label{background:#f1f5f9;padding:6px 10px;font-weight:bold;font-size:9.5pt;color:#0f2557;border-left:4px solid #2563eb;margin:12px 0 6px;}
+</style>
+</head>
+<body>
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — Vendor Risk Assessment</span>
+  <div>
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn" style="background:white;color:#0f2557;" onclick="window.history.back()">← Back</button>
+  </div>
+</div>
+<h1>Vendor Risk Assessment Questionnaire</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Aligned: SOC 2 · ISO 27001 · HIPAA BAA</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Vendor Name</label><input type="text" placeholder="Vendor / supplier name"></div>
+  <div class="meta-item"><label>Service Provided</label><input type="text" placeholder="e.g., Cloud storage, HR software"></div>
+  <div class="meta-item"><label>Assessment Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Assessed By</label><input type="text" placeholder="Your name / team"></div>
+  <div class="meta-item"><label>Vendor Contact</label><input type="text" placeholder="Name and email"></div>
+  <div class="meta-item"><label>Overall Risk Rating</label><select><option>Select</option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></div>
+</div>
+
+<div class="section-label">Section 1 — Company &amp; Contract Information</div>
+<table>
+  <thead><tr><th>Question</th><th>Vendor Response</th><th>Rating (1–5)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr class="q-row"><td>Does the vendor have a documented information security policy?</td><td><select><option>Yes</option><option>No</option><option>Partial</option><option>Unknown</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Is the vendor willing to sign a Business Associate Agreement (BAA) if handling PHI?</td><td><select><option>Yes</option><option>No</option><option>N/A</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>What data types does this vendor access, store, or process on our behalf?</td><td><input type="text" placeholder="PHI / PII / Financial / Confidential / Public"></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Does the vendor have cyber liability insurance? Minimum coverage?</td><td><input type="text" placeholder="Yes/No + amount"></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<div class="section-label">Section 2 — Access Control &amp; Authentication</div>
+<table>
+  <thead><tr><th>Question</th><th>Vendor Response</th><th>Rating (1–5)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr class="q-row"><td>Does the vendor enforce multi-factor authentication (MFA) for all users?</td><td><select><option>Yes</option><option>No</option><option>Partial</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Does the vendor use role-based access control (RBAC) and least privilege?</td><td><select><option>Yes</option><option>No</option><option>Partial</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>How often does the vendor review and recertify user access?</td><td><select><option>Quarterly</option><option>Semi-Annual</option><option>Annual</option><option>Ad hoc</option><option>Never</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<div class="section-label">Section 3 — Data Protection &amp; Encryption</div>
+<table>
+  <thead><tr><th>Question</th><th>Vendor Response</th><th>Rating (1–5)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr class="q-row"><td>Is data encrypted at rest? What standard (AES-256 or equivalent)?</td><td><input type="text" placeholder="Yes/No + standard used"></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Is data encrypted in transit? (TLS 1.2 or higher?)</td><td><select><option>Yes — TLS 1.3</option><option>Yes — TLS 1.2</option><option>No</option><option>Unknown</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Where is our data stored (country / region / cloud provider)?</td><td><input type="text" placeholder="e.g., US-East, AWS, Azure"></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>What is the vendor's data retention and secure deletion policy?</td><td><textarea placeholder="Describe retention period and deletion method"></textarea></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<div class="section-label">Section 4 — Compliance &amp; Certifications</div>
+<table>
+  <thead><tr><th>Certification / Standard</th><th>Current?</th><th>Expiry / Last Audit</th><th>Evidence Provided</th></tr></thead>
+  <tbody>
+    <tr><td>SOC 2 Type II</td><td><select><option>Yes</option><option>No</option><option>In Progress</option></select></td><td><input type="text" placeholder="MM/YYYY"></td><td><select><option>Yes</option><option>No</option><option>Requested</option></select></td></tr>
+    <tr><td>ISO 27001</td><td><select><option>Yes</option><option>No</option><option>In Progress</option></select></td><td><input type="text" placeholder="MM/YYYY"></td><td><select><option>Yes</option><option>No</option><option>Requested</option></select></td></tr>
+    <tr><td>HIPAA Compliance</td><td><select><option>Yes</option><option>No</option><option>N/A</option></select></td><td><input type="text" placeholder="MM/YYYY"></td><td><select><option>Yes</option><option>No</option><option>Requested</option></select></td></tr>
+    <tr><td>PCI DSS</td><td><select><option>Yes</option><option>No</option><option>N/A</option></select></td><td><input type="text" placeholder="MM/YYYY"></td><td><select><option>Yes</option><option>No</option><option>Requested</option></select></td></tr>
+    <tr><td>FedRAMP</td><td><select><option>Yes</option><option>No</option><option>N/A</option></select></td><td><input type="text" placeholder="MM/YYYY"></td><td><select><option>Yes</option><option>No</option><option>Requested</option></select></td></tr>
+  </tbody>
+</table>
+
+<div class="section-label">Section 5 — Incident Response &amp; Breach Notification</div>
+<table>
+  <thead><tr><th>Question</th><th>Vendor Response</th><th>Rating (1–5)</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr class="q-row"><td>Does the vendor have a documented incident response plan?</td><td><select><option>Yes</option><option>No</option><option>In progress</option></select></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Within what timeframe will the vendor notify us of a breach?</td><td><input type="text" placeholder="e.g., 24 hours / 72 hours / per contract"></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+    <tr class="q-row"><td>Has the vendor experienced a security breach in the last 3 years? Describe.</td><td><textarea placeholder="Yes/No — if yes, describe"></textarea></td><td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td><td><input type="text"></td></tr>
+  </tbody>
+</table>
+
+<div class="section-label">Assessment Decision</div>
+<table>
+  <thead><tr><th>Field</th><th>Entry</th></tr></thead>
+  <tbody>
+    <tr><td style="width:200px;font-weight:bold;">Overall Risk Rating</td><td><select style="width:auto;"><option>Low</option><option>Medium</option><option>High</option><option>Critical — Do Not Use</option></select></td></tr>
+    <tr><td style="font-weight:bold;">Decision</td><td><select style="width:auto;"><option>Approved</option><option>Approved with Conditions</option><option>Rejected</option><option>Under Review</option></select></td></tr>
+    <tr><td style="font-weight:bold;">Conditions / Remediation Required</td><td><textarea placeholder="List any conditions that must be met before approval"></textarea></td></tr>
+    <tr><td style="font-weight:bold;">Next Review Date</td><td><input type="text" placeholder="MM/DD/YYYY (recommend: annual)"></td></tr>
+    <tr><td style="font-weight:bold;">Approved By</td><td><input type="text" placeholder="Name and title"></td></tr>
+  </tbody>
+</table>
+
+<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+Aligned: SOC 2 CC9.2 · ISO 27001 A.5.19 · HIPAA §164.308(b)(1) &nbsp;|&nbsp; Review all vendor assessments annually or upon contract renewal.</div>
+</body></html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Risk Register | Logical Coders GRC Suite</title>
+<style>
+  @media print { .no-print { display:none; } body { margin:0; } }
+  body { font-family: Arial, sans-serif; font-size: 11pt; color: #1e293b; margin: 2cm; }
+  h1 { color: #0f2557; font-size: 18pt; margin-bottom: 4px; }
+  .subtitle { color: #64748b; font-size: 10pt; margin-bottom: 16px; }
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; background: #f8fafc; }
+  .meta-item label { font-size: 8pt; font-weight: bold; color: #64748b; text-transform: uppercase; display: block; margin-bottom: 2px; }
+  .meta-item input { border: none; border-bottom: 1px solid #cbd5e1; width: 100%; font-size: 10pt; font-family: Arial; padding: 2px 0; background: transparent; }
+  table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  th { background: #0f2557; color: white; padding: 7px 8px; text-align: left; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 7px 8px; border-bottom: 1px solid #e2e8f0; vertical-align: top; min-height: 28px; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .risk-id { font-weight: bold; color: #0f2557; width: 40px; }
+  .score-low { background: #dcfce7; color: #166534; font-weight: bold; text-align: center; border-radius: 4px; padding: 2px 6px; }
+  .score-medium { background: #fef9c3; color: #854d0e; font-weight: bold; text-align: center; border-radius: 4px; padding: 2px 6px; }
+  .score-high { background: #fed7aa; color: #9a3412; font-weight: bold; text-align: center; border-radius: 4px; padding: 2px 6px; }
+  .score-critical { background: #fecaca; color: #991b1b; font-weight: bold; text-align: center; border-radius: 4px; padding: 2px 6px; }
+  .legend { display: flex; gap: 16px; margin-top: 16px; font-size: 8.5pt; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 3px; }
+  .footer-note { margin-top: 20px; font-size: 8pt; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+  .btn { background: #2563eb; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 10pt; font-family: Arial; margin-right: 8px; margin-bottom: 16px; }
+  .btn-outline { background: white; color: #0f2557; border: 1px solid #0f2557; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 10pt; font-family: Arial; margin-right: 8px; margin-bottom: 16px; }
+  input[type="text"], select, textarea { border: 1px solid #cbd5e1; border-radius: 4px; padding: 4px 6px; font-family: Arial; font-size: 9pt; width: 100%; }
+  textarea { resize: none; height: 36px; }
+  .add-row-btn { background: #f1f5f9; border: 1px dashed #94a3b8; color: #64748b; padding: 6px; cursor: pointer; width: 100%; font-size: 9pt; margin-top: 4px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — Risk Register Template</span>
+  <div>
+    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    <button class="btn-outline" style="color:white;border-color:white;" onclick="window.history.back()">← Back to Suite</button>
+  </div>
+</div>
+
+<h1>Risk Register</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Template v1.0</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><input type="text" placeholder="Company name"></div>
+  <div class="meta-item"><label>Prepared By</label><input type="text" placeholder="Your name"></div>
+  <div class="meta-item"><label>Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+  <div class="meta-item"><label>Framework</label><input type="text" placeholder="NIST CSF / HIPAA / SOC 2 / ISO 27001"></div>
+  <div class="meta-item"><label>Review Cycle</label><input type="text" placeholder="Annual / Quarterly"></div>
+  <div class="meta-item"><label>Next Review Date</label><input type="text" placeholder="MM/DD/YYYY"></div>
+</div>
+
+<table id="risk-table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Asset / System</th>
+      <th>Threat Description</th>
+      <th>Existing Controls</th>
+      <th>L</th>
+      <th>I</th>
+      <th>Score</th>
+      <th>Level</th>
+      <th>Treatment</th>
+      <th>Owner</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody id="risk-body">
+    <tr>
+      <td class="risk-id">R001</td>
+      <td><input type="text" placeholder="Asset or system name"></td>
+      <td><textarea placeholder="Threat description"></textarea></td>
+      <td><textarea placeholder="Controls currently in place"></textarea></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td style="text-align:center"><strong>—</strong></td>
+      <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+      <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+      <td><input type="text" placeholder="Owner name"></td>
+      <td><input type="text" placeholder="MM/DD/YYYY"></td>
+    </tr>
+    <tr>
+      <td class="risk-id">R002</td>
+      <td><input type="text"></td><td><textarea></textarea></td><td><textarea></textarea></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td style="text-align:center"><strong>—</strong></td>
+      <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+      <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+      <td><input type="text"></td><td><input type="text"></td>
+    </tr>
+    <tr>
+      <td class="risk-id">R003</td>
+      <td><input type="text"></td><td><textarea></textarea></td><td><textarea></textarea></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td style="text-align:center"><strong>—</strong></td>
+      <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+      <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+      <td><input type="text"></td><td><input type="text"></td>
+    </tr>
+    <tr>
+      <td class="risk-id">R004</td>
+      <td><input type="text"></td><td><textarea></textarea></td><td><textarea></textarea></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td style="text-align:center"><strong>—</strong></td>
+      <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+      <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+      <td><input type="text"></td><td><input type="text"></td>
+    </tr>
+    <tr>
+      <td class="risk-id">R005</td>
+      <td><input type="text"></td><td><textarea></textarea></td><td><textarea></textarea></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+      <td style="text-align:center"><strong>—</strong></td>
+      <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+      <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+      <td><input type="text"></td><td><input type="text"></td>
+    </tr>
+  </tbody>
+</table>
+<button class="add-row-btn no-print" onclick="addRow()">+ Add Row</button>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#dcfce7;"></div>Low (1–4)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fef9c3;"></div>Medium (5–9)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fed7aa;"></div>High (10–16)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fecaca;"></div>Critical (17–25)</div>
+  <div style="margin-left:auto;color:#64748b;font-size:8.5pt;">L = Likelihood (1–5) &nbsp; I = Impact (1–5) &nbsp; Score = L × I</div>
+</div>
+
+<div class="footer-note">
+  Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+  Frameworks: NIST CSF 2.0 · ISO 27001:2022 · HIPAA · SOC 2 · FedRAMP &nbsp;|&nbsp; Review annually or after significant changes.
+</div>
+
+<script>
+let rowCount = 5;
+function addRow() {
+  rowCount++;
+  const id = 'R' + String(rowCount).padStart(3,'0');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="risk-id">${id}</td>
+    <td><input type="text"></td><td><textarea></textarea></td><td><textarea></textarea></td>
+    <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+    <td><select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>
+    <td style="text-align:center"><strong>—</strong></td>
+    <td><select><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select></td>
+    <td><select><option>Mitigate</option><option>Accept</option><option>Transfer</option><option>Avoid</option></select></td>
+    <td><input type="text"></td><td><input type="text"></td>`;
+  document.getElementById('risk-body').appendChild(tr);
+}
+</script>
+</body>
+</html>
