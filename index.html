@@ -275,7 +275,13 @@
         </div>
     </div>
     <div id="controls-container"></div>
-    <div class="card" id="evidence-summary" style="display:none"><h2>Evidence Summary</h2><div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem;" id="evidence-stats"></div></div>
+    <div class="card" id="evidence-summary" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+            <h2 style="margin:0;">Evidence Summary</h2>
+            <button class="btn btn-secondary" onclick="exportEvidence()">Export CSV</button>
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem;" id="evidence-stats"></div>
+    </div>
 </div>
 
 <!-- 90-DAY PLAYBOOK -->
@@ -575,6 +581,28 @@ function updateEvidenceSummary(){
     updateDashboard();
 }
 
+function exportEvidence(){
+    const fw=frameworks[currentFramework];
+    const rows=document.querySelectorAll('#controls-container .control-row');
+    const headers=['Control ID','Control Name','Framework','Evidence Description','Evidence Owner','Collection Method','Frequency','Status'];
+    const data=Array.from(rows).map((row,i)=>{
+        const c=fw.controls[i];
+        const textareas=row.querySelectorAll('textarea');
+        const inputs=row.querySelectorAll('input[type="text"]');
+        const selects=row.querySelectorAll('select');
+        return[c.id,c.name,fw.name,
+            textareas[0]?textareas[0].value:'',
+            inputs[0]?inputs[0].value:'',
+            selects[0]?selects[0].value:'',
+            selects[1]?selects[1].value:'',
+            selects[2]?selects[2].value:''
+        ].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',');
+    });
+    const a=document.createElement('a');
+    a.href='data:text/csv;charset=utf-8,'+encodeURIComponent([headers.join(','),...data].join('\n'));
+    a.download=`evidence_${currentFramework}.csv`;a.click();
+}
+
 // PLAYBOOK
 function updateProgress(){
     const boxes=document.querySelectorAll('#playbook input[type="checkbox"]');
@@ -638,9 +666,38 @@ function submitIntake(){
     const challenge=document.getElementById('f-challenge').value;
     if(!first||!last||!email||!org||!industry||!challenge){alert('Please complete all required fields (marked with *).');return;}
     if(!email.includes('@')){alert('Please enter a valid email address.');return;}
-    document.getElementById('intake-form').style.display='none';
-    document.getElementById('success-box').style.display='block';
-    window.scrollTo(0,0);
+    const btn=document.querySelector('#intake-form .btn-primary');
+    btn.disabled=true;btn.textContent='Sending...';
+    fetch('https://formspree.io/f/xeedojol',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({
+            name:first+' '+last,
+            email:email,
+            phone:document.getElementById('f-phone').value.trim(),
+            organization:org,
+            title:document.getElementById('f-title').value.trim(),
+            industry:industry,
+            size:document.getElementById('f-size').value,
+            framework:document.getElementById('f-framework').value,
+            challenge:challenge,
+            timeline:document.getElementById('f-timeline').value,
+            notes:document.getElementById('f-notes').value.trim(),
+            source:document.getElementById('f-source').value
+        })
+    }).then(r=>r.json()).then(data=>{
+        if(data.ok){
+            document.getElementById('intake-form').style.display='none';
+            document.getElementById('success-box').style.display='block';
+            window.scrollTo(0,0);
+        } else {
+            btn.disabled=false;btn.textContent='Submit — We\'ll Be in Touch Within 1 Business Day';
+            alert('Something went wrong. Please email logicalcoders@outlook.com directly or try again.');
+        }
+    }).catch(()=>{
+        btn.disabled=false;btn.textContent='Submit — We\'ll Be in Touch Within 1 Business Day';
+        alert('Could not send — please email logicalcoders@outlook.com directly.');
+    });
 }
 
 // INIT
