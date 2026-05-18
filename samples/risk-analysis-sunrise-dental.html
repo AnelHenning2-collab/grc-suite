@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HIPAA Security Risk Analysis — Sunrise Dental Group</title>
+<style>
+@media print{.no-print{display:none;}body{margin:0;}}
+body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;line-height:1.6;}
+h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+.subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+.meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+table{width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:16px;}
+th{background:#0f2557;color:white;padding:8px 10px;text-align:left;font-size:8pt;text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+tr:nth-child(even) td{background:#f8fafc;}
+.sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.sum-box{border-radius:8px;padding:14px;text-align:center;}
+.sum-box .n{font-size:22pt;font-weight:bold;}.sum-box .l{font-size:8pt;font-weight:bold;text-transform:uppercase;letter-spacing:0.05em;}
+.box-c{background:#fef2f2;color:#991b1b;}.box-h{background:#fff7ed;color:#c2410c;}
+.box-m{background:#fffbeb;color:#854d0e;}.box-l{background:#f0fdf4;color:#166534;}
+.badge{padding:2px 9px;border-radius:10px;font-size:9pt;font-weight:bold;display:inline-block;}
+.badge-c{background:#fecaca;color:#991b1b;}.badge-h{background:#fed7aa;color:#c2410c;}
+.badge-m{background:#fef9c3;color:#854d0e;}.badge-l{background:#dcfce7;color:#166534;}
+.approval-box{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:20px;background:#f8fafc;}
+.sig-line{border-bottom:1px solid #1e293b;height:40px;margin-bottom:4px;}
+.footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+.btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;margin-right:8px;}
+ol,ul{padding-left:1.5rem;}li{margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — HIPAA Security Risk Analysis · Small Practice Sample</span>
+  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>HIPAA Security Risk Analysis</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Aligned: HIPAA §164.308(a)(1) · NIST SP 800-30 Rev. 1</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><span>Sunrise Dental Group</span></div>
+  <div class="meta-item"><label>Industry</label><span>Dental / Healthcare (Covered Entity)</span></div>
+  <div class="meta-item"><label>Assessment Date</label><span>May 18, 2026</span></div>
+  <div class="meta-item"><label>Security Official</label><span>Dr. Maria Santos, DDS</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Methodology</label><span>NIST SP 800-30 Rev. 1</span></div>
+  <div class="meta-item"><label>Organization Size</label><span>8 employees · 1 location · Tampa, FL</span></div>
+  <div class="meta-item"><label>ePHI Systems</label><span>Dentrix EHR, Dexis Digital X-ray, Billing Portal</span></div>
+  <div class="meta-item"><label>Review Cycle</label><span>Annual + upon any material change</span></div>
+</div>
+
+<h2>1. Executive Summary</h2>
+<p>This Security Risk Analysis was conducted for <strong>Sunrise Dental Group</strong> in accordance with HIPAA Security Rule §164.308(a)(1)(ii)(A), which requires all covered entities to conduct an accurate and thorough assessment of potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic Protected Health Information (ePHI).</p>
+<p>This is the practice's <strong>first formal Security Risk Analysis</strong>. Prior to this engagement, no written risk assessment existed — a direct HIPAA compliance gap. The assessment identified <strong>5 risk items</strong> across the practice's systems, data, and operational processes. Immediate action is required for all Critical and High findings prior to the scheduled renewal of the practice's cyber liability insurance policy.</p>
+
+<div class="sum-grid">
+  <div class="sum-box box-c"><div class="n">1</div><div class="l">Critical</div></div>
+  <div class="sum-box box-h"><div class="n">3</div><div class="l">High</div></div>
+  <div class="sum-box box-m"><div class="n">1</div><div class="l">Medium</div></div>
+  <div class="sum-box box-l"><div class="n">0</div><div class="l">Low</div></div>
+</div>
+
+<h2>2. Risk Assessment Results</h2>
+<p>Risk Score = Likelihood (1–5) × Impact (1–5) &nbsp;|&nbsp; Critical: 17–25 &nbsp;·&nbsp; High: 10–16 &nbsp;·&nbsp; Medium: 5–9 &nbsp;·&nbsp; Low: 1–4</p>
+<table>
+  <thead><tr><th>#</th><th>Asset / System</th><th>Threat</th><th>L</th><th>I</th><th>Score</th><th>Level</th><th>Owner</th><th>Current Controls</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1</strong></td><td>Dentrix EHR System</td><td>Ransomware attack encrypting all patient records and billing data</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center"><strong>20</strong></td><td><span class="badge badge-c">Critical</span></td><td>Dr. Santos (Security Official)</td><td>No endpoint protection; backup not verified in 14 months; no incident response plan</td></tr>
+    <tr><td><strong>2</strong></td><td>Staff Email (Gmail)</td><td>Phishing attack leading to credential theft and PHI disclosure</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center"><strong>16</strong></td><td><span class="badge badge-h">High</span></td><td>Office Manager</td><td>No email filtering; no MFA; staff not trained on phishing recognition</td></tr>
+    <tr><td><strong>3</strong></td><td>Patient Billing Portal</td><td>Unauthorized external access via weak or reused passwords</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center"><strong>12</strong></td><td><span class="badge badge-h">High</span></td><td>Office Manager</td><td>No MFA; password policy not enforced; shared administrative account in use</td></tr>
+    <tr><td><strong>4</strong></td><td>Cloud Storage (Dropbox)</td><td>Unsanctioned PHI storage in personal/uncontrolled cloud accounts</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center"><strong>12</strong></td><td><span class="badge badge-h">High</span></td><td>All Staff</td><td>No data classification policy; no sanctioned file-sharing tool; no BAA with current provider</td></tr>
+    <tr><td><strong>5</strong></td><td>Physical Records / Filing</td><td>Unauthorized physical access to paper charts and X-ray files</td><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center"><strong>6</strong></td><td><span class="badge badge-m">Medium</span></td><td>Office Manager</td><td>No visitor access log; filing area accessible from waiting room during busy hours</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Findings</h2>
+<p><strong>Critical (1):</strong> The Dentrix EHR System faces an unacceptably high ransomware risk due to the absence of endpoint protection, unverified backup integrity, and no tested incident response plan. A successful attack would trigger mandatory breach notification under HIPAA §164.400 and potential OCR enforcement action. This finding must be escalated to the Security Official immediately.</p>
+<p><strong>High (3):</strong> Staff email, the patient billing portal, and cloud storage each present a high probability of ePHI exposure. The use of personal Gmail for patient communications violates HIPAA's minimum necessary and transmission security standards. Dropbox usage without a Business Associate Agreement (BAA) is a direct HIPAA violation.</p>
+<p><strong>Medium (1):</strong> Physical access controls for paper records present a moderate risk. While electronic systems are the priority, physical safeguards are a required component of HIPAA Security Rule compliance (§164.310).</p>
+
+<h2>4. Recommendations</h2>
+<ol>
+  <li><strong>Immediate:</strong> Deploy endpoint detection and response (EDR) on all workstations and verify backup integrity within 14 days.</li>
+  <li><strong>Immediate:</strong> Enable MFA on all staff email accounts and the billing portal. Discontinue shared administrative credentials.</li>
+  <li><strong>30 days:</strong> Migrate from personal Gmail to a HIPAA-compliant email platform (Microsoft 365 Business with BAA, or equivalent).</li>
+  <li><strong>30 days:</strong> Execute a Business Associate Agreement with all vendors who access, store, or transmit ePHI on behalf of the practice.</li>
+  <li><strong>60 days:</strong> Implement a sanctioned, HIPAA-compliant file-sharing platform and prohibit personal cloud storage for work use.</li>
+  <li><strong>Ongoing:</strong> Conduct annual security awareness training for all staff. Document all training completions per HIPAA §164.308(a)(5).</li>
+  <li><strong>Ongoing:</strong> Retain this Risk Analysis for a minimum of 6 years per HIPAA §164.530(j). Re-assess annually or upon any material change.</li>
+</ol>
+
+<div class="approval-box">
+  <h2 style="margin-top:0;">Security Official Attestation</h2>
+  <p style="font-size:10pt;">I, the designated HIPAA Security Official for Sunrise Dental Group, attest that this Security Risk Analysis was conducted in accordance with HIPAA Security Rule §164.308(a)(1)(ii)(A) and accurately reflects the risk posture of the organization as of the date stated above. This document shall be reviewed annually and updated upon any significant change to the practice environment.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">HIPAA Security Official — Dr. Maria Santos, DDS</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Prepared By — Anél Henning, Logical Coders</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  </div>
+</div>
+
+<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+HIPAA §164.308(a)(1) · NIST SP 800-30 Rev. 1 · HHS OCR Security Rule Guidance &nbsp;|&nbsp; Retain 6 years per HIPAA §164.530(j) &nbsp;|&nbsp; SAMPLE DOCUMENT — Logical Coders GRC Suite</div>
+</body></html>

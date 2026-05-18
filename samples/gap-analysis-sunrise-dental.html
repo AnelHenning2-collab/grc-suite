@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Evidence Gap Analysis — Sunrise Dental Group</title>
+<style>
+@media print{.no-print{display:none;}body{margin:0;}}
+body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;line-height:1.6;}
+h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+h3{color:#374151;font-size:11pt;margin:16px 0 6px;}
+.subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+.meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+table{width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:16px;}
+th{background:#0f2557;color:white;padding:8px 10px;text-align:left;font-size:8pt;text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+tr:nth-child(even) td{background:#f8fafc;}
+.sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.sum-box{border-radius:8px;padding:14px;text-align:center;}
+.sum-box .n{font-size:22pt;font-weight:bold;}.sum-box .l{font-size:8pt;font-weight:bold;text-transform:uppercase;letter-spacing:0.05em;}
+.badge{padding:2px 9px;border-radius:10px;font-size:9pt;font-weight:bold;display:inline-block;}
+.badge-ok{background:#dcfce7;color:#166534;}.badge-prog{background:#dbeafe;color:#1e40af;}
+.badge-gap{background:#fecaca;color:#991b1b;}.badge-ns{background:#f1f5f9;color:#64748b;}
+.control-block{border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:16px;}
+.control-block.gap{border-left:5px solid #dc2626;}.control-block.progress{border-left:5px solid #2563eb;}
+.control-block.complete{border-left:5px solid #059669;}.control-block.notstarted{border-left:5px solid #94a3b8;}
+.control-id{font-size:8.5pt;color:#64748b;margin-bottom:4px;}
+.highlight{background:#fef2f2;border-left:4px solid #dc2626;padding:8px 12px;margin:8px 0;font-size:9.5pt;border-radius:0 4px 4px 0;}
+.approval-box{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:20px;background:#f8fafc;}
+.sig-line{border-bottom:1px solid #1e293b;height:40px;margin-bottom:4px;}
+.footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+.btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;margin-right:8px;}
+ol,ul{padding-left:1.5rem;}li{margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — Evidence Gap Analysis · Small Practice Sample</span>
+  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<h1>Evidence Gap Analysis Report</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Framework: HIPAA Security Rule</div>
+
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><span>Sunrise Dental Group</span></div>
+  <div class="meta-item"><label>Framework</label><span>HIPAA Security Rule</span></div>
+  <div class="meta-item"><label>Report Date</label><span>May 18, 2026</span></div>
+  <div class="meta-item"><label>Controls Assessed</label><span>5 Priority Controls</span></div>
+  <div class="meta-item"><label>Gaps Identified</label><span>3</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+</div>
+
+<h2>1. Control Status Summary</h2>
+<div class="sum-grid">
+  <div class="sum-box" style="background:#f0fdf4;color:#166534;"><div class="n">0</div><div class="l">Complete</div></div>
+  <div class="sum-box" style="background:#dbeafe;color:#1e40af;"><div class="n">2</div><div class="l">In Progress</div></div>
+  <div class="sum-box" style="background:#f1f5f9;color:#64748b;"><div class="n">0</div><div class="l">Not Started</div></div>
+  <div class="sum-box" style="background:#fef2f2;color:#991b1b;"><div class="n">3</div><div class="l">Gaps</div></div>
+</div>
+
+<h2>2. Control-by-Control Analysis</h2>
+
+<div class="control-block gap">
+  <div class="control-id">§164.308(a)(1) — HIPAA Security Rule</div>
+  <h3>Security Management Process</h3>
+  <table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+  <tbody><tr><td>No written Security Risk Analysis exists. This assessment is the first formal documentation of organizational risk.</td><td>Dr. Santos (Security Official)</td><td>Inspection</td><td>Annual</td><td><span class="badge badge-gap">Gap — Missing</span></td></tr></tbody></table>
+  <div class="highlight">⚠ Gap: OCR has cited §164.308(a)(1) in over 90% of investigated breaches. A written, dated, signed Security Risk Analysis is the single most-required evidence item in any HIPAA audit. This must be completed and signed before any other remediation activity. <strong>Priority: Immediate.</strong></div>
+</div>
+
+<div class="control-block progress">
+  <div class="control-id">§164.308(a)(3) — HIPAA Security Rule</div>
+  <h3>Workforce Authorization &amp; Access Management</h3>
+  <table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+  <tbody><tr><td>Staff roster exists; job function descriptions informally maintained. No formal access request or approval process documented. Onboarding checklist does not include system access authorization.</td><td>Office Manager</td><td>Inspection / Interview</td><td>Per hire/termination</td><td><span class="badge badge-prog">In Progress</span></td></tr></tbody></table>
+  <p style="font-size:9.5pt;color:#374151;">Evidence to collect: Signed access authorization form for each staff member; termination checklist showing account deactivation; role-based access list from Dentrix EHR admin panel.</p>
+</div>
+
+<div class="control-block gap">
+  <div class="control-id">§164.312(a)(1) — HIPAA Security Rule</div>
+  <h3>Access Control — Unique User Identification</h3>
+  <table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+  <tbody><tr><td>Current state: All front-desk staff share a single Dentrix login. The dentist and hygienists use separate accounts but passwords are posted on the staff bulletin board. No MFA is enabled on any system.</td><td>IT Contractor</td><td>Observation</td><td>Continuous</td><td><span class="badge badge-gap">Gap — Missing</span></td></tr></tbody></table>
+  <div class="highlight">⚠ Gap: Shared logins are a direct HIPAA violation. They make audit logs legally useless — you cannot demonstrate which individual accessed which patient record. MFA is not explicitly required by HIPAA but is considered a best practice and is required by most cyber liability insurers. <strong>Priority: Immediate — remediate within 14 days.</strong></div>
+</div>
+
+<div class="control-block progress">
+  <div class="control-id">§164.312(b) — HIPAA Security Rule</div>
+  <h3>Audit Controls — Activity Logging</h3>
+  <table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+  <tbody><tr><td>Dentrix EHR generates access logs. However, no process exists to review these logs. Logs have not been exported or reviewed in the past 12 months. Retention policy not defined.</td><td>Dr. Santos (Security Official)</td><td>Inspection</td><td>Monthly review (target)</td><td><span class="badge badge-prog">In Progress</span></td></tr></tbody></table>
+  <p style="font-size:9.5pt;color:#374151;">Evidence to collect: EHR audit log export (last 90 days); documented log review procedure; log retention policy (minimum 6 years per §164.530(j)); assigned reviewer name and review schedule.</p>
+</div>
+
+<div class="control-block gap">
+  <div class="control-id">§164.312(e)(1) — HIPAA Security Rule</div>
+  <h3>Transmission Security — ePHI in Transit</h3>
+  <table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+  <tbody><tr><td>Staff currently send patient information, appointment reminders, and referral documents via personal Gmail accounts. No encryption is applied. No Business Associate Agreement exists with Google.</td><td>All Staff</td><td>Observation / Interview</td><td>Continuous</td><td><span class="badge badge-gap">Gap — Missing</span></td></tr></tbody></table>
+  <div class="highlight">⚠ Gap: Transmitting ePHI via unencrypted email is a HIPAA violation regardless of whether a breach occurs. Evidence required: HIPAA-compliant email platform subscription (Microsoft 365 Business with BAA, or equivalent); signed BAA with email provider; written policy prohibiting personal email for patient communications. <strong>Priority: 30 days.</strong></div>
+</div>
+
+<h2>3. Priority Remediation Plan</h2>
+<table>
+  <thead><tr><th>Control</th><th>Gap</th><th>Remediation Action</th><th>Target</th><th>Owner</th></tr></thead>
+  <tbody>
+    <tr><td>§164.308(a)(1)</td><td>No written risk analysis</td><td>Sign and date this risk analysis; file with HIPAA documentation</td><td>Immediate</td><td>Dr. Santos</td></tr>
+    <tr><td>§164.312(a)(1)</td><td>Shared logins; no MFA</td><td>Create individual Dentrix accounts for each staff member; enable MFA on all systems</td><td>14 days</td><td>IT Contractor</td></tr>
+    <tr><td>§164.312(e)(1)</td><td>Unencrypted email with PHI</td><td>Subscribe to HIPAA-compliant email (M365); execute BAA; train staff</td><td>30 days</td><td>Office Manager</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Next Steps</h2>
+<ol>
+  <li>Sign and date the Security Risk Analysis (this document) immediately — this closes the §164.308(a)(1) gap.</li>
+  <li>Create individual EHR logins for all staff within 14 days. Remove the shared account.</li>
+  <li>Subscribe to Microsoft 365 Business, execute the BAA with Microsoft, and migrate all patient communications within 30 days.</li>
+  <li>Establish a monthly EHR log review process and assign a named reviewer.</li>
+  <li>Complete workforce access authorization forms for all current staff within 45 days.</li>
+  <li>Re-assess all gap controls at Day 60 and update this report prior to any audit or insurance renewal.</li>
+</ol>
+
+<div class="approval-box">
+  <h2 style="margin-top:0;">Reviewed By</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">HIPAA Security Official — Dr. Maria Santos, DDS</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+    <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Prepared By — Anél Henning, Logical Coders</div>
+    <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  </div>
+</div>
+
+<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+HIPAA Security Rule §164.308–§164.312 · HHS OCR Audit Protocol &nbsp;|&nbsp; Retain 6 years per §164.530(j) &nbsp;|&nbsp; SAMPLE DOCUMENT — Logical Coders GRC Suite</div>
+</body></html>
