@@ -285,13 +285,66 @@
     <div class="card">
         <h2>Add a Risk Item</h2><p class="subtitle">Enter each threat-asset pair and score it. The matrix updates automatically.</p>
         <div class="form-row">
-            <div class="form-group"><label>Asset or System</label><input type="text" id="risk-asset" placeholder="e.g., Patient records database"></div>
-            <div class="form-group"><label>Threat Description</label><input type="text" id="risk-threat" placeholder="e.g., Unauthorized access by insider"></div>
+            <div class="form-group">
+                <label>Asset or System</label>
+                <select id="risk-asset">
+                    <option value="">Select asset or system</option>
+                    <option>Electronic Health Records (EHR) System</option>
+                    <option>Practice Management / Billing System</option>
+                    <option>Email System / Communications Platform</option>
+                    <option>Patient Portal</option>
+                    <option>Medical Imaging System (PACS / RIS)</option>
+                    <option>Workstations / Endpoint Devices</option>
+                    <option>Mobile Devices / Laptops</option>
+                    <option>Network Infrastructure / Firewall / Router</option>
+                    <option>Backup and Recovery Systems</option>
+                    <option>Cloud Storage (SharePoint, OneDrive, Dropbox, etc.)</option>
+                    <option>Medical / IoT Devices</option>
+                    <option>Remote Access / VPN</option>
+                    <option>Active Directory / Identity Management Platform</option>
+                    <option>Physical Records / Paper Charts</option>
+                    <option>Third-Party / Vendor-Managed System</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Threat</label>
+                <select id="risk-threat">
+                    <option value="">Select threat type</option>
+                    <option>Ransomware / Malware Attack</option>
+                    <option>Phishing / Social Engineering Attack</option>
+                    <option>Unauthorized Access — External Attacker</option>
+                    <option>Unauthorized Access — Insider Threat</option>
+                    <option>Data Breach / Unauthorized Disclosure of PHI</option>
+                    <option>Lost or Stolen Device (laptop, phone, USB drive)</option>
+                    <option>Unpatched Software / Vulnerability Exploitation</option>
+                    <option>Third-Party / Business Associate Compromise</option>
+                    <option>Physical Theft or Break-In</option>
+                    <option>Accidental Data Exposure / Human Error</option>
+                    <option>Denial of Service (DoS) Attack</option>
+                    <option>Natural Disaster / Facility Outage</option>
+                    <option>Power Failure / Environmental Disruption</option>
+                </select>
+            </div>
         </div>
         <div class="form-row-3">
             <div class="form-group"><label>Likelihood (1–5)</label><select id="risk-likelihood"><option value="1">1 — Rare</option><option value="2">2 — Unlikely</option><option value="3" selected>3 — Possible</option><option value="4">4 — Likely</option><option value="5">5 — Almost Certain</option></select></div>
             <div class="form-group"><label>Impact (1–5)</label><select id="risk-impact"><option value="1">1 — Negligible</option><option value="2">2 — Minor</option><option value="3" selected>3 — Moderate</option><option value="4">4 — Major</option><option value="5">5 — Catastrophic</option></select></div>
-            <div class="form-group"><label>Risk Owner</label><input type="text" id="risk-owner" placeholder="e.g., IT Manager"></div>
+            <div class="form-group">
+                <label>Risk Owner</label>
+                <select id="risk-owner">
+                    <option value="">Select role</option>
+                    <option>Practice Owner / CEO</option>
+                    <option>HIPAA Security Official</option>
+                    <option>Privacy Officer</option>
+                    <option>CISO / Chief Information Security Officer</option>
+                    <option>IT Manager / IT Director</option>
+                    <option>Compliance Officer</option>
+                    <option>Practice Manager / Office Manager</option>
+                    <option>System / Network Administrator</option>
+                    <option>Vendor / Business Associate (named)</option>
+                    <option>Clinical Lead / Medical Director</option>
+                </select>
+            </div>
         </div>
         <div class="form-group"><label>Current Controls in Place</label><textarea id="risk-controls" rows="2" placeholder="e.g., Role-based access control, quarterly access reviews"></textarea></div>
         <button class="btn btn-primary" onclick="addRisk()">+ Add Risk Item</button>
@@ -753,7 +806,7 @@ let currentFramework='nist';
 function selectFramework(key,btn){currentFramework=key;document.querySelectorAll('.framework-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderControls();}
 function renderControls(){
     const fw=frameworks[currentFramework];
-    document.getElementById('controls-container').innerHTML=fw.controls.map((c,i)=>`<div class="control-row"><h4>${c.name}</h4><div class="control-id">${c.id} &mdash; ${fw.name}</div><div class="control-desc">${c.desc}</div><div class="form-row"><div class="form-group"><label>Evidence Description</label><textarea rows="2" placeholder="What evidence exists or will be collected?" onchange="updateEvidenceSummary()"></textarea></div><div class="form-group"><label>Evidence Owner</label><input type="text" placeholder="e.g., IT Manager, CISO" onchange="updateEvidenceSummary()"></div></div><div class="form-row-3"><div class="form-group"><label>Collection Method</label><select onchange="updateEvidenceSummary()"><option value="">Select method</option><option>Inspection (Review document)</option><option>Interview (Question staff)</option><option>Observation (Watch process)</option><option>Re-performance (Test control)</option></select></div><div class="form-group"><label>Frequency</label><select onchange="updateEvidenceSummary()"><option value="">Select frequency</option><option>Continuous</option><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div><div class="form-group"><label>Status</label><select class="status-select" onchange="updateEvidenceSummary()"><option value="">Select status</option><option value="complete">Complete</option><option value="progress">In Progress</option><option value="notstarted">Not Started</option><option value="gap">Gap — Evidence Missing</option></select></div></div></div>`).join('');
+    document.getElementById('controls-container').innerHTML=fw.controls.map((c,i)=>`<div class="control-row"><h4>${c.name}</h4><div class="control-id">${c.id} &mdash; ${fw.name}</div><div class="control-desc">${c.desc}</div><div class="form-row"><div class="form-group"><label>Evidence Description</label><textarea rows="2" placeholder="What evidence exists or will be collected?" onchange="updateEvidenceSummary()"></textarea></div><div class="form-group"><label>Evidence Owner</label><select onchange="updateEvidenceSummary()"><option value="">Select role</option><option>CISO / Chief Information Security Officer</option><option>IT Manager / IT Director</option><option>Privacy Officer</option><option>HIPAA Security Official</option><option>Compliance Officer</option><option>Practice Manager / Office Manager</option><option>System / Network Administrator</option><option>Cloud / Infrastructure Team</option><option>HR / People Operations</option><option>Security Operations Center (SOC)</option><option>Third-Party / Managed Service Provider</option></select></div></div><div class="form-row-3"><div class="form-group"><label>Collection Method</label><select onchange="updateEvidenceSummary()"><option value="">Select method</option><option>Inspection (Review document)</option><option>Interview (Question staff)</option><option>Observation (Watch process)</option><option>Re-performance (Test control)</option></select></div><div class="form-group"><label>Frequency</label><select onchange="updateEvidenceSummary()"><option value="">Select frequency</option><option>Continuous</option><option>Monthly</option><option>Quarterly</option><option>Annual</option></select></div><div class="form-group"><label>Status</label><select class="status-select" onchange="updateEvidenceSummary()"><option value="">Select status</option><option value="complete">Complete</option><option value="progress">In Progress</option><option value="notstarted">Not Started</option><option value="gap">Gap — Evidence Missing</option></select></div></div></div>`).join('');
     document.getElementById('evidence-summary').style.display='none';updateDashboard();
 }
 function updateEvidenceSummary(){
@@ -773,14 +826,13 @@ function exportEvidence(){
     const data=Array.from(rows).map((row,i)=>{
         const c=fw.controls[i];
         const textareas=row.querySelectorAll('textarea');
-        const inputs=row.querySelectorAll('input[type="text"]');
         const selects=row.querySelectorAll('select');
         return[c.id,c.name,fw.name,
             textareas[0]?textareas[0].value:'',
-            inputs[0]?inputs[0].value:'',
             selects[0]?selects[0].value:'',
             selects[1]?selects[1].value:'',
-            selects[2]?selects[2].value:''
+            selects[2]?selects[2].value:'',
+            selects[3]?selects[3].value:''
         ].map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',');
     });
     const a=document.createElement('a');
@@ -992,11 +1044,11 @@ function generateGapReport(){
     const controlRows=Array.from(rows).map((row,i)=>{
         const c=fw.controls[i];
         const desc=row.querySelector('textarea')?row.querySelector('textarea').value:'';
-        const owner=row.querySelector('input[type="text"]')?row.querySelector('input[type="text"]').value:'';
         const selects=row.querySelectorAll('select');
-        const method=selects[0]?selects[0].value:'';
-        const freq=selects[1]?selects[1].value:'';
-        const status=selects[2]?selects[2].value:'';
+        const owner=selects[0]?selects[0].value:'';
+        const method=selects[1]?selects[1].value:'';
+        const freq=selects[2]?selects[2].value:'';
+        const status=selects[3]?selects[3].value:'';
         if(status&&counts[status]!==undefined)counts[status]++;
         const badgeMap={complete:'badge-ok',progress:'badge-prog',notstarted:'badge-ns',gap:'badge-gap'};
         const labelMap={complete:'Complete',progress:'In Progress',notstarted:'Not Started',gap:'Gap — Missing'};
@@ -1289,7 +1341,7 @@ const DEMO = {
             section: 'risk-mapper', target: 'risk-threat',
             title: 'Identify the Threat',
             explain: 'Ransomware is the #1 cyber threat to small healthcare practices. 46% of ransomware victims in 2023 were organizations with fewer than 100 employees.<br><br>One phishing email to a front-desk staff member is all it takes. The attacker encrypts all patient records — the practice cannot see patients, bill insurance, or access clinical notes without paying the ransom.',
-            fill: {id:'risk-threat', value:'Ransomware attack encrypting all patient records and billing data'},
+            fill: {id:'risk-threat', value:'Ransomware / Malware Attack'},
             action: null
         },
         {
@@ -1310,7 +1362,7 @@ const DEMO = {
             section: 'risk-mapper', target: 'risk-owner',
             title: 'Assign the Risk Owner',
             explain: 'HIPAA §164.308(a)(2) requires a designated <strong>Security Official</strong> — one person responsible for security policies and procedures. In a small practice, this is typically the Practice Manager or the lead dentist.<br><br>Assigning ownership means there is a named person accountable when OCR asks "who is responsible for this risk?"',
-            fill: {id:'risk-owner', value:'Practice Manager — HIPAA Security Official'},
+            fill: {id:'risk-owner', value:'HIPAA Security Official'},
             action: null
         },
         {
