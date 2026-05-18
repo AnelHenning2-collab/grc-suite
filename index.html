@@ -165,6 +165,35 @@
             .nav-links { display: none; }
         }
 
+        /* REPORTS */
+        .reports-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+        .report-card { background:white; border-radius:12px; padding:1.5rem; box-shadow:0 1px 4px rgba(0,0,0,0.08); border-top:4px solid #cbd5e1; transition:all 0.2s; }
+        .report-card:hover { box-shadow:0 4px 16px rgba(37,99,235,0.12); transform:translateY(-2px); }
+        .report-card.ready { border-top-color:#059669; }
+        .report-card.waiting { border-top-color:#f59e0b; }
+        .report-icon { font-size:2.2rem; margin-bottom:0.75rem; }
+        .report-title { font-size:1.05rem; font-weight:700; color:#0f2557; margin-bottom:0.4rem; }
+        .report-desc { font-size:0.85rem; color:#64748b; margin-bottom:1rem; line-height:1.55; }
+        .report-sources { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+        .report-source { background:#f1f5f9; color:#475569; font-size:0.72rem; padding:0.18rem 0.6rem; border-radius:20px; font-weight:600; }
+        .report-status-line { font-size:0.8rem; font-weight:600; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+        .status-dot { width:8px; height:8px; border-radius:50%; display:inline-block; flex-shrink:0; }
+        .status-dot.green { background:#059669; }
+        .status-dot.yellow { background:#f59e0b; }
+        @media (max-width:700px) { .reports-grid { grid-template-columns:1fr; } }
+
+        /* DEMO FINALE */
+        .demo-finale-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin:0.75rem 0 1rem; }
+        .demo-finale-card { background:#f8fafc; border-radius:8px; padding:0.65rem 0.8rem; border-left:3px solid #2563eb; opacity:0; animation:slideInCard 0.4s ease forwards; }
+        .demo-finale-card:nth-child(1){animation-delay:0.15s;border-left-color:#dc2626;}
+        .demo-finale-card:nth-child(2){animation-delay:0.35s;border-left-color:#d97706;}
+        .demo-finale-card:nth-child(3){animation-delay:0.55s;border-left-color:#2563eb;}
+        .demo-finale-card:nth-child(4){animation-delay:0.75s;border-left-color:#059669;}
+        .demo-finale-card .fc-name { font-size:0.78rem; font-weight:700; color:#1e293b; }
+        .demo-finale-card .fc-src { font-size:0.7rem; color:#64748b; margin-top:0.15rem; }
+        @keyframes slideInCard { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+        .demo-bubble.wide { width:460px; }
+
         /* GUIDED DEMO */
         .demo-spotlight { position:fixed; z-index:9000; border-radius:10px; box-shadow:0 0 0 9999px rgba(10,18,40,0.72); pointer-events:none; transition:all 0.38s cubic-bezier(0.4,0,0.2,1); }
         .demo-bubble { position:fixed; z-index:9001; background:white; border-radius:14px; padding:1.4rem 1.5rem; width:340px; box-shadow:0 12px 40px rgba(0,0,0,0.28); border-top:4px solid #2563eb; transition:all 0.38s cubic-bezier(0.4,0,0.2,1); }
@@ -197,6 +226,7 @@
         <div class="nav-link" onclick="showSection('playbook')">90-Day Playbook</div>
         <div class="nav-link" onclick="showSection('assistant')">GRC Assistant</div>
         <div class="nav-link" onclick="showSection('templates')">Templates</div>
+        <div class="nav-link" onclick="showSection('reports')">Reports</div>
         <div class="nav-link cta" onclick="showSection('intake')">Get Started</div>
     </div>
 </nav>
@@ -388,6 +418,45 @@
     </div>
 </div>
 
+<!-- REPORTS -->
+<div id="reports" class="section">
+    <div class="section-header"><h1>📊 Report Generator</h1><p>Generate professional, audit-ready reports from your assessment data. Each report pulls directly from the tools you have completed and opens as a printable PDF.</p></div>
+    <div class="reports-grid">
+        <div class="report-card waiting" id="rc-risk">
+            <div class="report-icon">🔍</div>
+            <div class="report-title">HIPAA Security Risk Analysis</div>
+            <div class="report-desc">Formal risk analysis document required by HIPAA §164.308(a)(1). Includes executive summary, scored risk table, findings narrative, recommendations, and Security Official attestation block. OCR audit-ready.</div>
+            <div class="report-sources"><span class="report-source">← Risk Mapper</span></div>
+            <div class="report-status-line" id="rs-risk"><span class="status-dot yellow"></span><span>Add risks in Risk Mapper to generate</span></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="generateRiskReport()">Generate Report →</button>
+        </div>
+        <div class="report-card waiting" id="rc-gap">
+            <div class="report-icon">📋</div>
+            <div class="report-title">Evidence Gap Analysis</div>
+            <div class="report-desc">Control-by-control breakdown of evidence status across your selected framework. Flags gaps, identifies missing evidence, and lists priority remediation actions by control. Maps directly to your compliance framework.</div>
+            <div class="report-sources"><span class="report-source">← Evidence Builder</span></div>
+            <div class="report-status-line" id="rs-gap"><span class="status-dot yellow"></span><span>Set control statuses in Evidence Builder to generate</span></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="generateGapReport()">Generate Report →</button>
+        </div>
+        <div class="report-card waiting" id="rc-proposal">
+            <div class="report-icon">📝</div>
+            <div class="report-title">Engagement Proposal & Scope of Work</div>
+            <div class="report-desc">Pre-filled proposal based on client intake data. Covers the 90-day pilot scope, three-phase delivery plan, investment options, and next steps. Ready to review, edit, and send to the client.</div>
+            <div class="report-sources"><span class="report-source">← Client Intake Form</span><span class="report-source">← Risk Mapper</span></div>
+            <div class="report-status-line" id="rs-proposal"><span class="status-dot yellow"></span><span>Submit intake form to generate</span></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="generateProposal()">Generate Report →</button>
+        </div>
+        <div class="report-card waiting" id="rc-outcomes">
+            <div class="report-icon">✅</div>
+            <div class="report-title">90-Day Pilot Outcomes Report</div>
+            <div class="report-desc">Final stakeholder report summarizing completed playbook tasks, evidence collected, controls implemented, risk score changes, and recommended next wave priorities. Delivered at Day 90 to demonstrate ROI.</div>
+            <div class="report-sources"><span class="report-source">← 90-Day Playbook</span><span class="report-source">← Evidence Builder</span></div>
+            <div class="report-status-line" id="rs-outcomes"><span class="status-dot yellow"></span><span>Complete playbook tasks to generate</span></div>
+            <button class="btn btn-primary" style="width:100%;" onclick="generateOutcomesReport()">Generate Report →</button>
+        </div>
+    </div>
+</div>
+
 <!-- CLIENT INTAKE FORM -->
 <div id="intake" class="section">
     <div class="intake-hero">
@@ -569,7 +638,8 @@ function showSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    const map={dashboard:0,'risk-mapper':1,evidence:2,playbook:3,assistant:4,templates:5,intake:6};
+    const map={dashboard:0,'risk-mapper':1,evidence:2,playbook:3,assistant:4,templates:5,reports:6,intake:7};
+    if(id==='reports') updateReportStatus();
     if(document.querySelectorAll('.nav-link')[map[id]]) document.querySelectorAll('.nav-link')[map[id]].classList.add('active');
     updateDashboard(); window.scrollTo(0,0);
 }
@@ -697,6 +767,350 @@ function addMessage(text,isUser){
 function sendMessage(){const input=document.getElementById('chat-input');const msg=input.value.trim();if(!msg)return;addMessage(msg,true);input.value='';setTimeout(()=>addMessage(getResponse(msg),false),500);}
 function askQuestion(q){document.getElementById('chat-input').value=q;sendMessage();}
 
+// REPORT STATUS
+let savedIntake={};
+function updateReportStatus(){
+    const riskReady=risks.length>0;
+    const evReady=Array.from(document.querySelectorAll('#controls-container .status-select')).some(s=>s.value);
+    const intakeReady=savedIntake.org||false;
+    const playbookReady=Array.from(document.querySelectorAll('#playbook input[type="checkbox"]')).some(c=>c.checked);
+    const setStatus=(cardId,statusId,ready,readyMsg,waitMsg)=>{
+        const card=document.getElementById(cardId);
+        const line=document.getElementById(statusId);
+        if(!card||!line)return;
+        card.className='report-card '+(ready?'ready':'waiting');
+        line.innerHTML=ready
+            ?`<span class="status-dot green"></span><span>${readyMsg}</span>`
+            :`<span class="status-dot yellow"></span><span>${waitMsg}</span>`;
+    };
+    setStatus('rc-risk','rs-risk',riskReady,`${risks.length} risk(s) ready to report`,'Add risks in Risk Mapper to generate');
+    setStatus('rc-gap','rs-gap',evReady,'Evidence data ready to report','Set control statuses in Evidence Builder to generate');
+    setStatus('rc-proposal','rs-proposal',intakeReady,`Proposal ready for ${savedIntake.org}`,'Submit intake form to generate');
+    setStatus('rc-outcomes','rs-outcomes',playbookReady,'Playbook data ready to report','Complete playbook tasks to generate');
+}
+
+// REPORT GENERATORS
+const RPT_STYLE=`@media print{.no-print{display:none;}body{margin:0;}}
+body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b;margin:2cm;line-height:1.6;}
+h1{color:#0f2557;font-size:18pt;margin-bottom:4px;}
+h2{color:#0f2557;font-size:13pt;margin:20px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px;}
+h3{color:#374151;font-size:11pt;margin:14px 0 6px;}
+.subtitle{color:#64748b;font-size:10pt;margin-bottom:16px;}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;border:1px solid #e2e8f0;padding:12px;border-radius:6px;background:#f8fafc;}
+.meta-item label{font-size:8pt;font-weight:bold;color:#64748b;text-transform:uppercase;display:block;margin-bottom:2px;}
+table{width:100%;border-collapse:collapse;font-size:9.5pt;margin-bottom:16px;}
+th{background:#0f2557;color:white;padding:8px 10px;text-align:left;font-size:8pt;text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:1px solid #e2e8f0;vertical-align:top;}
+tr:nth-child(even) td{background:#f8fafc;}
+.sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0;}
+.sum-box{border-radius:8px;padding:14px;text-align:center;}
+.sum-box .n{font-size:22pt;font-weight:bold;}.sum-box .l{font-size:8pt;font-weight:bold;text-transform:uppercase;}
+.box-c{background:#fef2f2;color:#991b1b;}.box-h{background:#fff7ed;color:#c2410c;}
+.box-m{background:#fffbeb;color:#854d0e;}.box-l{background:#f0fdf4;color:#166534;}
+.approval-box{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:20px;background:#f8fafc;}
+.sig-line{border-bottom:1px solid #1e293b;height:40px;margin-bottom:4px;}
+.footer-note{margin-top:20px;font-size:8pt;color:#94a3b8;border-top:1px solid #e2e8f0;padding-top:10px;}
+.btn{background:#2563eb;color:white;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:10pt;margin-right:8px;margin-bottom:16px;}
+.badge{padding:2px 9px;border-radius:10px;font-size:9pt;font-weight:bold;}
+.badge-c{background:#fecaca;color:#991b1b;}.badge-h{background:#fed7aa;color:#c2410c;}
+.badge-m{background:#fef9c3;color:#854d0e;}.badge-l{background:#dcfce7;color:#166534;}
+.badge-ok{background:#dcfce7;color:#166534;}.badge-prog{background:#dbeafe;color:#1e40af;}
+.badge-gap{background:#fecaca;color:#991b1b;}.badge-ns{background:#f1f5f9;color:#64748b;}
+.highlight{background:#fffbeb;border-left:4px solid #f59e0b;padding:8px 12px;margin:8px 0;font-size:9.5pt;border-radius:0 4px 4px 0;}
+ol,ul{padding-left:1.5rem;} li{margin-bottom:6px;}`;
+
+const RPT_NAV=(title)=>`<div class="no-print" style="background:#0f2557;padding:12px 20px;margin:-2cm -2cm 20px -2cm;display:flex;align-items:center;justify-content:space-between;">
+  <span style="color:white;font-weight:bold;font-size:12pt;">Logical Coders | GRC Suite — ${title}</span>
+  <div><button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  <button class="btn" style="background:white;color:#0f2557;" onclick="window.close()">← Close</button></div></div>`;
+
+const RPT_FOOTER=(refs)=>`<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>${refs}</div>`;
+
+function openReport(html){const w=window.open('','_blank');w.document.write(html);w.document.close();}
+
+function generateRiskReport(){
+    if(!risks.length){alert('Add at least one risk in the Risk Mapper first.');return;}
+    const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    const org=savedIntake.org||'[Organization Name]';
+    const critical=risks.filter(r=>r.score>=17);
+    const high=risks.filter(r=>r.score>=10&&r.score<17);
+    const medium=risks.filter(r=>r.score>=5&&r.score<10);
+    const low=risks.filter(r=>r.score<5);
+    const badgeCls=s=>s>=17?'badge-c':s>=10?'badge-h':s>=5?'badge-m':'badge-l';
+    const rows=risks.map(r=>`<tr><td><strong>${r.id}</strong></td><td>${r.asset}</td><td>${r.threat}</td>
+        <td style="text-align:center">${r.likelihood}</td><td style="text-align:center">${r.impact}</td>
+        <td style="text-align:center;font-weight:bold">${r.score}</td>
+        <td><span class="badge ${badgeCls(r.score)}">${getRiskLevel(r.score).level}</span></td>
+        <td>${r.owner||'—'}</td><td style="font-size:8.5pt">${r.controls||'—'}</td></tr>`).join('');
+    const recs=[];
+    if(critical.length) recs.push(`Immediately remediate ${critical.length} Critical risk(s): ${critical.map(r=>r.asset).join(', ')}. Escalate to leadership.`);
+    if(high.length) recs.push(`Develop remediation plans for ${high.length} High risk(s) within 30 days.`);
+    recs.push('Assign a named HIPAA Security Official (§164.308(a)(2)) accountable for all risk treatment decisions.');
+    recs.push('Re-assess all risks annually and upon any significant change (new system, new vendor, workforce change).');
+    recs.push('Retain this Risk Analysis for a minimum of 6 years per HIPAA §164.530(j).');
+    openReport(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HIPAA Security Risk Analysis</title><style>${RPT_STYLE}</style></head><body>
+${RPT_NAV('HIPAA Security Risk Analysis')}
+<h1>HIPAA Security Risk Analysis</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; Aligned: HIPAA §164.308(a)(1) · NIST SP 800-30 Rev. 1</div>
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><span>${org}</span></div>
+  <div class="meta-item"><label>Industry</label><span>${savedIntake.industry||'Healthcare'}</span></div>
+  <div class="meta-item"><label>Assessment Date</label><span>${date}</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Methodology</label><span>NIST SP 800-30 Rev. 1</span></div>
+  <div class="meta-item"><label>Review Cycle</label><span>Annual + upon material change</span></div>
+</div>
+<h2>1. Executive Summary</h2>
+<p>This Security Risk Analysis was conducted for <strong>${org}</strong> per HIPAA §164.308(a)(1)(ii)(A), which requires all covered entities to assess risks and vulnerabilities to the confidentiality, integrity, and availability of electronic Protected Health Information (ePHI). This assessment identified <strong>${risks.length} risk item(s)</strong> requiring treatment.</p>
+<div class="sum-grid">
+  <div class="sum-box box-c"><div class="n">${critical.length}</div><div class="l">Critical</div></div>
+  <div class="sum-box box-h"><div class="n">${high.length}</div><div class="l">High</div></div>
+  <div class="sum-box box-m"><div class="n">${medium.length}</div><div class="l">Medium</div></div>
+  <div class="sum-box box-l"><div class="n">${low.length}</div><div class="l">Low</div></div>
+</div>
+<h2>2. Risk Assessment Results</h2>
+<p>Risk Score = Likelihood (1–5) × Impact (1–5) &nbsp;|&nbsp; Critical: 17–25 &nbsp;·&nbsp; High: 10–16 &nbsp;·&nbsp; Medium: 5–9 &nbsp;·&nbsp; Low: 1–4</p>
+<table><thead><tr><th>#</th><th>Asset / System</th><th>Threat</th><th>L</th><th>I</th><th>Score</th><th>Level</th><th>Owner</th><th>Current Controls</th></tr></thead>
+<tbody>${rows}</tbody></table>
+<h2>3. Findings</h2>
+${critical.length?`<p><strong>Critical (${critical.length}):</strong> ${critical.map(r=>`${r.asset} — ${r.threat}`).join('; ')}. These represent an immediate threat to ePHI and require escalation to organizational leadership.</p>`:''}
+${high.length?`<p><strong>High (${high.length}):</strong> ${high.map(r=>`${r.asset} — ${r.threat}`).join('; ')}. Remediation plans required within 30 days.</p>`:''}
+${medium.length?`<p><strong>Medium (${medium.length}):</strong> Schedule remediation within 60–90 days as part of the governance roadmap.</p>`:''}
+<h2>4. Recommendations</h2><ol>${recs.map(r=>`<li>${r}</li>`).join('')}</ol>
+<div class="approval-box"><h2 style="margin-top:0;">Security Official Attestation</h2>
+<p style="font-size:10pt;">I attest that this Security Risk Analysis accurately reflects the risk posture of the organization as of the date stated above.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">HIPAA Security Official — Name &amp; Title</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Executive Approver — Name &amp; Title</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+</div></div>
+${RPT_FOOTER('HIPAA §164.308(a)(1) · NIST SP 800-30 Rev.1 · HHS OCR Guidance &nbsp;|&nbsp; Retain 6 years per HIPAA §164.530(j)')}
+</body></html>`);
+}
+
+function generateGapReport(){
+    const rows=document.querySelectorAll('#controls-container .control-row');
+    if(!rows.length){alert('Select a framework and set control statuses in the Evidence Builder first.');return;}
+    const fw=frameworks[currentFramework];
+    const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    const org=savedIntake.org||'[Organization Name]';
+    let counts={complete:0,progress:0,notstarted:0,gap:0};
+    const controlRows=Array.from(rows).map((row,i)=>{
+        const c=fw.controls[i];
+        const desc=row.querySelector('textarea')?row.querySelector('textarea').value:'';
+        const owner=row.querySelector('input[type="text"]')?row.querySelector('input[type="text"]').value:'';
+        const selects=row.querySelectorAll('select');
+        const method=selects[0]?selects[0].value:'';
+        const freq=selects[1]?selects[1].value:'';
+        const status=selects[2]?selects[2].value:'';
+        if(status&&counts[status]!==undefined)counts[status]++;
+        const badgeMap={complete:'badge-ok',progress:'badge-prog',notstarted:'badge-ns',gap:'badge-gap'};
+        const labelMap={complete:'Complete',progress:'In Progress',notstarted:'Not Started',gap:'Gap — Missing'};
+        const badge=status?`<span class="badge ${badgeMap[status]||'badge-ns'}">${labelMap[status]||status}</span>`:'<span class="badge badge-ns">Not Set</span>';
+        const gapNote=status==='gap'?`<div class="highlight">⚠ Gap identified: evidence not yet collected for this control. Priority remediation required.</div>`:'';
+        return`<h3>${c.id} — ${c.name}</h3>
+<p style="font-size:9.5pt;color:#64748b;">${c.desc}</p>
+<table><thead><tr><th>Evidence Description</th><th>Owner</th><th>Method</th><th>Frequency</th><th>Status</th></tr></thead>
+<tbody><tr><td>${desc||'<em>Not defined</em>'}</td><td>${owner||'—'}</td><td>${method||'—'}</td><td>${freq||'—'}</td><td>${badge}</td></tr></tbody></table>
+${gapNote}`;
+    }).join('');
+    const gaps=Array.from(rows).filter((_,i)=>{const s=rows[i].querySelector('.status-select');return s&&s.value==='gap';});
+    openReport(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Evidence Gap Analysis</title><style>${RPT_STYLE}</style></head><body>
+${RPT_NAV('Evidence Gap Analysis')}
+<h1>Evidence Gap Analysis Report</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; Framework: ${fw.name}</div>
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><span>${org}</span></div>
+  <div class="meta-item"><label>Framework</label><span>${fw.name}</span></div>
+  <div class="meta-item"><label>Report Date</label><span>${date}</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Controls Assessed</label><span>${rows.length}</span></div>
+  <div class="meta-item"><label>Gaps Identified</label><span>${counts.gap}</span></div>
+</div>
+<h2>1. Control Status Summary</h2>
+<div class="sum-grid">
+  <div class="sum-box box-l"><div class="n">${counts.complete}</div><div class="l">Complete</div></div>
+  <div class="sum-box" style="background:#dbeafe;color:#1e40af;"><div class="n">${counts.progress}</div><div class="l">In Progress</div></div>
+  <div class="sum-box" style="background:#f1f5f9;color:#475569;"><div class="n">${counts.notstarted}</div><div class="l">Not Started</div></div>
+  <div class="sum-box box-c"><div class="n">${counts.gap}</div><div class="l">Gaps</div></div>
+</div>
+<h2>2. Control-by-Control Analysis</h2>${controlRows}
+${counts.gap>0?`<h2>3. Priority Remediation Items</h2>
+<p>The following controls have been flagged as <strong>Gap — Evidence Missing</strong> and require immediate remediation before any compliance audit:</p>
+<ul>${fw.controls.filter((_,i)=>{const s=rows[i]&&rows[i].querySelector('.status-select');return s&&s.value==='gap';}).map(c=>`<li><strong>${c.id} — ${c.name}:</strong> Define evidence, assign an owner, and begin collection within 30 days.</li>`).join('')}</ul>`:''}
+<h2>${counts.gap>0?4:3}. Recommended Next Steps</h2>
+<ol><li>Assign an evidence owner to every control with no owner defined.</li>
+<li>Begin collecting evidence for all In Progress and Not Started controls immediately.</li>
+<li>Re-assess gap controls within 30 days and update this report prior to any audit.</li>
+<li>Use the 90-Day Playbook to track remediation milestones and stakeholder sign-off.</li></ol>
+<div class="approval-box"><h2 style="margin-top:0;">Reviewed By</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Compliance Lead — Name &amp; Title</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Security Official — Name &amp; Title</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+</div></div>
+${RPT_FOOTER(`${fw.name} · HIPAA §164.308(a)(1) · NIST CSF PR.IP &nbsp;|&nbsp; Review after any control remediation or framework change`)}
+</body></html>`);
+}
+
+function generateProposal(){
+    const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    const org=savedIntake.org||document.getElementById('f-org').value||'[Organization Name]';
+    const contact=(savedIntake.first||'')+' '+(savedIntake.last||'');
+    const industry=savedIntake.industry||document.getElementById('f-industry').value||'Healthcare';
+    const challenge=savedIntake.challenge||document.getElementById('f-challenge').value||'No formal security program in place';
+    const framework=savedIntake.framework||document.getElementById('f-framework').value||'HIPAA Security Rule';
+    const timeline=savedIntake.timeline||document.getElementById('f-timeline').value||'Within 30 days';
+    const riskSummary=risks.length?`<p>Initial threat mapping identified <strong>${risks.length} risk(s)</strong> including ${risks.filter(r=>r.score>=17).length} Critical and ${risks.filter(r=>r.score>=10&&r.score<17).length} High severity items requiring immediate attention.</p>`:'';
+    openReport(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Engagement Proposal</title><style>${RPT_STYLE}
+.phase-box{border:1px solid #e2e8f0;border-radius:8px;padding:14px 16px;margin-bottom:12px;border-left:5px solid #2563eb;}
+.phase-box.p2{border-left-color:#7c3aed;}.phase-box.p3{border-left-color:#059669;}
+.phase-label{font-size:8pt;font-weight:bold;text-transform:uppercase;color:#64748b;margin-bottom:4px;}
+.phase-title{font-size:12pt;font-weight:bold;color:#0f2557;margin-bottom:6px;}
+.invest-table td{padding:10px 12px;}.invest-table tr:first-child td{font-weight:bold;background:#f8fafc;}
+</style></head><body>
+${RPT_NAV('Engagement Proposal & Scope of Work')}
+<h1>Engagement Proposal &amp; Scope of Work</h1>
+<div class="subtitle">Prepared by Logical Coders | Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
+<div class="meta-grid">
+  <div class="meta-item"><label>Prepared For</label><span>${org}</span></div>
+  <div class="meta-item"><label>Contact</label><span>${contact.trim()||'[Contact Name]'}</span></div>
+  <div class="meta-item"><label>Proposal Date</label><span>${date}</span></div>
+  <div class="meta-item"><label>Industry</label><span>${industry}</span></div>
+  <div class="meta-item"><label>Primary Framework</label><span>${framework}</span></div>
+  <div class="meta-item"><label>Requested Timeline</label><span>${timeline}</span></div>
+</div>
+<h2>1. Executive Summary</h2>
+<p>Thank you for the opportunity to support <strong>${org}</strong>. Based on your intake submission, your primary challenge is: <em>${challenge}</em>.</p>
+${riskSummary}
+<p>Logical Coders proposes a <strong>90-Day Security Governance Pilot</strong> designed to establish a structured, audit-ready compliance program aligned to <strong>${framework}</strong>. This engagement delivers measurable outcomes at Day 90 with a clear roadmap for the next phase of governance maturity.</p>
+<h2>2. Proposed Scope — 90-Day Pilot</h2>
+<div class="phase-box"><div class="phase-label">Phase 1 &nbsp;·&nbsp; Days 1–30</div><div class="phase-title">Inventory &amp; Threat Map</div>
+<ul><li>Complete asset inventory (systems, data, vendors, devices)</li><li>Conduct HIPAA Security Risk Analysis per §164.308(a)(1)</li><li>Map top threats to assets and score by likelihood and impact</li><li>Identify top 5 controls to address priority risks</li><li>Present findings and risk map to leadership</li></ul></div>
+<div class="phase-box p2"><div class="phase-label">Phase 2 &nbsp;·&nbsp; Days 31–60</div><div class="phase-title">Prioritize &amp; Define Evidence</div>
+<ul><li>Select and confirm compliance framework controls</li><li>Define evidence requirements for each of the top 5 controls</li><li>Assign evidence owners across the organization</li><li>Conduct gap analysis and document missing evidence</li><li>Draft or update minimum 2 required security policies</li><li>Deliver Phase 2 status report to stakeholders</li></ul></div>
+<div class="phase-box p3"><div class="phase-label">Phase 3 &nbsp;·&nbsp; Days 61–90</div><div class="phase-title">Embedded Support &amp; Validate</div>
+<ul><li>Implement controls with embedded cybersecurity support</li><li>Collect and organize evidence for all 5 controls</li><li>Validate evidence quality (complete, accurate, timely)</li><li>Measure outcomes against initial risk scores</li><li>Deliver final 90-Day Outcomes Report</li><li>Recommend next wave priorities and ongoing retainer options</li></ul></div>
+<h2>3. Deliverables</h2>
+<table><thead><tr><th>Deliverable</th><th>Phase</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>HIPAA Security Risk Analysis</td><td>1</td><td>Formal, signed, OCR-compliant risk analysis document</td></tr>
+<tr><td>Threat Risk Map</td><td>1</td><td>Visual 5×5 risk matrix with all identified threats scored</td></tr>
+<tr><td>Evidence Gap Analysis</td><td>2</td><td>Control-by-control evidence status and remediation plan</td></tr>
+<tr><td>Security Policies (2+)</td><td>2</td><td>Tailored to your industry and framework requirements</td></tr>
+<tr><td>Evidence File</td><td>3</td><td>Organized evidence package for top 5 controls</td></tr>
+<tr><td>90-Day Outcomes Report</td><td>3</td><td>Final stakeholder report with ROI and next wave recommendations</td></tr>
+</tbody></table>
+<h2>4. Investment</h2>
+<table class="invest-table"><thead><tr><th>Option</th><th>Scope</th><th>Investment</th></tr></thead>
+<tbody>
+<tr><td>90-Day Governance Pilot</td><td>Full three-phase engagement as described above</td><td>[Insert fee]</td></tr>
+<tr><td>Monthly Retainer (post-pilot)</td><td>Ongoing compliance monitoring, evidence maintenance, policy updates</td><td>[Insert fee]/month</td></tr>
+<tr><td>Template Package</td><td>7 audit-ready GRC templates customized for your organization</td><td>[Insert fee]</td></tr>
+</tbody></table>
+<div class="highlight">Note: Investment figures are placeholders. Edit before sending to client.</div>
+<h2>5. Next Steps</h2>
+<ol><li>Review this proposal and confirm the scope meets your needs.</li><li>Schedule a 30-minute discovery call: logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</li><li>Upon agreement, Logical Coders will issue a formal engagement letter and begin Phase 1 within 5 business days.</li></ol>
+<div class="approval-box"><h2 style="margin-top:0;">Agreement</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">${org} — Authorized Signatory</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anél Henning</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+</div></div>
+${RPT_FOOTER('MS Cybersecurity Management · Purdue Global · ISC2 · ISACA &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661')}
+</body></html>`);
+}
+
+function generateOutcomesReport(){
+    const boxes=document.querySelectorAll('#playbook input[type="checkbox"]');
+    const checked=Array.from(boxes).filter(c=>c.checked);
+    if(!checked.length){alert('Complete at least one playbook task before generating the Outcomes Report.');return;}
+    const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    const org=savedIntake.org||'[Organization Name]';
+    const pct=Math.round((checked.length/boxes.length)*100);
+    const tasks=[
+        'Complete asset inventory (systems, data, people, vendors)',
+        'Identify top 10 threats relevant to your industry',
+        'Map threats to assets using the Threat Risk Mapper',
+        'Score all risks (likelihood × impact)',
+        'Identify top 5 controls to address priority risks',
+        'Present initial risk map to leadership / stakeholders',
+        'Select compliance framework aligned to your business',
+        'Use Evidence Builder to define evidence for top 5 controls',
+        'Assign evidence owners to each control',
+        'Conduct gap analysis — document missing evidence',
+        'Draft or update at least 2 policies to support controls',
+        'Deliver Phase 2 status report to stakeholders',
+        'Implement controls with embedded cybersecurity support',
+        'Collect and organize evidence for all 5 controls',
+        'Validate evidence quality (complete, accurate, timely)',
+        'Measure outcomes against initial risk scores',
+        'Document lessons learned and remaining gaps',
+        'Present final report and recommend next wave priorities'
+    ];
+    const phases=[
+        {label:'Phase 1 — Days 1–30',title:'Inventory & Threat Map',range:[0,6]},
+        {label:'Phase 2 — Days 31–60',title:'Prioritize & Define Evidence',range:[6,12]},
+        {label:'Phase 3 — Days 61–90',title:'Embedded Support & Validate',range:[12,18]}
+    ];
+    const evSelects=document.querySelectorAll('#controls-container .status-select');
+    const evCounts={complete:0,progress:0,notstarted:0,gap:0};
+    evSelects.forEach(s=>{if(s.value&&evCounts[s.value]!==undefined)evCounts[s.value]++;});
+    const phaseRows=phases.map(p=>{
+        const pTasks=tasks.slice(p.range[0],p.range[1]);
+        const pBoxes=Array.from(boxes).slice(p.range[0],p.range[1]);
+        const pDone=pBoxes.filter(b=>b.checked).length;
+        return`<h3>${p.label} — ${p.title}</h3>
+<p>Completed: <strong>${pDone} of ${pTasks.length} tasks (${Math.round(pDone/pTasks.length*100)}%)</strong></p>
+<table><thead><tr><th>Task</th><th>Status</th></tr></thead><tbody>
+${pTasks.map((t,i)=>`<tr><td>${t}</td><td><span class="badge ${pBoxes[i]&&pBoxes[i].checked?'badge-ok':'badge-ns'}">${pBoxes[i]&&pBoxes[i].checked?'✓ Complete':'Pending'}</span></td></tr>`).join('')}
+</tbody></table>`;
+    }).join('');
+    openReport(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>90-Day Outcomes Report</title><style>${RPT_STYLE}</style></head><body>
+${RPT_NAV('90-Day Pilot Outcomes Report')}
+<h1>90-Day Security Governance Pilot — Outcomes Report</h1>
+<div class="subtitle">Logical Coders GRC Suite &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; Aligned: NIST CSF 2.0 · HIPAA · ISO 27001</div>
+<div class="meta-grid">
+  <div class="meta-item"><label>Organization</label><span>${org}</span></div>
+  <div class="meta-item"><label>Report Date</label><span>${date}</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Tasks Completed</label><span>${checked.length} of ${boxes.length}</span></div>
+  <div class="meta-item"><label>Overall Progress</label><span>${pct}%</span></div>
+  <div class="meta-item"><label>Framework</label><span>${frameworks[currentFramework].name}</span></div>
+</div>
+<h2>1. Executive Summary</h2>
+<p>Over the 90-day governance pilot, <strong>${org}</strong> completed <strong>${checked.length} of ${boxes.length} structured governance tasks</strong> — achieving <strong>${pct}% completion</strong> of the Logical Coders Security Governance Playbook.</p>
+${risks.length?`<p>The engagement began with identification of <strong>${risks.length} risk item(s)</strong> including ${risks.filter(r=>r.score>=17).length} Critical and ${risks.filter(r=>r.score>=10&&r.score<17).length} High severity threats. Controls implemented during this pilot directly address the highest-priority risks identified at Day 1.</p>`:''}
+<h2>2. Playbook Completion by Phase</h2>${phaseRows}
+${evSelects.length?`<h2>3. Evidence Collection Summary</h2>
+<div class="sum-grid">
+  <div class="sum-box box-l"><div class="n">${evCounts.complete}</div><div class="l">Complete</div></div>
+  <div class="sum-box" style="background:#dbeafe;color:#1e40af;"><div class="n">${evCounts.progress}</div><div class="l">In Progress</div></div>
+  <div class="sum-box" style="background:#f1f5f9;color:#475569;"><div class="n">${evCounts.notstarted}</div><div class="l">Not Started</div></div>
+  <div class="sum-box box-c"><div class="n">${evCounts.gap}</div><div class="l">Gaps Remaining</div></div>
+</div>`:''}
+<h2>${evSelects.length?4:3}. Recommendations for Next Wave</h2>
+<ol>
+<li>Continue evidence collection for all controls marked In Progress or Not Started — target 100% coverage before any formal audit.</li>
+<li>Schedule annual re-assessment of all risks identified in the initial Security Risk Analysis.</li>
+<li>Expand the governance program to include staff security awareness training and phishing simulation.</li>
+<li>Consider a monthly retainer engagement for ongoing compliance monitoring, policy maintenance, and audit readiness.</li>
+<li>Review and update all policies annually or upon any significant change to the environment.</li>
+</ol>
+<div class="approval-box"><h2 style="margin-top:0;">Pilot Sign-Off</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Client Security Official — Name &amp; Title</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anél Henning</div>
+  <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
+</div></div>
+${RPT_FOOTER('NIST CSF 2.0 · HIPAA §164.308 · ISO 27001 &nbsp;|&nbsp; Retain all deliverables per applicable regulatory retention requirements')}
+</body></html>`);
+}
+
 // INTAKE FORM
 function submitIntake(){
     const first=document.getElementById('f-firstname').value.trim();
@@ -707,6 +1121,17 @@ function submitIntake(){
     const challenge=document.getElementById('f-challenge').value;
     if(!first||!last||!email||!org||!industry||!challenge){alert('Please complete all required fields (marked with *).');return;}
     if(!email.includes('@')){alert('Please enter a valid email address.');return;}
+    savedIntake={first,last,org,
+        email,
+        phone:document.getElementById('f-phone').value.trim(),
+        title:document.getElementById('f-title').value.trim(),
+        industry,challenge,
+        framework:document.getElementById('f-framework').value,
+        timeline:document.getElementById('f-timeline').value,
+        size:document.getElementById('f-size').value,
+        notes:document.getElementById('f-notes').value.trim(),
+        source:document.getElementById('f-source').value
+    };
     const btn=document.querySelector('#intake-form .btn-primary');
     btn.disabled=true;btn.textContent='Sending...';
     fetch('https://formspree.io/f/xeedojol',{
@@ -865,6 +1290,12 @@ const DEMO = {
             fill: null, action: 'checkCB3'
         },
         {
+            section: 'reports', target: null, wide: true,
+            title: '📊 Step 4 — Generate the Deliverables',
+            explain: 'Every tool you just used feeds directly into a professional, printable report — generated in one click.<div class="demo-finale-grid"><div class="demo-finale-card"><div class="fc-name">🔍 HIPAA Risk Analysis</div><div class="fc-src">← Risk Mapper data · OCR-ready · Signed attestation</div></div><div class="demo-finale-card"><div class="fc-name">📋 Evidence Gap Analysis</div><div class="fc-src">← Evidence Builder · Control-by-control · Gaps flagged</div></div><div class="demo-finale-card"><div class="fc-name">📝 Proposal & Scope of Work</div><div class="fc-src">← Client intake · 3-phase scope · Investment table</div></div><div class="demo-finale-card"><div class="fc-name">✅ 90-Day Outcomes Report</div><div class="fc-src">← Playbook progress · Evidence summary · Next wave</div></div></div>Each report opens print-ready. Click <strong>Generate Report →</strong> on any card to see the full document.',
+            fill: null, action: 'showReports'
+        },
+        {
             section: null, target: null,
             title: '✅ That\'s the Complete GRC Process',
             explain: 'In 90 days, Sunrise Dental Group goes from <strong>zero security program</strong> to:<br><br>✅ Signed Security Risk Analysis (HIPAA required)<br>✅ Evidence file for all 5 critical controls<br>✅ Individual EHR logins with MFA enforced<br>✅ Verified backup system with tested restoration<br>✅ Signed workforce security policies<br>✅ Audit-ready documentation package<br><br><strong>This is exactly what Logical Coders delivers.</strong>',
@@ -914,6 +1345,8 @@ const DEMO = {
         document.getElementById('demo-explain').innerHTML = step.explain;
         document.getElementById('demo-progress').textContent = `Step ${n + 1} of ${this.steps.length}`;
         document.getElementById('demo-next-btn').textContent = isLast ? 'Finish ✓' : 'Next →';
+        const bubble = document.getElementById('demo-bubble');
+        bubble.style.width = step.wide ? '460px' : '340px';
 
         setTimeout(() => {
             if (step.target) {
@@ -956,6 +1389,9 @@ const DEMO = {
         if (action === 'checkCB3') {
             const cb = document.getElementById('cb3');
             if (cb) { cb.checked = true; updateProgress(); }
+        }
+        if (action === 'showReports') {
+            updateReportStatus();
         }
     },
 
