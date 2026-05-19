@@ -170,7 +170,7 @@ input[type=radio].no-r{accent-color:#ef4444;}
     <h1>Assessment Submitted</h1>
     <p>Thank you. Your completed assessment has been sent to Logical Coders. Anél will review your results and reach out within one business day with findings and recommended next steps.</p>
     <p style="font-size:14px;color:#475569;">You can close this page or return to the main site.</p>
-    <a href="https://anelhenning2-collab.github.io/grc-suite/" style="display:inline-block;margin-top:16px;background:#1e293b;color:#60a5fa;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:14px;">Back to GRC Suite</a>
+    <a href="https://anelhenning2-collab.github.io/grc-suite/governance/" style="display:inline-block;margin-top:16px;background:#1e293b;color:#60a5fa;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:14px;">Back to GRC Suite</a>
   </div>
 
   <!-- ASSESSMENT FORM -->
@@ -717,6 +717,7 @@ document.getElementById('assessment-form').addEventListener('submit', async func
 
   try {
     await emailjs.send('LogicalCoders', 'template_9efdll7', templateParams);
+    await emailjs.send('LogicalCoders', 'template_mf6o1bk', templateParams);
     document.getElementById('assessment').style.display = 'none';
     document.getElementById('thankyou').style.display = 'block';
     window.scrollTo(0, 0);
