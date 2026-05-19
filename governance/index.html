@@ -665,7 +665,7 @@ function updateScore() {
 }
 
 // ── EMAILJS INIT ──────────────────────────────────────────────────────────
-emailjs.init('3iT8XyEzf_a91dZZZ');
+emailjs.init('qGcWMsXISy3wUTtcN');
 
 // ── FORM SUBMIT ───────────────────────────────────────────────────────────
 document.getElementById('assessment-form').addEventListener('submit', async function(e) {
@@ -716,7 +716,7 @@ document.getElementById('assessment-form').addEventListener('submit', async func
   };
 
   try {
-    await emailjs.send('LogicalCoders', 'v4txmla', templateParams);
+    await emailjs.send('LogicalCoders', 'template_9efdll7', templateParams);
     document.getElementById('assessment').style.display = 'none';
     document.getElementById('thankyou').style.display = 'block';
     window.scrollTo(0, 0);
