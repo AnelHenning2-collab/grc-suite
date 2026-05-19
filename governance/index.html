@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compliance Assessment — Logical Coders</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.7;font-size:15px;}
+a{color:#60a5fa;}
+nav{background:#1e293b;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid #2563eb;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:white;font-weight:bold;font-size:17px;}
+.nav-sub{color:#64748b;font-size:13px;}
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px;}
+h1{font-size:28px;color:white;margin-bottom:8px;}
+h2{font-size:20px;color:#93c5fd;margin:28px 0 12px;padding-bottom:6px;border-bottom:1px solid #1e3a5f;}
+h3{font-size:16px;color:#7dd3fc;margin:18px 0 10px;}
+p{color:#cbd5e1;margin-bottom:14px;}
+.subtitle{color:#64748b;font-size:14px;margin-bottom:28px;}
+
+/* Framework selector */
+.fw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:28px 0;}
+@media(max-width:600px){.fw-grid{grid-template-columns:1fr;}}
+.fw-card{background:#1e293b;border:2px solid #334155;border-radius:12px;padding:22px;cursor:pointer;transition:all .2s;text-align:left;}
+.fw-card:hover{border-color:#2563eb;background:#1e3a5f;}
+.fw-card.active{border-color:#2563eb;background:#1e3a5f;}
+.fw-card .fw-badge{display:inline-block;background:#1d4ed8;color:white;font-size:11px;font-weight:bold;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;}
+.fw-card.iso .fw-badge{background:#7c3aed;}
+.fw-card.soc .fw-badge{background:#0891b2;}
+.fw-card.hipaa .fw-badge{background:#059669;}
+.fw-card h3{margin:0 0 6px;font-size:17px;color:white;}
+.fw-card p{margin:0;font-size:13px;color:#94a3b8;}
+
+/* Forms */
+.form-section{display:none;}
+.form-section.active{display:block;}
+.client-fields{background:#1e293b;border-radius:10px;padding:22px;margin-bottom:24px;border-left:4px solid #2563eb;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px;}
+@media(max-width:600px){.field-row{grid-template-columns:1fr;}}
+label{display:block;font-size:13px;color:#94a3b8;margin-bottom:5px;font-weight:bold;text-transform:uppercase;letter-spacing:.04em;}
+input,select,textarea{width:100%;background:#0f172a;border:1px solid #334155;border-radius:6px;padding:10px 14px;color:#e2e8f0;font-size:14px;font-family:Arial,sans-serif;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#2563eb;}
+input::placeholder,textarea::placeholder{color:#475569;}
+
+/* Question table */
+.q-section{margin-bottom:28px;}
+.q-table{width:100%;border-collapse:collapse;font-size:14px;}
+.q-table thead tr{background:#1d4ed8;}
+.q-table thead th{padding:11px 12px;text-align:left;color:white;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+.q-table thead th:last-child,.q-table thead th:nth-last-child(2),.q-table thead th:nth-last-child(3){text-align:center;width:70px;}
+.q-table tbody tr{border-bottom:1px solid #1e293b;}
+.q-table tbody tr:nth-child(even){background:#1a2540;}
+.q-table tbody tr:hover{background:#1e3a5f;}
+.q-table td{padding:10px 12px;vertical-align:middle;color:#cbd5e1;}
+.q-table td:first-child{width:36px;color:#64748b;font-size:12px;text-align:center;}
+.q-table td:nth-child(2){font-weight:500;color:#e2e8f0;}
+.q-table td.req-col{color:#93c5fd;font-size:12px;font-style:italic;}
+.q-table td.radio-col{text-align:center;}
+.q-table input[type=radio]{width:18px;height:18px;cursor:pointer;accent-color:#2563eb;}
+input[type=radio].yes-r{accent-color:#10b981;}
+input[type=radio].partial-r{accent-color:#f59e0b;}
+input[type=radio].no-r{accent-color:#ef4444;}
+
+/* Score bar */
+.score-bar-wrap{background:#1e293b;border-radius:10px;padding:18px;margin:24px 0;}
+.score-bar-wrap .score-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;color:#94a3b8;}
+.score-bar-wrap .score-label span:last-child{font-weight:bold;color:#60a5fa;font-size:16px;}
+.progress-bar{background:#0f172a;border-radius:20px;height:16px;}
+.progress-fill{background:linear-gradient(90deg,#2563eb,#10b981);height:16px;border-radius:20px;transition:width .4s;}
+.score-bands{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.band{padding:4px 12px;border-radius:20px;font-size:12px;}
+.band.critical{background:#450a0a;color:#fca5a5;}
+.band.high{background:#431407;color:#fdba74;}
+.band.medium{background:#1c1917;color:#d6d3d1;}
+.band.good{background:#14532d;color:#86efac;}
+
+/* Section scores */
+.section-scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0;}
+.sec-score{background:#1e293b;border-radius:8px;padding:12px;text-align:center;}
+.sec-score .sn{font-size:22px;font-weight:bold;color:#60a5fa;}
+.sec-score .sl{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-top:3px;}
+
+/* Submit */
+.submit-area{background:#1e293b;border-radius:10px;padding:24px;margin-top:28px;text-align:center;}
+.btn{background:#2563eb;color:white;border:none;padding:12px 28px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:bold;transition:background .2s;}
+.btn:hover{background:#1d4ed8;}
+.btn.green{background:#059669;}.btn.green:hover{background:#047857;}
+.btn.gray{background:#334155;}.btn.gray:hover{background:#475569;}
+.btn-lg{padding:16px 40px;font-size:16px;border-radius:10px;}
+.required-note{font-size:12px;color:#64748b;margin-top:8px;}
+
+/* Alerts */
+.alert{border-radius:8px;padding:14px 18px;margin:16px 0;font-size:14px;}
+.alert.info{background:#1e3a5f;border:1px solid #2563eb;color:#93c5fd;}
+.alert.success{background:#14532d;border:1px solid #10b981;color:#86efac;}
+.alert.warning{background:#431407;border:1px solid #f59e0b;color:#fde68a;}
+
+/* Thank you */
+#thankyou{display:none;text-align:center;padding:60px 24px;}
+#thankyou .ty-icon{font-size:60px;margin-bottom:20px;}
+#thankyou h1{font-size:30px;color:#10b981;margin-bottom:12px;}
+#thankyou p{font-size:16px;color:#94a3b8;max-width:500px;margin:0 auto 20px;}
+
+/* Step indicator */
+.steps{display:flex;align-items:center;gap:0;margin-bottom:28px;flex-wrap:wrap;}
+.step{display:flex;align-items:center;gap:8px;font-size:13px;color:#475569;}
+.step.active{color:#60a5fa;font-weight:bold;}
+.step.done{color:#10b981;}
+.step-num{width:26px;height:26px;border-radius:50%;background:#1e293b;border:2px solid #334155;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;flex-shrink:0;}
+.step.active .step-num{background:#2563eb;border-color:#2563eb;color:white;}
+.step.done .step-num{background:#059669;border-color:#059669;color:white;}
+.step-line{width:30px;height:2px;background:#334155;flex-shrink:0;}
+@media(max-width:500px){.step-line{width:15px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo">Logical Coders</div>
+    <div class="nav-sub">GRC &amp; Cybersecurity Consulting</div>
+  </div>
+  <div style="color:#64748b;font-size:13px;">Compliance Assessment Portal</div>
+</nav>
+
+<div class="wrap" id="main-wrap">
+
+  <!-- LANDING -->
+  <div id="landing">
+    <h1>Compliance Readiness Assessment</h1>
+    <p class="subtitle">Complete this assessment so we can identify exactly where your organisation stands and what needs to be done. Your answers are sent securely and reviewed by Anél Henning before your consultation.</p>
+
+    <div class="alert info">This assessment takes approximately 10 to 15 minutes. There are no right or wrong answers — honesty gives you the most accurate picture of your compliance posture.</div>
+
+    <h2>Step 1 — Select Your Framework</h2>
+    <p>Choose the framework that applies to your situation. If you are unsure, select NIST CSF — it is the most common starting point for small businesses.</p>
+
+    <div class="fw-grid">
+      <div class="fw-card" onclick="selectFramework('nist',this)">
+        <div class="fw-badge">NIST CSF</div>
+        <h3>NIST Cybersecurity Framework</h3>
+        <p>Best for small to mid-size businesses. Covers Identify, Protect, Detect, Respond, and Recover. Most enterprise clients reference this framework.</p>
+      </div>
+      <div class="fw-card iso" onclick="selectFramework('iso',this)">
+        <div class="fw-badge" style="background:#7c3aed;">ISO 27001</div>
+        <h3>ISO 27001 Readiness</h3>
+        <p>For organisations seeking enterprise client approval or preparing for formal certification. Used by larger corporations and regulated industries.</p>
+      </div>
+      <div class="fw-card soc" onclick="selectFramework('soc',this)">
+        <div class="fw-badge" style="background:#0891b2;">SOC 2</div>
+        <h3>SOC 2 Readiness</h3>
+        <p>For technology companies and SaaS providers. Assesses Security, Availability, and Confidentiality trust criteria.</p>
+      </div>
+      <div class="fw-card hipaa" onclick="selectFramework('hipaa',this)">
+        <div class="fw-badge" style="background:#059669;">HIPAA</div>
+        <h3>HIPAA Security Rule</h3>
+        <p>For healthcare providers and any business that handles patient data. Covers Administrative, Physical, and Technical Safeguards.</p>
+      </div>
+    </div>
+
+    <div id="start-btn-wrap" style="display:none;text-align:center;margin-top:10px;">
+      <button class="btn btn-lg green" onclick="startAssessment()">Start Assessment &rarr;</button>
+    </div>
+  </div>
+
+  <!-- THANK YOU -->
+  <div id="thankyou">
+    <div class="ty-icon">&#10003;</div>
+    <h1>Assessment Submitted</h1>
+    <p>Thank you. Your completed assessment has been sent to Logical Coders. Anél will review your results and reach out within one business day with findings and recommended next steps.</p>
+    <p style="font-size:14px;color:#475569;">You can close this page or return to the main site.</p>
+    <a href="https://anelhenning2-collab.github.io/grc-suite/" style="display:inline-block;margin-top:16px;background:#1e293b;color:#60a5fa;padding:10px 24px;border-radius:8px;text-decoration:none;font-size:14px;">Back to GRC Suite</a>
+  </div>
+
+  <!-- ASSESSMENT FORM -->
+  <div id="assessment" style="display:none;">
+
+    <div class="steps" id="step-indicator">
+      <div class="step done" id="step1"><div class="step-num">1</div> Framework</div>
+      <div class="step-line"></div>
+      <div class="step active" id="step2"><div class="step-num">2</div> Your Details</div>
+      <div class="step-line"></div>
+      <div class="step" id="step3"><div class="step-num">3</div> Questions</div>
+      <div class="step-line"></div>
+      <div class="step" id="step4"><div class="step-num">4</div> Submit</div>
+    </div>
+
+    <form id="assessment-form" method="POST" action="https://formsubmit.co/logicalcoders@outlook.com">
+      <input type="hidden" name="_subject" id="form-subject" value="Compliance Assessment Submission">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="Framework" id="hidden-framework" value="">
+      <input type="hidden" name="_next" value="https://anelhenning2-collab.github.io/grc-suite/governance/?submitted=true">
+
+      <!-- CLIENT DETAILS -->
+      <h2>Your Contact Details</h2>
+      <div class="client-fields">
+        <div class="field-row">
+          <div>
+            <label>Full Name *</label>
+            <input type="text" name="Full Name" placeholder="Jane Smith" required>
+          </div>
+          <div>
+            <label>Job Title</label>
+            <input type="text" name="Job Title" placeholder="IT Manager">
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Company Name *</label>
+            <input type="text" name="Company Name" placeholder="Acme Corp" required>
+          </div>
+          <div>
+            <label>Industry</label>
+            <input type="text" name="Industry" placeholder="Healthcare, Technology, Legal...">
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Email Address *</label>
+            <input type="email" name="Email" placeholder="jane@company.com" required>
+          </div>
+          <div>
+            <label>Phone Number</label>
+            <input type="tel" name="Phone" placeholder="+1 555 000 0000">
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <label>Number of Employees</label>
+            <select name="Company Size">
+              <option value="">Select...</option>
+              <option>1 to 10</option>
+              <option>11 to 50</option>
+              <option>51 to 200</option>
+              <option>201 to 500</option>
+              <option>500+</option>
+            </select>
+          </div>
+          <div>
+            <label>Assessment Deadline</label>
+            <input type="text" name="Deadline" placeholder="e.g. Within 30 days, No deadline">
+          </div>
+        </div>
+        <div>
+          <label>What is driving this assessment? (optional)</label>
+          <textarea name="Driver" rows="2" placeholder="e.g. Enterprise client request, internal audit, preparing for growth, compliance requirement..."></textarea>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE SECTIONS (injected by JS) -->
+      <div id="questions-wrap"></div>
+
+      <!-- LIVE SCORE -->
+      <h2>Your Current Score</h2>
+      <div class="score-bar-wrap">
+        <div class="score-label"><span>Compliance Readiness</span><span id="score-display">0 / 0</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="score-fill" style="width:0%"></div></div>
+        <div class="score-bands">
+          <div class="band critical">Below 40% — Critical gaps</div>
+          <div class="band high">40–59% — High risk</div>
+          <div class="band medium">60–79% — Moderate gaps</div>
+          <div class="band good">80–100% — Strong posture</div>
+        </div>
+      </div>
+      <div class="section-scores" id="section-scores"></div>
+
+      <!-- ADDITIONAL NOTES -->
+      <h2>Additional Context</h2>
+      <div class="client-fields">
+        <label>Is there anything else you would like Anél to know before the review?</label>
+        <textarea name="Additional Notes" rows="3" placeholder="Any prior incidents, specific concerns, upcoming audits, or context about your IT environment..."></textarea>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+        <p style="font-size:14px;color:#94a3b8;margin-bottom:16px;">By submitting this form you agree that your answers will be reviewed by Logical Coders for the purpose of providing a compliance assessment and proposal.</p>
+        <button type="submit" class="btn btn-lg green">Submit Assessment &rarr;</button>
+        <div class="required-note">* Required fields. Your information is never shared with third parties.</div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+// ── FRAMEWORK DATA ────────────────────────────────────────────────────────
+
+const FRAMEWORKS = {
+  nist: {
+    name: "NIST Cybersecurity Framework",
+    color: "#2563eb",
+    sections: [
+      {
+        name: "IDENTIFY",
+        desc: "Does the organisation know what it has, what matters, and what could go wrong?",
+        questions: [
+          "Does the organisation maintain a complete inventory of all hardware devices used to access company data?",
+          "Does the organisation maintain a complete inventory of all software applications in use?",
+          "Has the organisation identified which data is most sensitive or critical to operations?",
+          "Has a formal Risk Assessment been conducted in the last 12 months?",
+          "Are roles and responsibilities for cybersecurity clearly assigned to specific individuals?",
+          "Does the organisation understand which regulations apply to its business such as HIPAA, PCI-DSS, or state privacy laws?",
+          "Has the organisation identified its most critical business processes and the impact if they were disrupted?",
+          "Are third-party vendors assessed for security risk before being engaged?"
+        ]
+      },
+      {
+        name: "PROTECT",
+        desc: "Does the organisation have controls in place to limit the impact of a cybersecurity event?",
+        questions: [
+          "Are all user accounts protected with unique usernames and strong passwords?",
+          "Is Multi-Factor Authentication enabled on email, cloud storage, and critical business systems?",
+          "Is access to sensitive data restricted to only the staff who need it for their job?",
+          "Is there a formal process for granting and revoking access when staff join or leave?",
+          "Are all devices used to access company data encrypted?",
+          "Is antivirus or endpoint protection software installed and up to date on all devices?",
+          "Are operating systems and software updated and patched on a regular schedule?",
+          "Is company data backed up regularly and stored in a separate location?",
+          "Has the organisation tested its backup by performing a restoration in the last 12 months?",
+          "Has security awareness training been provided to all staff in the last 12 months?",
+          "Does the organisation have a written Information Security Policy?",
+          "Does the organisation have a written Acceptable Use Policy for devices and systems?",
+          "Is guest Wi-Fi separated from the internal business network?"
+        ]
+      },
+      {
+        name: "DETECT",
+        desc: "Does the organisation have the ability to identify when a cybersecurity event has occurred?",
+        questions: [
+          "Are login attempts and access to sensitive systems logged and monitored?",
+          "Does the organisation receive alerts when unusual activity occurs such as failed logins or large file downloads?",
+          "Is there a process for reviewing security logs on a regular basis?",
+          "Does the organisation have threat detection software that sends alerts when threats are found?",
+          "Would the organisation know within 24 hours if a staff member's account had been compromised?"
+        ]
+      },
+      {
+        name: "RESPOND",
+        desc: "Does the organisation know what to do when a cybersecurity event occurs?",
+        questions: [
+          "Does the organisation have a written Incident Response Plan?",
+          "Does every staff member know who to contact if they suspect a security incident?",
+          "Has the organisation tested its incident response process in the last 12 months?",
+          "Does the organisation have a process for communicating with clients if a breach occurs?",
+          "Are incidents documented including what happened, who responded, and what was done?",
+          "Does the organisation know its legal obligations for reporting a data breach?"
+        ]
+      },
+      {
+        name: "RECOVER",
+        desc: "Can the organisation restore normal operations after a cybersecurity event?",
+        questions: [
+          "Does the organisation have a written Business Continuity Plan?",
+          "Has a Recovery Time Objective been defined — how long the business can be down?",
+          "Has a Recovery Point Objective been defined — how much data loss is acceptable?",
+          "Has the organisation tested its ability to restore operations from a backup in the last 12 months?",
+          "Is there a process for reviewing what went wrong after an incident and updating procedures?"
+        ]
+      }
+    ]
+  },
+
+  iso: {
+    name: "ISO 27001 Readiness Assessment",
+    color: "#7c3aed",
+    sections: [
+      {
+        name: "A5 — INFORMATION SECURITY POLICIES",
+        desc: "Documented policies approved, communicated, and maintained.",
+        questions: [
+          "Does the organisation have a documented Information Security Policy approved by management?",
+          "Is the policy reviewed and updated at least once per year?",
+          "Has the policy been communicated to all employees and relevant external parties?"
+        ]
+      },
+      {
+        name: "A6 — ORGANISATION OF INFORMATION SECURITY",
+        desc: "Roles, responsibilities, and third-party security obligations.",
+        questions: [
+          "Are information security roles and responsibilities clearly defined and assigned?",
+          "Is there a process for managing information security in projects from the beginning?",
+          "Are there security requirements for remote working and mobile device use?",
+          "Are third parties required to agree to security obligations before being given access?"
+        ]
+      },
+      {
+        name: "A7 — HUMAN RESOURCE SECURITY",
+        desc: "Pre-employment screening, training, disciplinary process, and offboarding.",
+        questions: [
+          "Are background checks conducted on employees before they are given access to sensitive information?",
+          "Are employees required to sign confidentiality or non-disclosure agreements?",
+          "Do all employees receive information security awareness training at least once per year?",
+          "Is there a formal disciplinary process for employees who violate security policies?",
+          "Is access immediately removed when an employee leaves the organisation?"
+        ]
+      },
+      {
+        name: "A8 — ASSET MANAGEMENT",
+        desc: "Inventory, classification, and secure disposal of information assets.",
+        questions: [
+          "Does the organisation maintain an inventory of all information assets?",
+          "Is all information classified by sensitivity level such as Confidential, Internal, or Public?",
+          "Are there procedures for the secure disposal of devices and media containing sensitive information?"
+        ]
+      },
+      {
+        name: "A9 — ACCESS CONTROL",
+        desc: "Formal access policy, least privilege, MFA, and access reviews.",
+        questions: [
+          "Is there a formal access control policy that defines who can access what?",
+          "Is access granted based on the minimum required for the job role?",
+          "Are user access rights reviewed at regular intervals at least once per year?",
+          "Are privileged access rights such as administrator accounts tightly controlled?",
+          "Are all users required to use strong unique passwords for every system?",
+          "Is Multi-Factor Authentication required for remote access and sensitive systems?"
+        ]
+      },
+      {
+        name: "A10 — CRYPTOGRAPHY",
+        desc: "Encryption at rest, in transit, and key management policy.",
+        questions: [
+          "Is sensitive data encrypted when stored on devices or servers?",
+          "Is sensitive data encrypted when transmitted over networks including email?",
+          "Is there a policy governing the use of encryption and management of encryption keys?"
+        ]
+      },
+      {
+        name: "A12 — OPERATIONS SECURITY",
+        desc: "Documented procedures, change management, monitoring, malware protection, and backups.",
+        questions: [
+          "Are operating procedures for IT operations documented and kept up to date?",
+          "Is there a formal change management process for changes to IT systems?",
+          "Are systems monitored and logs reviewed on a regular basis?",
+          "Is malware protection software installed and updated on all systems?",
+          "Are systems and software patched and updated on a regular schedule?",
+          "Are backups performed regularly and tested to confirm they can be restored?",
+          "Are audit logs protected from tampering and retained for a defined period?"
+        ]
+      },
+      {
+        name: "A16 — INCIDENT MANAGEMENT",
+        desc: "Incident procedures, staff awareness, documentation, and evidence handling.",
+        questions: [
+          "Is there a documented procedure for reporting and managing security incidents?",
+          "Are all staff aware of how to report a suspected security incident?",
+          "Are incidents documented, investigated, and reviewed after resolution?",
+          "Is there a process for collecting and preserving evidence after an incident?"
+        ]
+      }
+    ]
+  },
+
+  soc: {
+    name: "SOC 2 Readiness Assessment",
+    color: "#0891b2",
+    sections: [
+      {
+        name: "SECURITY — CC Series",
+        desc: "The system is protected against unauthorised access, both physical and logical.",
+        questions: [
+          "Does the organisation have a defined security programme with assigned ownership?",
+          "Are security policies communicated to all staff and external parties?",
+          "Has the organisation conducted a formal risk assessment in the last 12 months?",
+          "Are security controls monitored on an ongoing basis?",
+          "Are logical access controls in place to restrict access to systems and data?",
+          "Is Multi-Factor Authentication required for all staff accessing production systems?",
+          "Are access rights reviewed and updated when roles change?",
+          "Is data encrypted at rest and in transit?",
+          "Are there controls preventing unauthorised removal of data from the environment?",
+          "Is vulnerability scanning or penetration testing conducted at least annually?",
+          "Are security incidents detected, logged, and responded to in a timely manner?",
+          "Is there a formal change management process for infrastructure and application changes?",
+          "Are third-party vendors assessed for security risk before being onboarded?",
+          "Are vendor contracts reviewed to ensure security obligations are included?"
+        ]
+      },
+      {
+        name: "AVAILABILITY — A Series",
+        desc: "The system is available for operation as committed or agreed.",
+        questions: [
+          "Has the organisation defined uptime or availability commitments to its customers?",
+          "Is system performance and availability monitored continuously?",
+          "Are there processes to recover from infrastructure disruptions within the defined recovery time?",
+          "Are backups performed and tested regularly to support recovery commitments?"
+        ]
+      },
+      {
+        name: "CONFIDENTIALITY — C Series",
+        desc: "Information designated as confidential is protected as committed.",
+        questions: [
+          "Is confidential information identified and classified when it is collected?",
+          "Is confidential information protected from unauthorised access throughout its lifecycle?",
+          "Is confidential information securely disposed of when it is no longer needed?"
+        ]
+      }
+    ]
+  },
+
+  hipaa: {
+    name: "HIPAA Security Rule Assessment",
+    color: "#059669",
+    sections: [
+      {
+        name: "ADMINISTRATIVE SAFEGUARDS",
+        desc: "Security officer, risk analysis, workforce training, access management, and BAAs.",
+        questions: [
+          "Has the organisation designated a HIPAA Security Officer responsible for policies and oversight?",
+          "Has the organisation conducted a formal Security Risk Analysis to identify risks to ePHI?",
+          "Does the organisation have a written Risk Management Plan to address identified risks?",
+          "Have all staff who handle ePHI received HIPAA security awareness training?",
+          "Is there a formal process for granting, modifying, and revoking access to ePHI systems?",
+          "Does the organisation have a written sanction policy for staff who violate HIPAA policies?",
+          "Are logs of access to ePHI systems reviewed on a regular basis?",
+          "Does the organisation have a written contingency plan covering backup, disaster recovery, and emergency operations?",
+          "Has the organisation executed a signed BAA with every vendor or contractor who touches ePHI?"
+        ]
+      },
+      {
+        name: "PHYSICAL SAFEGUARDS",
+        desc: "Facility access controls, workstation security, and device disposal.",
+        questions: [
+          "Are physical access controls in place to limit who can enter areas where ePHI systems are located?",
+          "Are there written policies governing how workstations that access ePHI must be used?",
+          "Are workstations positioned so that screens cannot be seen by unauthorised individuals such as patients?",
+          "Is there a policy for the receipt, removal, and disposal of hardware and media containing ePHI?",
+          "Is ePHI securely wiped or destroyed before devices are disposed of or reassigned?"
+        ]
+      },
+      {
+        name: "TECHNICAL SAFEGUARDS",
+        desc: "Unique user IDs, automatic logoff, encryption, audit controls, and MFA.",
+        questions: [
+          "Does every user have a unique login credential with no shared accounts permitted?",
+          "Is there a procedure for obtaining access to ePHI in an emergency?",
+          "Do workstations automatically log off or lock after a period of inactivity?",
+          "Is ePHI encrypted when stored on devices, servers, or cloud platforms?",
+          "Is ePHI encrypted when transmitted over networks including email and messaging?",
+          "Are audit logs in place to record access and activity on systems containing ePHI?",
+          "Are there controls to ensure ePHI is not improperly altered or destroyed?",
+          "Is Multi-Factor Authentication in place for all systems containing ePHI?"
+        ]
+      },
+      {
+        name: "BREACH NOTIFICATION READINESS",
+        desc: "Breach definition awareness, investigation procedure, and reporting obligations.",
+        questions: [
+          "Does the organisation know the definition of a HIPAA breach and when notification is required?",
+          "Is there a written procedure for investigating a potential breach?",
+          "Does the organisation know the 60-day deadline for notifying affected individuals after a breach?",
+          "Does the organisation know when it is required to notify the Department of Health and Human Services?",
+          "Has the organisation designated who is responsible for breach notification?"
+        ]
+      }
+    ]
+  }
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let selectedFramework = null;
+
+// ── FRAMEWORK SELECT ──────────────────────────────────────────────────────
+function selectFramework(id, el) {
+  selectedFramework = id;
+  document.querySelectorAll('.fw-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('start-btn-wrap').style.display = 'block';
+}
+
+function startAssessment() {
+  if (!selectedFramework) return;
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('assessment').style.display = 'block';
+  const fw = FRAMEWORKS[selectedFramework];
+  document.getElementById('hidden-framework').value = fw.name;
+  document.getElementById('form-subject').value = 'Compliance Assessment — ' + fw.name;
+  buildQuestions(fw);
+  updateScore();
+  window.scrollTo(0, 0);
+}
+
+// ── BUILD QUESTIONS ───────────────────────────────────────────────────────
+function buildQuestions(fw) {
+  const wrap = document.getElementById('questions-wrap');
+  const secScores = document.getElementById('section-scores');
+  wrap.innerHTML = '';
+  secScores.innerHTML = '';
+
+  fw.sections.forEach((sec, si) => {
+    const secDiv = document.createElement('div');
+    secDiv.className = 'q-section';
+    secDiv.innerHTML = `
+      <h2 style="color:${fw.color || '#93c5fd'}">${sec.name}</h2>
+      <p style="font-size:13px;color:#64748b;margin-bottom:12px;">${sec.desc}</p>
+      <table class="q-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Yes</th>
+            <th>Partial</th>
+            <th>No</th>
+          </tr>
+        </thead>
+        <tbody id="sec-body-${si}"></tbody>
+      </table>`;
+    wrap.appendChild(secDiv);
+
+    const tbody = document.getElementById(`sec-body-${si}`);
+    sec.questions.forEach((q, qi) => {
+      const fieldName = `S${si}_Q${qi}`;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${qi + 1}</td>
+        <td>${q}</td>
+        <td class="radio-col"><input type="radio" class="yes-r" name="${fieldName}" value="Yes" onchange="updateScore()"></td>
+        <td class="radio-col"><input type="radio" class="partial-r" name="${fieldName}" value="Partial" onchange="updateScore()"></td>
+        <td class="radio-col"><input type="radio" class="no-r" name="${fieldName}" value="No" onchange="updateScore()"></td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Section score chip
+    const chip = document.createElement('div');
+    chip.className = 'sec-score';
+    chip.id = `sec-chip-${si}`;
+    chip.innerHTML = `<div class="sn" id="sec-score-${si}">0/${sec.questions.length}</div><div class="sl">${sec.name.split('—')[0].trim()}</div>`;
+    secScores.appendChild(chip);
+  });
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────────
+function updateScore() {
+  if (!selectedFramework) return;
+  const fw = FRAMEWORKS[selectedFramework];
+  let totalYes = 0, totalPartial = 0, totalQ = 0;
+
+  fw.sections.forEach((sec, si) => {
+    let secYes = 0, secPartial = 0;
+    sec.questions.forEach((q, qi) => {
+      const radios = document.getElementsByName(`S${si}_Q${qi}`);
+      radios.forEach(r => {
+        if (r.checked) {
+          if (r.value === 'Yes') { secYes++; totalYes++; }
+          if (r.value === 'Partial') { secPartial++; totalPartial++; }
+        }
+      });
+      totalQ++;
+    });
+    const secEl = document.getElementById(`sec-score-${si}`);
+    if (secEl) {
+      const pts = secYes + secPartial * 0.5;
+      const pct = Math.round(pts / sec.questions.length * 100);
+      secEl.textContent = `${pct}%`;
+      secEl.style.color = pct >= 80 ? '#10b981' : pct >= 60 ? '#f59e0b' : '#ef4444';
+    }
+  });
+
+  const pts = totalYes + totalPartial * 0.5;
+  const pct = totalQ > 0 ? Math.round(pts / totalQ * 100) : 0;
+  document.getElementById('score-display').textContent = `${Math.round(pts)} / ${totalQ} (${pct}%)`;
+  document.getElementById('score-fill').style.width = pct + '%';
+  const fill = document.getElementById('score-fill');
+  fill.style.background = pct >= 80 ? 'linear-gradient(90deg,#059669,#10b981)' :
+                           pct >= 60 ? 'linear-gradient(90deg,#d97706,#f59e0b)' :
+                           'linear-gradient(90deg,#b91c1c,#ef4444)';
+}
+
+// ── FORM SUBMIT ───────────────────────────────────────────────────────────
+document.getElementById('assessment-form').addEventListener('submit', function(e) {
+  const fw = FRAMEWORKS[selectedFramework];
+  // Append score summary as hidden field
+  const scoreEl = document.getElementById('score-display');
+  let scoreInput = document.getElementById('hidden-score');
+  if (!scoreInput) {
+    scoreInput = document.createElement('input');
+    scoreInput.type = 'hidden';
+    scoreInput.name = 'Score Summary';
+    scoreInput.id = 'hidden-score';
+    this.appendChild(scoreInput);
+  }
+  scoreInput.value = scoreEl.textContent;
+});
+
+// ── CHECK IF RETURNED AFTER SUBMIT ───────────────────────────────────────
+if (window.location.search.includes('submitted=true')) {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('thankyou').style.display = 'block';
+}
+</script>
+</body>
+</html>
