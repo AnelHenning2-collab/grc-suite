@@ -678,31 +678,41 @@ document.getElementById('assessment-form').addEventListener('submit', async func
   const formData = new FormData(this);
   const fw = FRAMEWORKS[selectedFramework];
 
-  // Build readable answers block
+  // Build shortened answers block (just section + Q number + answer)
   let answersText = '';
   fw.sections.forEach((sec, si) => {
     answersText += `\n${sec.name}:\n`;
     sec.questions.forEach((q, qi) => {
       const radios = document.getElementsByName(`S${si}_Q${qi}`);
-      let answer = 'Not answered';
+      let answer = '-';
       radios.forEach(r => { if(r.checked) answer = r.value; });
-      answersText += `  ${qi+1}. ${q}\n     -> ${answer}\n`;
+      answersText += `  Q${qi+1}: ${answer}\n`;
     });
   });
 
+  const name    = formData.get('Full Name') || '';
+  const company = formData.get('Company Name') || '';
+  const fw_name = formData.get('Framework') || '';
+  const score   = document.getElementById('score-display').textContent;
+
   const templateParams = {
-    framework: formData.get('Framework') || '',
-    name:      formData.get('Full Name') || '',
+    // Primary variables matching updated template
+    framework: fw_name,
+    name,
     email:     formData.get('Email') || '',
     phone:     formData.get('Phone') || '',
-    company:   formData.get('Company Name') || '',
+    company,
     industry:  formData.get('Industry') || '',
     size:      formData.get('Company Size') || '',
     deadline:  formData.get('Deadline') || '',
     driver:    formData.get('Driver') || '',
-    score:     document.getElementById('score-display').textContent,
+    score,
     notes:     formData.get('Additional Notes') || '',
-    answers:   answersText
+    answers:   answersText,
+    // Fallback aliases for default EmailJS template fields
+    title:     fw_name,
+    from_name: name,
+    message:   `Company: ${company} | Score: ${score} | Framework: ${fw_name}\n${answersText}`
   };
 
   try {
