@@ -7,10 +7,10 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6;}
-nav{background:#1e293b;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid #2563eb;}
-.nav-logo{color:white;font-weight:bold;font-size:15pt;}
-.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
-.nav-btn{background:none;border:1px solid #334155;color:#94a3b8;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:9pt;transition:all .2s;}
+nav{background:#1e293b;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:3px solid #2563eb;flex-wrap:wrap;gap:8px;}
+.nav-logo{color:white;font-weight:bold;font-size:13pt;}
+.nav-links{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-btn{background:none;border:1px solid #334155;color:#94a3b8;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:8.5pt;transition:all .2s;}
 .nav-btn:hover,.nav-btn.active{background:#2563eb;color:white;border-color:#2563eb;}
 .section{display:none;padding:24px;max-width:1200px;margin:0 auto;}
 .section.active{display:block;}
@@ -19,25 +19,17 @@ h2{font-size:15pt;color:#93c5fd;margin:24px 0 10px;padding-bottom:6px;border-bot
 h3{font-size:12pt;color:#7dd3fc;margin:16px 0 8px;}
 p{color:#cbd5e1;margin-bottom:12px;font-size:10.5pt;}
 .subtitle{color:#64748b;font-size:10pt;margin-bottom:20px;}
-
-/* Cards */
 .card{background:#1e293b;border-radius:10px;padding:18px;margin-bottom:14px;border-left:4px solid #2563eb;}
 .card.red{border-left-color:#ef4444;}.card.green{border-left-color:#10b981;}
 .card.purple{border-left-color:#8b5cf6;}.card.amber{border-left-color:#f59e0b;}
 .card.navy{border-left-color:#1d4ed8;}.card.teal{border-left-color:#14b8a6;}
-
-/* Grid */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 @media(max-width:800px){.grid2,.grid3,.grid4{grid-template-columns:1fr;}}
-
-/* Stat boxes */
 .stat{background:#1e3a5f;border-radius:8px;padding:14px;text-align:center;}
 .stat .n{font-size:28pt;font-weight:bold;color:#60a5fa;}
 .stat .l{font-size:8pt;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;}
-
-/* Table */
 table{width:100%;border-collapse:collapse;font-size:10pt;margin:12px 0;}
 th{background:#1d4ed8;color:white;padding:10px;text-align:left;font-size:9pt;text-transform:uppercase;}
 td{padding:9px 10px;border-bottom:1px solid #1e293b;color:#cbd5e1;vertical-align:top;}
@@ -45,8 +37,8 @@ tr:nth-child(even) td{background:#1a2540;}
 td:first-child{font-weight:bold;color:#93c5fd;}
 
 /* Flashcard */
-.fc-container{perspective:1000px;}
-.flashcard{width:100%;height:200px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .6s;}
+.fc-container{perspective:1000px;position:relative;}
+.flashcard{width:100%;height:220px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .6s;}
 .flashcard.flipped{transform:rotateY(180deg);}
 .fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;}
 .fc-front{background:#1e3a5f;border:2px solid #2563eb;}
@@ -55,15 +47,22 @@ td:first-child{font-weight:bold;color:#93c5fd;}
 .fc-hint{font-size:9pt;color:#94a3b8;}
 .fc-def{font-size:12pt;color:#86efac;}
 .fc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
-.btn{background:#2563eb;color:white;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:10pt;font-weight:bold;}
+.btn{background:#2563eb;color:white;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-size:10pt;font-weight:bold;transition:background .2s;}
 .btn:hover{background:#1d4ed8;}
 .btn.green{background:#059669;}.btn.green:hover{background:#047857;}
 .btn.red{background:#dc2626;}.btn.red:hover{background:#b91c1c;}
 .btn.gray{background:#334155;}.btn.gray:hover{background:#475569;}
+.btn.amber{background:#d97706;}.btn.amber:hover{background:#b45309;}
 .fc-progress{text-align:center;color:#64748b;font-size:9pt;margin-top:8px;}
 .fc-score{display:flex;gap:10px;justify-content:center;margin-top:8px;}
 .score-box{background:#1e293b;border-radius:6px;padding:6px 14px;text-align:center;}
 .score-box .sn{font-size:16pt;font-weight:bold;}.score-box .sl{font-size:8pt;color:#64748b;}
+
+/* Audio button */
+.audio-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.12);border:none;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:16pt;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10;}
+.audio-btn:hover{background:rgba(255,255,255,.25);}
+.audio-btn.speaking{background:#2563eb;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}
 
 /* Quiz */
 .quiz-q{background:#1e293b;border-radius:10px;padding:20px;margin-bottom:14px;}
@@ -76,12 +75,8 @@ td:first-child{font-weight:bold;color:#93c5fd;}
 .q-opt.reveal{background:#1e3a5f;border-color:#60a5fa;color:#93c5fd;}
 .q-explain{background:#1e3a5f;border-radius:6px;padding:12px;margin-top:10px;font-size:10pt;color:#93c5fd;display:none;}
 .domain-badge{display:inline-block;background:#1d4ed8;color:white;font-size:8pt;padding:2px 10px;border-radius:10px;margin-bottom:10px;}
-
-/* Progress bar */
 .prog-bar{background:#1e293b;border-radius:20px;height:12px;margin:6px 0;}
 .prog-fill{background:linear-gradient(90deg,#2563eb,#10b981);height:12px;border-radius:20px;transition:width .4s;}
-
-/* Mnemonic */
 .mnemonic{background:#1e3a5f;border-radius:8px;padding:14px;margin:10px 0;}
 .mnem-word{font-size:18pt;font-weight:bold;color:#60a5fa;letter-spacing:4px;}
 .mnem-break{color:#94a3b8;font-size:10pt;margin-top:6px;}
@@ -91,23 +86,63 @@ td:first-child{font-weight:bold;color:#93c5fd;}
 .scenario .s-label{font-size:8pt;font-weight:bold;color:#8b5cf6;text-transform:uppercase;margin-bottom:8px;}
 .scenario .s-story{color:#e2e8f0;font-size:11pt;margin-bottom:12px;}
 .scenario .s-q{color:#93c5fd;font-weight:bold;margin-bottom:10px;}
-.scenario .s-answer{background:#0f172a;border-radius:6px;padding:10px;display:none;color:#86efac;font-size:10.5pt;}
-.toggle-answer{background:#334155;color:white;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:9pt;}
+.scenario .s-answer{background:#0f172a;border-radius:6px;padding:12px;display:none;color:#86efac;font-size:10.5pt;margin-top:10px;}
+.toggle-answer{background:#334155;color:white;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:9pt;margin-right:8px;}
 .toggle-answer:hover{background:#475569;}
+
+/* Scenario Visual Diagram */
+.s-visual{background:#0f172a;border-radius:8px;padding:16px;margin-bottom:14px;overflow-x:auto;}
+.diagram{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;min-height:120px;position:relative;}
+.d-node{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:80px;}
+.d-icon{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22pt;position:relative;}
+.d-icon.danger{border:2px solid #ef4444;animation:dangerPulse 2s infinite;}
+.d-icon.safe{border:2px solid #10b981;}
+.d-icon.neutral{border:2px solid #475569;}
+.d-icon.fixed{border:2px solid #10b981;background:#14532d;}
+@keyframes dangerPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4);}50%{box-shadow:0 0 0 8px rgba(239,68,68,0);}}
+.d-label{font-size:8.5pt;color:#94a3b8;text-align:center;max-width:80px;}
+.d-arrow{display:flex;align-items:center;padding:0 4px;flex-shrink:0;}
+.d-arrow svg{width:40px;height:24px;}
+.d-badge{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;font-size:11pt;display:flex;align-items:center;justify-content:center;line-height:1;}
+.d-caption{text-align:center;font-size:9pt;color:#64748b;margin-top:10px;font-style:italic;}
+.d-alert{background:#450a0a;border:1px solid #ef4444;border-radius:6px;padding:6px 12px;font-size:9pt;color:#fca5a5;margin-top:8px;text-align:center;}
+.d-fix{background:#14532d;border:1px solid #10b981;border-radius:6px;padding:6px 12px;font-size:9pt;color:#86efac;margin-top:8px;text-align:center;}
+
+/* Word Search */
+.ws-grid{display:inline-grid;gap:2px;background:#1e293b;padding:10px;border-radius:10px;user-select:none;}
+.ws-cell{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:11pt;font-weight:bold;color:#94a3b8;border-radius:4px;cursor:pointer;transition:all .15s;background:#0f172a;}
+.ws-cell:hover{background:#1e3a5f;color:white;}
+.ws-cell.selected{background:#2563eb;color:white;}
+.ws-cell.found{color:white;font-weight:bold;}
+.ws-words{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+.ws-word{background:#1e293b;border:1px solid #334155;border-radius:6px;padding:4px 12px;font-size:9.5pt;color:#94a3b8;cursor:default;}
+.ws-word.found{background:#14532d;border-color:#10b981;color:#86efac;text-decoration:line-through;}
+.ws-controls{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+
+/* Match Game */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:800px;}
+.match-card{background:#1e293b;border:2px solid #334155;border-radius:8px;padding:12px 16px;cursor:pointer;color:#cbd5e1;font-size:10pt;transition:all .2s;min-height:60px;display:flex;align-items:center;}
+.match-card:hover{border-color:#2563eb;}
+.match-card.selected{border-color:#f59e0b;background:#1e3a5f;color:white;}
+.match-card.matched{border-color:#10b981;background:#14532d;color:#86efac;cursor:default;}
+.match-card.wrong{border-color:#ef4444;background:#450a0a;animation:shake .3s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+.game-score{display:flex;gap:12px;margin-bottom:14px;}
 </style>
 </head>
 <body>
 
 <nav>
-  <span class="nav-logo">Study Hub — ISC2 CC & Security+</span>
+  <span class="nav-logo">Study Hub — ISC2 CC &amp; Security+</span>
   <div class="nav-links">
-    <button class="nav-btn active" onclick="show('overview')">Overview</button>
-    <button class="nav-btn" onclick="show('flashcards')">Flashcards</button>
-    <button class="nav-btn" onclick="show('scenarios')">Scenarios</button>
-    <button class="nav-btn" onclick="show('quiz')">Practice Quiz</button>
-    <button class="nav-btn" onclick="show('anchors')">Memory Anchors</button>
-    <button class="nav-btn" onclick="show('domains')">Domains</button>
-    <button class="nav-btn" onclick="show('mnemonics')">Mnemonics</button>
+    <button class="nav-btn active" onclick="show('overview',this)">Overview</button>
+    <button class="nav-btn" onclick="show('flashcards',this)">Flashcards</button>
+    <button class="nav-btn" onclick="show('scenarios',this)">Scenarios</button>
+    <button class="nav-btn" onclick="show('quiz',this)">Practice Quiz</button>
+    <button class="nav-btn" onclick="show('wordgames',this)">Word Games</button>
+    <button class="nav-btn" onclick="show('anchors',this)">Memory Anchors</button>
+    <button class="nav-btn" onclick="show('domains',this)">Domains</button>
+    <button class="nav-btn" onclick="show('mnemonics',this)">Mnemonics</button>
   </div>
 </nav>
 
@@ -115,77 +150,55 @@ td:first-child{font-weight:bold;color:#93c5fd;}
 <div id="overview" class="section active">
   <h1>ISC2 CC Study Hub</h1>
   <p class="subtitle">Anél Henning · Personal Study Reference · ISC2 CC → CompTIA Security+ SY0-701</p>
-
   <div class="grid4" style="margin:20px 0;">
     <div class="stat"><div class="n">5</div><div class="l">Domains to Master</div></div>
     <div class="stat"><div class="n">100</div><div class="l">Q's on the Exam</div></div>
     <div class="stat"><div class="n">700</div><div class="l">Passing Score /1000</div></div>
     <div class="stat"><div class="n">2hr</div><div class="l">Time Limit</div></div>
   </div>
-
   <h2>Why Nothing Is Sticking — And How to Fix It</h2>
   <div class="grid2">
-    <div class="card red">
-      <h3>The Problem</h3>
-      <p>You're reading definitions in isolation. Your brain stores <strong>stories and connections</strong> — not raw facts. Without hands-on experience, the concepts feel abstract and evaporate overnight.</p>
-    </div>
-    <div class="card green">
-      <h3>The Fix</h3>
-      <p>Anchor every concept to something you already know: your GRC Suite, your 10 years in grocery, or a real dental practice scenario. Use this hub daily — flashcards, scenarios, and quiz together.</p>
-    </div>
+    <div class="card red"><h3>The Problem</h3><p>You're reading definitions in isolation. Your brain stores <strong>stories and connections</strong> — not raw facts. Without hands-on experience, the concepts feel abstract and evaporate overnight.</p></div>
+    <div class="card green"><h3>The Fix</h3><p>Anchor every concept to something you already know. Use this hub daily — flashcards with audio, visual scenarios, word games, and quiz together. Multi-sense learning sticks.</p></div>
   </div>
-
   <h2>Your Daily Study Method</h2>
   <div class="card">
-    <table>
-      <thead><tr><th>Time</th><th>Activity</th><th>Tool</th></tr></thead>
-      <tbody>
-        <tr><td>15 min</td><td>Flashcards — 20 cards, mark what you missed</td><td>Flashcards tab</td></tr>
-        <tr><td>20 min</td><td>Read one domain section, connect to your GRC Suite</td><td>Domains tab</td></tr>
-        <tr><td>15 min</td><td>Work through 2–3 scenario questions out loud</td><td>Scenarios tab</td></tr>
-        <tr><td>10 min</td><td>10 practice quiz questions</td><td>Quiz tab</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Time</th><th>Activity</th><th>Tool</th></tr></thead><tbody>
+      <tr><td>15 min</td><td>Flashcards with audio — 20 cards, hear the definition</td><td>Flashcards tab</td></tr>
+      <tr><td>20 min</td><td>Read one visual scenario out loud</td><td>Scenarios tab</td></tr>
+      <tr><td>10 min</td><td>Word search or match game</td><td>Word Games tab</td></tr>
+      <tr><td>10 min</td><td>10 practice quiz questions</td><td>Quiz tab</td></tr>
+    </tbody></table>
   </div>
-
   <h2>ISC2 CC Domain Weights</h2>
-  <div class="card">
-    <div id="domain-bars"></div>
-  </div>
-
+  <div class="card"><div id="domain-bars"></div></div>
   <h2>The Three Memory Techniques</h2>
   <div class="grid3">
-    <div class="card navy">
-      <h3>1. GRC Suite Anchor</h3>
-      <p>Every concept maps to something you built. Risk assessment = your Risk Mapper. Evidence = your Evidence Builder. When you see a question — picture the tool.</p>
-    </div>
-    <div class="card amber">
-      <h3>2. Grocery Store Method</h3>
-      <p>10 years of operations experience = 10 years of security analogies. Least privilege = cashier can't approve big refunds. Separation of duties = one counts cash, one verifies.</p>
-    </div>
-    <div class="card teal">
-      <h3>3. Explain It Out Loud</h3>
-      <p>Pick 5 concepts each night. Explain them as if you're talking to Dr. Santos at Sunrise Dental. If you can't explain it simply, you don't own it yet.</p>
-    </div>
+    <div class="card navy"><h3>1. GRC Suite Anchor</h3><p>Every concept maps to something you built. Risk assessment = your Risk Mapper. When you see a question — picture the tool.</p></div>
+    <div class="card amber"><h3>2. Grocery Store Method</h3><p>10 years of operations = 10 years of security analogies. Least privilege = cashier can't approve big refunds.</p></div>
+    <div class="card teal"><h3>3. Audio + Visual</h3><p>Hear definitions read aloud on every flashcard. See scenarios drawn out as diagrams. Multi-sense learning is how it sticks.</p></div>
   </div>
 </div>
 
 <!-- FLASHCARDS -->
 <div id="flashcards" class="section">
   <h1>Flashcards</h1>
-  <p class="subtitle">Click the card to flip. Mark as Known or Review Again to track progress.</p>
-  <div class="fc-score">
-    <div class="score-box"><div class="sn" id="fc-known" style="color:#10b981;">0</div><div class="sl">Known</div></div>
-    <div class="score-box"><div class="sn" id="fc-review" style="color:#ef4444;">0</div><div class="sl">Review</div></div>
-    <div class="score-box"><div class="sn" id="fc-left" style="color:#60a5fa;">0</div><div class="sl">Remaining</div></div>
+  <p class="subtitle">Click the card to flip. Use the speaker button to hear it read aloud. Mark Known or Review to track progress.</p>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
+    <div class="fc-score">
+      <div class="score-box"><div class="sn" id="fc-known" style="color:#10b981;">0</div><div class="sl">Known</div></div>
+      <div class="score-box"><div class="sn" id="fc-review" style="color:#ef4444;">0</div><div class="sl">Review</div></div>
+      <div class="score-box"><div class="sn" id="fc-left" style="color:#60a5fa;">0</div><div class="sl">Remaining</div></div>
+    </div>
+    <button class="btn amber" onclick="speakCurrent()" id="speak-btn" title="Read aloud">&#128266; Read Aloud</button>
+    <button class="btn gray" onclick="stopSpeech()" title="Stop">&#9632; Stop</button>
   </div>
-  <br>
   <div class="fc-container">
     <div class="flashcard" id="flashcard" onclick="flipCard()">
       <div class="fc-front">
         <div style="font-size:8pt;color:#64748b;margin-bottom:8px;" id="fc-domain"></div>
         <div class="fc-term" id="fc-term">Loading...</div>
-        <div class="fc-hint">Click to reveal definition</div>
+        <div class="fc-hint">Click card to reveal · Speaker button to hear</div>
       </div>
       <div class="fc-back">
         <div class="fc-def" id="fc-def"></div>
@@ -199,16 +212,13 @@ td:first-child{font-weight:bold;color:#93c5fd;}
     <button class="btn green" onclick="markCard(true)">Known ✓</button>
   </div>
   <div class="fc-progress" id="fc-progress"></div>
-  <br>
-  <div style="text-align:center;">
-    <button class="btn" onclick="resetCards()">Reset All Cards</button>
-  </div>
+  <br><div style="text-align:center;"><button class="btn" onclick="resetCards()">Reset All Cards</button></div>
 </div>
 
 <!-- SCENARIOS -->
 <div id="scenarios" class="section">
-  <h1>Scenario Questions</h1>
-  <p class="subtitle">Read the scenario, think through the answer, then reveal it. Say your answer out loud before clicking.</p>
+  <h1>Visual Scenarios</h1>
+  <p class="subtitle">Each scenario shows you a diagram of what's happening, then asks an exam-style question. Say your answer out loud before revealing it.</p>
   <div id="scenarios-list"></div>
 </div>
 
@@ -218,251 +228,230 @@ td:first-child{font-weight:bold;color:#93c5fd;}
   <p class="subtitle">Select your answer. Explanation reveals after each question.</p>
   <div style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;">
     <button class="btn" onclick="loadQuiz('all')">All Domains</button>
-    <button class="btn gray" onclick="loadQuiz('D1')">Domain 1 — Principles</button>
-    <button class="btn gray" onclick="loadQuiz('D2')">Domain 2 — BC/DR</button>
-    <button class="btn gray" onclick="loadQuiz('D3')">Domain 3 — Access</button>
-    <button class="btn gray" onclick="loadQuiz('D4')">Domain 4 — Network</button>
-    <button class="btn gray" onclick="loadQuiz('D5')">Domain 5 — Operations</button>
+    <button class="btn gray" onclick="loadQuiz('D1')">Domain 1</button>
+    <button class="btn gray" onclick="loadQuiz('D2')">Domain 2</button>
+    <button class="btn gray" onclick="loadQuiz('D3')">Domain 3</button>
+    <button class="btn gray" onclick="loadQuiz('D4')">Domain 4</button>
+    <button class="btn gray" onclick="loadQuiz('D5')">Domain 5</button>
   </div>
-  <div id="quiz-score" style="display:none;" class="card green" style="margin-bottom:14px;text-align:center;"></div>
+  <div id="quiz-score" style="display:none;" class="card green"></div>
   <div id="quiz-container"></div>
+</div>
+
+<!-- WORD GAMES -->
+<div id="wordgames" class="section">
+  <h1>Word Games</h1>
+  <p class="subtitle">Reinforce terms through play. Switch between Word Search and Term Match.</p>
+  <div style="display:flex;gap:10px;margin-bottom:20px;">
+    <button class="btn" id="ws-tab-btn" onclick="showGame('wordsearch')">Word Search</button>
+    <button class="btn gray" id="match-tab-btn" onclick="showGame('match')">Term Match</button>
+  </div>
+
+  <!-- WORD SEARCH -->
+  <div id="wordsearch-game">
+    <div class="ws-controls">
+      <button class="btn green" onclick="newWordSearch()">New Puzzle</button>
+      <button class="btn gray" onclick="revealAll()">Reveal All</button>
+      <span id="ws-status" style="color:#64748b;font-size:10pt;align-self:center;"></span>
+    </div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+      <div>
+        <div class="ws-grid" id="ws-grid"></div>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <h3>Find These Terms</h3>
+        <div class="ws-words" id="ws-words"></div>
+        <div id="ws-congrats" style="display:none;" class="card green">
+          <h3>All words found!</h3>
+          <p>Click New Puzzle for another round.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH GAME -->
+  <div id="match-game" style="display:none;">
+    <div class="game-score">
+      <div class="score-box"><div class="sn" id="match-score" style="color:#10b981;">0</div><div class="sl">Matched</div></div>
+      <div class="score-box"><div class="sn" id="match-attempts" style="color:#f59e0b;">0</div><div class="sl">Attempts</div></div>
+    </div>
+    <button class="btn green" onclick="newMatchGame()" style="margin-bottom:14px;">New Game</button>
+    <p style="font-size:9.5pt;color:#64748b;margin-bottom:12px;">Click a term on the left, then its definition on the right.</p>
+    <div class="match-grid" id="match-grid"></div>
+    <div id="match-congrats" style="display:none;margin-top:14px;" class="card green">
+      <h3>All matched!</h3><p id="match-final"></p>
+    </div>
+  </div>
 </div>
 
 <!-- MEMORY ANCHORS -->
 <div id="anchors" class="section">
   <h1>Memory Anchors</h1>
   <p class="subtitle">Connect abstract security concepts to things you already know inside out.</p>
-
   <h2>GRC Suite Connections</h2>
-  <table>
-    <thead><tr><th>ISC2 CC Concept</th><th>Your GRC Suite</th><th>Why It Sticks</th></tr></thead>
-    <tbody>
-      <tr><td>Risk Assessment</td><td>Risk Mapper — likelihood × impact matrix</td><td>You built the scoring formula yourself</td></tr>
-      <tr><td>Controls</td><td>Evidence Builder — control-by-control evidence</td><td>You defined what evidence looks like for each control</td></tr>
-      <tr><td>Business Associate Agreement</td><td>BAA Log in your deliverables</td><td>You wrote the BAA tracking deliverable</td></tr>
-      <tr><td>Incident Response</td><td>90-Day Playbook Phase 3 tasks</td><td>You structured the response workflow</td></tr>
-      <tr><td>Confidentiality</td><td>PHI protection requirement in every report</td><td>You wrote "PHI encrypted in transit" in the outcomes report</td></tr>
-      <tr><td>Integrity</td><td>Evidence validation step — complete, accurate, timely</td><td>You defined the three criteria yourself</td></tr>
-      <tr><td>Availability</td><td>Monthly backup verification task in playbook</td><td>You put this in Phase 3 of every engagement</td></tr>
-      <tr><td>Gap Analysis</td><td>Gap Analysis report generator</td><td>You built the report from scratch</td></tr>
-      <tr><td>Security Policy</td><td>3 core policies in Phase 2 deliverables</td><td>You drafted InfoSec, Workforce, Acceptable Use</td></tr>
-      <tr><td>Risk Owner</td><td>Evidence Builder — Owner dropdown</td><td>You added the owner field to every control row</td></tr>
-    </tbody>
-  </table>
-
+  <table><thead><tr><th>ISC2 CC Concept</th><th>Your GRC Suite</th><th>Why It Sticks</th></tr></thead><tbody>
+    <tr><td>Risk Assessment</td><td>Risk Mapper — likelihood × impact matrix</td><td>You built the scoring formula yourself</td></tr>
+    <tr><td>Controls</td><td>Evidence Builder — control-by-control evidence</td><td>You defined what evidence looks like for each control</td></tr>
+    <tr><td>Business Associate Agreement</td><td>BAA Log in your deliverables</td><td>You wrote the BAA tracking deliverable</td></tr>
+    <tr><td>Incident Response</td><td>90-Day Playbook Phase 3 tasks</td><td>You structured the response workflow</td></tr>
+    <tr><td>Confidentiality</td><td>PHI protection requirement in every report</td><td>You wrote "PHI encrypted in transit" in the outcomes report</td></tr>
+    <tr><td>Integrity</td><td>Evidence validation — complete, accurate, timely</td><td>You defined the three criteria yourself</td></tr>
+    <tr><td>Availability</td><td>Monthly backup verification task in playbook</td><td>You put this in Phase 3 of every engagement</td></tr>
+    <tr><td>Gap Analysis</td><td>Gap Analysis report generator</td><td>You built the report from scratch</td></tr>
+    <tr><td>Security Policy</td><td>3 core policies in Phase 2 deliverables</td><td>You drafted InfoSec, Workforce, Acceptable Use</td></tr>
+    <tr><td>Risk Owner</td><td>Evidence Builder — Owner dropdown</td><td>You added the owner field to every control row</td></tr>
+  </tbody></table>
   <h2>Grocery Store Method</h2>
-  <table>
-    <thead><tr><th>Security Concept</th><th>Grocery Equivalent</th><th>The Connection</th></tr></thead>
-    <tbody>
-      <tr><td>Authentication</td><td>Clocking in — proving who you are</td><td>System must verify identity before allowing access</td></tr>
-      <tr><td>Authorization</td><td>Only managers open the safe</td><td>Authenticated users still need permission for each action</td></tr>
-      <tr><td>Least Privilege</td><td>Cashiers can't approve refunds over $50</td><td>Give only the minimum access needed for the job</td></tr>
-      <tr><td>Separation of Duties</td><td>One counts cash, another verifies the count</td><td>No single person controls a complete sensitive process</td></tr>
-      <tr><td>Physical Security</td><td>Lock on the back office, cameras at self-checkout</td><td>Protect physical access just like digital access</td></tr>
-      <tr><td>Availability</td><td>Store must open on time — downtime = lost revenue</td><td>Systems must be up when users need them</td></tr>
-      <tr><td>Audit Log</td><td>Register receipt tape — every transaction recorded</td><td>All actions logged so they can be reviewed later</td></tr>
-      <tr><td>Need to Know</td><td>Only HR sees payroll, not shelf stockers</td><td>Access limited to what's required for your specific role</td></tr>
-      <tr><td>Incident Response</td><td>Shoplifter caught — call manager, document, report</td><td>Detect → contain → document → report → fix</td></tr>
-      <tr><td>Redundancy</td><td>Two registers open so one breakdown doesn't close the store</td><td>Duplicate systems so failure of one doesn't cause outage</td></tr>
-      <tr><td>Data Classification</td><td>Employee files locked away vs. public menu board</td><td>Not all data needs the same level of protection</td></tr>
-      <tr><td>Change Management</td><td>New planogram — approve it, train staff, then roll it out</td><td>Changes to systems must be controlled and documented</td></tr>
-    </tbody>
-  </table>
+  <table><thead><tr><th>Security Concept</th><th>Grocery Equivalent</th><th>The Connection</th></tr></thead><tbody>
+    <tr><td>Authentication</td><td>Clocking in — proving who you are</td><td>System must verify identity before allowing access</td></tr>
+    <tr><td>Authorization</td><td>Only managers open the safe</td><td>Authenticated users still need permission for each action</td></tr>
+    <tr><td>Least Privilege</td><td>Cashiers can't approve refunds over $50</td><td>Give only the minimum access needed for the job</td></tr>
+    <tr><td>Separation of Duties</td><td>One counts cash, another verifies the count</td><td>No single person controls a complete sensitive process</td></tr>
+    <tr><td>Physical Security</td><td>Lock on back office, cameras at self-checkout</td><td>Protect physical access just like digital access</td></tr>
+    <tr><td>Availability</td><td>Store must open on time — downtime = lost revenue</td><td>Systems must be up when users need them</td></tr>
+    <tr><td>Audit Log</td><td>Register receipt tape — every transaction recorded</td><td>All actions logged so they can be reviewed later</td></tr>
+    <tr><td>Need to Know</td><td>Only HR sees payroll, not shelf stockers</td><td>Access limited to what's required for your specific role</td></tr>
+    <tr><td>Incident Response</td><td>Shoplifter caught — call manager, document, report</td><td>Detect → contain → document → report → fix</td></tr>
+    <tr><td>Redundancy</td><td>Two registers open so one breakdown doesn't close store</td><td>Duplicate systems so failure of one doesn't cause outage</td></tr>
+    <tr><td>Data Classification</td><td>Employee files locked vs. public menu board</td><td>Not all data needs the same level of protection</td></tr>
+    <tr><td>Change Management</td><td>New planogram — approve, train staff, then roll out</td><td>Changes to systems must be controlled and documented</td></tr>
+  </tbody></table>
 </div>
 
 <!-- DOMAINS -->
 <div id="domains" class="section">
   <h1>Domain Reference</h1>
-  <p class="subtitle">Quick-reference for all five ISC2 CC domains. Read one section, then go to Scenarios.</p>
-
+  <p class="subtitle">Quick-reference for all five ISC2 CC domains.</p>
   <h2>Domain 1 — Security Principles (26%)</h2>
   <div class="card navy">
-    <h3>CIA Triad — The Foundation of Everything</h3>
-    <table>
-      <thead><tr><th>Principle</th><th>Means</th><th>Threat to it</th><th>Your anchor</th></tr></thead>
-      <tbody>
-        <tr><td>Confidentiality</td><td>Only authorized people see the data</td><td>Eavesdropping, data breach</td><td>PHI in transit — encrypted in your reports</td></tr>
-        <tr><td>Integrity</td><td>Data hasn't been altered or tampered with</td><td>Man-in-the-middle, ransomware</td><td>Evidence validation — complete, accurate, timely</td></tr>
-        <tr><td>Availability</td><td>Systems are up when needed</td><td>DDoS, ransomware, hardware failure</td><td>Monthly backup verification in your playbook</td></tr>
-      </tbody>
-    </table>
+    <h3>CIA Triad</h3>
+    <table><thead><tr><th>Principle</th><th>Means</th><th>Threat</th><th>Your Anchor</th></tr></thead><tbody>
+      <tr><td>Confidentiality</td><td>Only authorized people see the data</td><td>Breach, eavesdropping</td><td>PHI encrypted in transit</td></tr>
+      <tr><td>Integrity</td><td>Data hasn't been altered</td><td>MITM, ransomware</td><td>Evidence validation step</td></tr>
+      <tr><td>Availability</td><td>Systems up when needed</td><td>DDoS, ransomware</td><td>Monthly backup verification</td></tr>
+    </tbody></table>
   </div>
-  <div class="card">
-    <h3>Key Terms — Domain 1</h3>
-    <table>
-      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
-      <tbody>
-        <tr><td>Risk</td><td>Likelihood × Impact — the potential for loss</td></tr>
-        <tr><td>Threat</td><td>Any potential danger (ransomware, insider, natural disaster)</td></tr>
-        <tr><td>Vulnerability</td><td>A weakness that a threat can exploit</td></tr>
-        <tr><td>Control</td><td>A safeguard put in place to reduce risk</td></tr>
-        <tr><td>Risk Appetite</td><td>How much risk an organization is willing to accept</td></tr>
-        <tr><td>Due Care</td><td>Doing what a reasonable person would do to protect assets</td></tr>
-        <tr><td>Due Diligence</td><td>Investigating before acting — knowing what you're protecting</td></tr>
-        <tr><td>Non-repudiation</td><td>Proof that an action occurred — can't deny it later (like a digital signature)</td></tr>
-        <tr><td>Privacy</td><td>The right of individuals to control their own information</td></tr>
-      </tbody>
-    </table>
+  <div class="card"><h3>Key Terms — Domain 1</h3>
+    <table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody>
+      <tr><td>Risk</td><td>Likelihood × Impact — potential for loss</td></tr>
+      <tr><td>Threat</td><td>Any potential danger (ransomware, insider, disaster)</td></tr>
+      <tr><td>Vulnerability</td><td>A weakness that a threat can exploit</td></tr>
+      <tr><td>Control</td><td>A safeguard to reduce risk</td></tr>
+      <tr><td>Risk Appetite</td><td>How much risk an org is willing to accept</td></tr>
+      <tr><td>Due Care</td><td>Doing what a reasonable person would do to protect assets</td></tr>
+      <tr><td>Due Diligence</td><td>Investigating before acting — knowing what you're protecting</td></tr>
+      <tr><td>Non-repudiation</td><td>Proof an action occurred — can't deny it later</td></tr>
+    </tbody></table>
   </div>
-
-  <h2>Domain 2 — Business Continuity & DR (10%)</h2>
+  <h2>Domain 2 — Business Continuity &amp; DR (10%)</h2>
   <div class="card amber">
-    <h3>Keep the Business Running When Things Break</h3>
-    <table>
-      <thead><tr><th>Term</th><th>Definition</th><th>Grocery Anchor</th></tr></thead>
-      <tbody>
-        <tr><td>BCP (Business Continuity Plan)</td><td>How the org keeps operating during a disaster</td><td>Snow day plan — store still needs to open somehow</td></tr>
-        <tr><td>DRP (Disaster Recovery Plan)</td><td>How to restore IT systems after a disaster</td><td>POS system crashed — steps to get it back up</td></tr>
-        <tr><td>RTO (Recovery Time Objective)</td><td>Max time allowed to restore a system</td><td>"We must reopen within 4 hours or we lose the day's revenue"</td></tr>
-        <tr><td>RPO (Recovery Point Objective)</td><td>Max acceptable data loss measured in time</td><td>"We can't lose more than 1 hour of transaction data"</td></tr>
-        <tr><td>BIA (Business Impact Analysis)</td><td>Identifies critical functions and the cost of their loss</td><td>Which departments can't function if the network goes down?</td></tr>
-        <tr><td>Hot Site</td><td>Fully operational backup facility — immediate failover</td><td>Second store location ready to go right now</td></tr>
-        <tr><td>Warm Site</td><td>Partially ready backup — needs some setup time</td><td>Storage unit with equipment — needs a few hours</td></tr>
-        <tr><td>Cold Site</td><td>Empty space — needs full setup before use</td><td>Empty building you own — days to weeks to activate</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Term</th><th>Definition</th><th>Grocery Anchor</th></tr></thead><tbody>
+      <tr><td>RTO</td><td>Max time to restore a system after failure</td><td>"Must reopen within 4 hours or lose the day"</td></tr>
+      <tr><td>RPO</td><td>Max acceptable data loss measured in time</td><td>"Can't lose more than 1 hour of transactions"</td></tr>
+      <tr><td>BCP</td><td>How org keeps operating during disaster</td><td>Snow day plan — store still needs to open somehow</td></tr>
+      <tr><td>Hot Site</td><td>Fully operational backup — immediate failover</td><td>Second store location ready right now</td></tr>
+      <tr><td>Warm Site</td><td>Partially ready — hours to activate</td><td>Storage unit with equipment — needs a few hours</td></tr>
+      <tr><td>Cold Site</td><td>Empty space — days/weeks to activate</td><td>Empty building you own — needs full setup</td></tr>
+    </tbody></table>
   </div>
-
   <h2>Domain 3 — Access Controls (22%)</h2>
   <div class="card green">
-    <h3>Who Gets In, What Can They Do, How Do We Prove It</h3>
-    <table>
-      <thead><tr><th>Model</th><th>How It Works</th><th>Example</th></tr></thead>
-      <tbody>
-        <tr><td>DAC (Discretionary)</td><td>Owner decides who gets access</td><td>You share a Google Doc with whoever you choose</td></tr>
-        <tr><td>MAC (Mandatory)</td><td>System/policy decides — labels like Top Secret</td><td>Military clearance levels — you can't override them</td></tr>
-        <tr><td>RBAC (Role-Based)</td><td>Access based on your job role</td><td>Manager role = safe access. Cashier role = register only.</td></tr>
-        <tr><td>ABAC (Attribute-Based)</td><td>Access based on multiple attributes (time, location, role)</td><td>Doctor can access records only during business hours from hospital network</td></tr>
-        <tr><td>Rule-Based</td><td>Rules set by admin — firewall rules</td><td>No traffic allowed on port 23 — full stop</td></tr>
-      </tbody>
-    </table>
-    <h3 style="margin-top:14px;">Authentication Factors — Remember: Something You...</h3>
-    <table>
-      <thead><tr><th>Factor</th><th>Type</th><th>Example</th></tr></thead>
-      <tbody>
-        <tr><td>Something you KNOW</td><td>Knowledge</td><td>Password, PIN, security question</td></tr>
-        <tr><td>Something you HAVE</td><td>Possession</td><td>Badge, phone, hardware token, smart card</td></tr>
-        <tr><td>Something you ARE</td><td>Inherence</td><td>Fingerprint, retina scan, face ID</td></tr>
-        <tr><td>Somewhere you ARE</td><td>Location</td><td>GPS location, IP address geolocation</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Model</th><th>How It Works</th><th>Example</th></tr></thead><tbody>
+      <tr><td>DAC</td><td>Owner decides who gets access</td><td>You share a Google Doc with whoever you choose</td></tr>
+      <tr><td>MAC</td><td>System/policy decides — classification labels</td><td>Military clearance levels — you can't override</td></tr>
+      <tr><td>RBAC</td><td>Access based on job role</td><td>Manager role = safe access. Cashier = register only.</td></tr>
+      <tr><td>ABAC</td><td>Access based on multiple attributes</td><td>Doctor can access records only during business hours</td></tr>
+    </tbody></table>
+    <h3 style="margin-top:14px;">Authentication Factors — Something You...</h3>
+    <table><thead><tr><th>Factor</th><th>Type</th><th>Example</th></tr></thead><tbody>
+      <tr><td>KNOW</td><td>Knowledge</td><td>Password, PIN, security question</td></tr>
+      <tr><td>HAVE</td><td>Possession</td><td>Badge, phone, hardware token</td></tr>
+      <tr><td>ARE</td><td>Inherence</td><td>Fingerprint, retina, face ID</td></tr>
+      <tr><td>SOMEWHERE</td><td>Location</td><td>GPS location, IP geolocation</td></tr>
+    </tbody></table>
   </div>
-
   <h2>Domain 4 — Network Security (24%)</h2>
   <div class="card red">
-    <h3>How Data Moves and How We Protect It</h3>
-    <table>
-      <thead><tr><th>Term</th><th>Definition</th><th>Quick Tip</th></tr></thead>
-      <tbody>
-        <tr><td>Firewall</td><td>Filters traffic based on rules — allows or blocks</td><td>Bouncer at the door — checks the list</td></tr>
-        <tr><td>IDS (Intrusion Detection System)</td><td>Monitors and ALERTS on suspicious activity — does not block</td><td>Security camera — watches and records</td></tr>
-        <tr><td>IPS (Intrusion Prevention System)</td><td>Monitors AND BLOCKS suspicious activity</td><td>Security guard — watches AND stops threats</td></tr>
-        <tr><td>VPN</td><td>Encrypted tunnel over public internet</td><td>Armored car — contents protected even on public roads</td></tr>
-        <tr><td>DMZ</td><td>Network zone between internet and internal network</td><td>Lobby of a building — public can enter but not go past reception</td></tr>
-        <tr><td>Proxy</td><td>Intermediary between user and internet</td><td>Ordering through a middleman — your identity is hidden</td></tr>
-        <tr><td>NAT</td><td>Translates private IPs to public IP</td><td>Your office has one street address — internal offices have extensions</td></tr>
-        <tr><td>Encryption at rest</td><td>Data encrypted when stored</td><td>Locked filing cabinet</td></tr>
-        <tr><td>Encryption in transit</td><td>Data encrypted while moving across network</td><td>Sealed envelope — even if intercepted, can't be read</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Term</th><th>Definition</th><th>Quick Tip</th></tr></thead><tbody>
+      <tr><td>Firewall</td><td>Filters traffic based on rules</td><td>Bouncer — checks the list</td></tr>
+      <tr><td>IDS</td><td>Monitors and ALERTS — does not block</td><td>Security camera — watches only</td></tr>
+      <tr><td>IPS</td><td>Monitors AND BLOCKS</td><td>Security guard — watches and stops</td></tr>
+      <tr><td>VPN</td><td>Encrypted tunnel over public internet</td><td>Armored car on a public road</td></tr>
+      <tr><td>DMZ</td><td>Network zone between internet and internal</td><td>Building lobby — public stops at reception</td></tr>
+      <tr><td>Symmetric</td><td>Same key encrypts and decrypts — fast</td><td>AES, DES, 3DES</td></tr>
+      <tr><td>Asymmetric</td><td>Public key encrypts, private decrypts — slower</td><td>RSA — mailbox analogy</td></tr>
+      <tr><td>Hashing</td><td>One-way, no key — for integrity/passwords</td><td>SHA-256, MD5</td></tr>
+    </tbody></table>
   </div>
-
   <h2>Domain 5 — Security Operations (19%)</h2>
   <div class="card purple">
-    <h3>Day-to-Day Security: Monitoring, Incidents, Physical</h3>
-    <table>
-      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
-      <tbody>
-        <tr><td>Incident Response Steps</td><td>Prepare → Identify → Contain → Eradicate → Recover → Lessons Learned</td></tr>
-        <tr><td>SIEM</td><td>Security Information and Event Management — aggregates and analyzes logs</td></tr>
-        <tr><td>Patch Management</td><td>Process for regularly updating software to fix vulnerabilities</td></tr>
-        <tr><td>Configuration Management</td><td>Maintaining known-good system settings — prevent unauthorized changes</td></tr>
-        <tr><td>Data Loss Prevention (DLP)</td><td>Tools that prevent sensitive data from leaving the org</td></tr>
-        <tr><td>Hardening</td><td>Reducing attack surface — disable unnecessary services, apply patches</td></tr>
-        <tr><td>Chain of Custody</td><td>Documentation of who handled evidence and when</td></tr>
-        <tr><td>Defense in Depth</td><td>Multiple layers of security — if one fails, others still protect</td></tr>
-      </tbody>
-    </table>
+    <table><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody>
+      <tr><td>Incident Response</td><td>Prepare → Identify → Contain → Eradicate → Recover → Lessons Learned</td></tr>
+      <tr><td>SIEM</td><td>Aggregates and analyzes logs across the org</td></tr>
+      <tr><td>Defense in Depth</td><td>Multiple overlapping layers of security</td></tr>
+      <tr><td>Patch Management</td><td>Regularly updating software to fix vulnerabilities</td></tr>
+      <tr><td>Chain of Custody</td><td>Documentation of who handled evidence and when</td></tr>
+      <tr><td>Hardening</td><td>Reducing attack surface — disable unused services</td></tr>
+    </tbody></table>
   </div>
 </div>
 
 <!-- MNEMONICS -->
 <div id="mnemonics" class="section">
-  <h1>Mnemonics & Memory Tricks</h1>
-  <p class="subtitle">These are the ones that actually appear on the exam. Memorize the mnemonic, recall the concept.</p>
-
-  <h2>The Big Ones</h2>
+  <h1>Mnemonics &amp; Memory Tricks</h1>
+  <p class="subtitle">Memorize the mnemonic, recall the concept on exam day.</p>
   <div class="grid2">
-    <div class="mnemonic">
-      <div class="mnem-word">CIA</div>
-      <div class="mnem-break"><strong>C</strong>onfidentiality · <strong>I</strong>ntegrity · <strong>A</strong>vailability</div>
-      <p style="margin-top:8px;font-size:10pt;color:#94a3b8;">The three pillars of information security. Every security decision traces back to one of these three.</p>
-    </div>
-    <div class="mnemonic">
-      <div class="mnem-word">AAA</div>
-      <div class="mnem-break"><strong>A</strong>uthentication · <strong>A</strong>uthorization · <strong>A</strong>ccounting</div>
-      <p style="margin-top:8px;font-size:10pt;color:#94a3b8;">Who are you? What can you do? What did you do? — The access control framework.</p>
-    </div>
-    <div class="mnemonic">
-      <div class="mnem-word">PICEL</div>
-      <div class="mnem-break"><strong>P</strong>repare · <strong>I</strong>dentify · <strong>C</strong>ontain · <strong>E</strong>radicate · <strong>L</strong>essons Learned</div>
-      <p style="margin-top:8px;font-size:10pt;color:#94a3b8;">Incident Response steps. Add Recover between Eradicate and Lessons: PICREL.</p>
-    </div>
-    <div class="mnemonic">
-      <div class="mnem-word">KHAL</div>
-      <div class="mnem-break"><strong>K</strong>now · <strong>H</strong>ave · <strong>A</strong>re · <strong>L</strong>ocation</div>
-      <p style="margin-top:8px;font-size:10pt;color:#94a3b8;">The four authentication factors. Something you Know, Have, Are, or where you Are.</p>
-    </div>
+    <div class="mnemonic"><div class="mnem-word">CIA</div><div class="mnem-break"><strong>C</strong>onfidentiality · <strong>I</strong>ntegrity · <strong>A</strong>vailability</div><p style="margin-top:8px;font-size:10pt;color:#94a3b8;">The three pillars of information security. Every security decision traces back to one of these.</p></div>
+    <div class="mnemonic"><div class="mnem-word">AAA</div><div class="mnem-break"><strong>A</strong>uthentication · <strong>A</strong>uthorization · <strong>A</strong>ccounting</div><p style="margin-top:8px;font-size:10pt;color:#94a3b8;">Who are you? What can you do? What did you do?</p></div>
+    <div class="mnemonic"><div class="mnem-word">PICRL</div><div class="mnem-break"><strong>P</strong>repare · <strong>I</strong>dentify · <strong>C</strong>ontain · <strong>R</strong>ecover · <strong>L</strong>essons Learned</div><p style="margin-top:8px;font-size:10pt;color:#94a3b8;">Incident Response steps. Add Eradicate between Contain and Recover.</p></div>
+    <div class="mnemonic"><div class="mnem-word">KHAL</div><div class="mnem-break"><strong>K</strong>now · <strong>H</strong>ave · <strong>A</strong>re · <strong>L</strong>ocation</div><p style="margin-top:8px;font-size:10pt;color:#94a3b8;">The four authentication factors.</p></div>
   </div>
-
-  <h2>IDS vs IPS — The One Everyone Confuses</h2>
-  <div class="card red">
-    <p><strong style="color:#ef4444;">IDS = Camera.</strong> Watches. Records. Alerts. Does NOT stop anything.<br>
-    <strong style="color:#10b981;">IPS = Security Guard.</strong> Watches AND physically stops the threat.<br><br>
-    <strong>Memory trick:</strong> IDS <em>Detects</em>. IPS <em>Prevents</em>. The D and P tell you everything.</p>
-  </div>
-
+  <h2>IDS vs IPS</h2>
+  <div class="card red"><p><strong style="color:#ef4444;">IDS = Camera.</strong> Watches. Records. Alerts. Does NOT stop anything.<br><strong style="color:#10b981;">IPS = Security Guard.</strong> Watches AND physically stops the threat.<br><br><strong>Trick:</strong> IDS <em>Detects</em>. IPS <em>Prevents</em>. D and P tell you everything.</p></div>
   <h2>Hot / Warm / Cold Sites</h2>
-  <div class="card amber">
-    <p>Think of it like a car:<br><br>
-    <strong style="color:#ef4444;">Hot site</strong> = Car engine running, ready to drive immediately. Most expensive.<br>
-    <strong style="color:#f59e0b;">Warm site</strong> = Car in the garage, needs 30 min warmup. Moderate cost.<br>
-    <strong style="color:#94a3b8;">Cold site</strong> = Empty parking space. Cheapest — but days to get operational.</p>
-  </div>
-
+  <div class="card amber"><p><strong style="color:#ef4444;">Hot</strong> = Engine running, drive immediately. Most expensive.<br><strong style="color:#f59e0b;">Warm</strong> = Car in garage, 30 min warmup. Moderate cost.<br><strong style="color:#94a3b8;">Cold</strong> = Empty parking space. Cheapest — days to get operational.</p></div>
   <h2>RTO vs RPO</h2>
-  <div class="card navy">
-    <p><strong style="color:#60a5fa;">RTO (Recovery Time Objective)</strong> = How long can we be DOWN?<br>
-    Think: <em>"How long until we're back up?"</em><br><br>
-    <strong style="color:#34d399;">RPO (Recovery Point Objective)</strong> = How much DATA can we lose?<br>
-    Think: <em>"How far back does our backup go?"</em><br><br>
-    <strong>Anchor:</strong> RPO is about the PAST (last backup). RTO is about the FUTURE (how soon we recover).</p>
-  </div>
-
-  <h2>MAC vs DAC vs RBAC</h2>
-  <div class="card green">
-    <p><strong style="color:#ef4444;">MAC (Mandatory)</strong> = Military. The SYSTEM decides based on labels. You can't override it.<br>
-    <strong style="color:#f59e0b;">DAC (Discretionary)</strong> = Desktop. The DATA OWNER decides who gets access. (Like sharing a Google Doc.)<br>
-    <strong style="color:#10b981;">RBAC (Role-Based)</strong> = Real World. Access based on your JOB ROLE. Manager vs cashier.<br><br>
-    <strong>Memory:</strong> M = Mandatory/Military. D = Discretionary/Data Owner. R = Role.</p>
-  </div>
-
-  <h2>Encryption Quick Reference</h2>
+  <div class="card navy"><p><strong style="color:#60a5fa;">RTO</strong> = How long can we be DOWN? (future — when do we recover)<br><strong style="color:#34d399;">RPO</strong> = How much DATA can we lose? (past — how far back does backup go)</p></div>
+  <h2>Encryption</h2>
   <div class="card teal">
-    <table>
-      <thead><tr><th>Type</th><th>Keys</th><th>Speed</th><th>Use Case</th><th>Examples</th></tr></thead>
-      <tbody>
-        <tr><td>Symmetric</td><td>Same key to encrypt and decrypt</td><td>Fast</td><td>Bulk data encryption</td><td>AES, DES, 3DES</td></tr>
-        <tr><td>Asymmetric</td><td>Public key encrypts, private key decrypts</td><td>Slow</td><td>Key exchange, digital signatures</td><td>RSA, ECC, Diffie-Hellman</td></tr>
-        <tr><td>Hashing</td><td>One-way — no key</td><td>Very fast</td><td>Password storage, integrity verification</td><td>SHA-256, MD5</td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:10px;"><strong>Memory:</strong> Symmetric = Same key. Asymmetric = A pair of keys. Hash = one-way street — no going back.</p>
+    <table><thead><tr><th>Type</th><th>Keys</th><th>Speed</th><th>Examples</th></tr></thead><tbody>
+      <tr><td>Symmetric</td><td>Same key both ways</td><td>Fast</td><td>AES, DES, 3DES</td></tr>
+      <tr><td>Asymmetric</td><td>Public in, private out</td><td>Slow</td><td>RSA, ECC</td></tr>
+      <tr><td>Hashing</td><td>No key — one way</td><td>Very fast</td><td>SHA-256, MD5</td></tr>
+    </tbody></table>
   </div>
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
+// ── SPEECH ───────────────────────────────────────────────────────────────
+function speak(text){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=0.88;u.pitch=1;u.volume=1;
+  const voices=window.speechSynthesis.getVoices();
+  const pref=voices.find(v=>v.lang.startsWith('en')&&v.name.toLowerCase().includes('female'))
+           ||voices.find(v=>v.lang.startsWith('en'))||voices[0];
+  if(pref)u.voice=pref;
+  const btn=document.getElementById('speak-btn');
+  if(btn)btn.classList.add('speaking');
+  u.onend=()=>{if(btn)btn.classList.remove('speaking');};
+  window.speechSynthesis.speak(u);
+}
+function stopSpeech(){
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  const btn=document.getElementById('speak-btn');
+  if(btn)btn.classList.remove('speaking');
+}
+function speakCurrent(){
+  if(fcIndex>=fcDeck.length)return;
+  const c=fcDeck[fcIndex];
+  const isBack=document.getElementById('flashcard').classList.contains('flipped');
+  const txt=isBack?`${c.term}. ${c.def}. Memory anchor: ${c.anchor}`:`${c.term}`;
+  speak(txt);
+}
+
+// ── DATA ─────────────────────────────────────────────────────────────────
 const DOMAINS=[
   {name:"Security Principles",pct:26,color:"#2563eb"},
   {name:"Business Continuity & DR",pct:10,color:"#f59e0b"},
@@ -472,111 +461,218 @@ const DOMAINS=[
 ];
 
 const CARDS=[
-  {domain:"D1 – Principles",term:"CIA Triad",def:"Confidentiality, Integrity, Availability — the three core principles of information security.",anchor:"Your GRC Suite covers all three: PHI encryption (C), evidence validation (I), backup verification (A)."},
-  {domain:"D1 – Principles",term:"Confidentiality",def:"Ensuring information is accessible only to those authorized to have access.",anchor:"PHI in transit — encrypted so only Dr. Santos and authorized staff can read it."},
-  {domain:"D1 – Principles",term:"Integrity",def:"Ensuring data is accurate, complete, and has not been altered without authorization.",anchor:"Evidence validation step in your playbook — complete, accurate, timely."},
-  {domain:"D1 – Principles",term:"Availability",def:"Ensuring authorized users can access information and systems when needed.",anchor:"Monthly backup verification task — system must be available when the practice needs it."},
-  {domain:"D1 – Principles",term:"Non-repudiation",def:"The inability to deny having performed an action — proven by digital signatures and audit logs.",anchor:"Signed Security Risk Analysis in your deliverables — Dr. Santos can't deny she reviewed it."},
-  {domain:"D1 – Principles",term:"Risk",def:"The likelihood that a threat will exploit a vulnerability and cause harm (Likelihood × Impact).",anchor:"Your Risk Mapper calculates this exact formula — likelihood × impact = risk score."},
-  {domain:"D1 – Principles",term:"Threat",def:"Any potential danger that could exploit a vulnerability and cause harm.",anchor:"Your Risk Mapper threat dropdown: Ransomware, Phishing, Unauthorized Access, etc."},
-  {domain:"D1 – Principles",term:"Vulnerability",def:"A weakness in a system, process, or control that a threat can exploit.",anchor:"Shared EHR login — that's a vulnerability. Ransomware is the threat that exploits it."},
-  {domain:"D1 – Principles",term:"Due Care",def:"Taking reasonable precautions to protect assets — doing what a prudent person would do.",anchor:"Executing BAAs with all vendors — a reasonable HIPAA-covered practice does this."},
-  {domain:"D1 – Principles",term:"Due Diligence",def:"Investigating and understanding risks before making decisions — ongoing care.",anchor:"Conducting the Security Risk Analysis before choosing controls."},
-  {domain:"D2 – BC/DR",term:"RTO",def:"Recovery Time Objective — the maximum acceptable time to restore a system after failure.",anchor:"'EHR must be back online within 4 hours or patient care is impacted.'"},
-  {domain:"D2 – BC/DR",term:"RPO",def:"Recovery Point Objective — the maximum acceptable amount of data loss measured in time.",anchor:"'We can't lose more than 1 hour of patient records — backup must run hourly.'"},
-  {domain:"D2 – BC/DR",term:"BCP",def:"Business Continuity Plan — how an organization continues operating during a disaster.",anchor:"Your playbook Phase 3 — structure for keeping the practice functioning during an incident."},
-  {domain:"D2 – BC/DR",term:"BIA",def:"Business Impact Analysis — identifies critical functions and the cost if they're disrupted.",anchor:"Which systems, if down, would stop Sunrise Dental from seeing patients?"},
-  {domain:"D2 – BC/DR",term:"Hot Site",def:"A fully operational backup facility that can take over immediately — most expensive.",anchor:"Car with engine running. Zero delay. Costs the most to maintain."},
-  {domain:"D2 – BC/DR",term:"Warm Site",def:"A partially configured backup facility — takes hours to activate.",anchor:"Car in garage — ready in 30 minutes. Moderate cost."},
-  {domain:"D2 – BC/DR",term:"Cold Site",def:"An empty facility with power and connectivity but no equipment — cheapest.",anchor:"Empty parking space. Cheapest — but days to weeks to become operational."},
-  {domain:"D3 – Access",term:"Authentication",def:"Verifying the identity of a user or system (proving who you are).",anchor:"Grocery: clocking in with your badge. EHR: entering your username and password."},
-  {domain:"D3 – Access",term:"Authorization",def:"Determining what an authenticated user is allowed to do.",anchor:"Grocery: manager badge → safe access. Cashier badge → register only."},
-  {domain:"D3 – Access",term:"Least Privilege",def:"Granting users only the minimum access necessary to perform their job function.",anchor:"Cashiers can't approve refunds over $50. They only have what they need."},
-  {domain:"D3 – Access",term:"Separation of Duties",def:"Requiring more than one person to complete a sensitive task — prevents fraud.",anchor:"One person counts the cash, another person verifies the count at store closing."},
-  {domain:"D3 – Access",term:"RBAC",def:"Role-Based Access Control — access is granted based on the user's role in the org.",anchor:"Manager role = full access. Receptionist role = scheduling only. Set once, applied to everyone in the role."},
-  {domain:"D3 – Access",term:"DAC",def:"Discretionary Access Control — the data owner decides who can access their data.",anchor:"You sharing a Google Doc — you decide who gets the link. You own it, you control it."},
-  {domain:"D3 – Access",term:"MAC",def:"Mandatory Access Control — the system enforces access based on classification labels.",anchor:"Military: Top Secret clearance required. You can't override it — the system decides."},
-  {domain:"D3 – Access",term:"MFA",def:"Multi-Factor Authentication — requires two or more authentication factors.",anchor:"Your playbook task: 'Individual EHR logins with MFA for all staff.'"},
-  {domain:"D4 – Network",term:"Firewall",def:"A network security device that monitors and controls incoming and outgoing traffic based on rules.",anchor:"Bouncer at the club door — checks the list, allows or blocks entry."},
-  {domain:"D4 – Network",term:"IDS",def:"Intrusion Detection System — monitors traffic and ALERTS on suspicious activity. Does NOT block.",anchor:"Security camera — it records and alerts, but doesn't physically stop anyone."},
-  {domain:"D4 – Network",term:"IPS",def:"Intrusion Prevention System — monitors AND actively BLOCKS suspicious activity.",anchor:"Security guard — watches AND steps in to stop the threat."},
-  {domain:"D4 – Network",term:"VPN",def:"Virtual Private Network — creates an encrypted tunnel over a public network.",anchor:"Armored car on a public road — contents are protected even though it's traveling publicly."},
-  {domain:"D4 – Network",term:"DMZ",def:"Demilitarized Zone — a network segment between the internet and the internal network.",anchor:"Building lobby — public can enter, but they can't get past reception without authorization."},
-  {domain:"D4 – Network",term:"Symmetric Encryption",def:"Uses the same key to encrypt and decrypt — fast, used for bulk data.",anchor:"One key that both locks and unlocks the same padlock. AES, DES, 3DES."},
-  {domain:"D4 – Network",term:"Asymmetric Encryption",def:"Uses a public key to encrypt and a private key to decrypt — slower, used for key exchange.",anchor:"Mailbox: anyone can drop mail in (public key), only you have the key to open it (private key). RSA."},
-  {domain:"D4 – Network",term:"Hashing",def:"One-way transformation of data into a fixed-length value — cannot be reversed.",anchor:"Password storage — system stores the hash, not the password. SHA-256, MD5."},
-  {domain:"D5 – Operations",term:"Incident Response",def:"The process of detecting, containing, eradicating, and recovering from a security incident.",anchor:"Prepare → Identify → Contain → Eradicate → Recover → Lessons Learned (PICRL)"},
-  {domain:"D5 – Operations",term:"Defense in Depth",def:"Multiple overlapping layers of security so that if one fails, others still protect.",anchor:"Store security: cameras + guards + locks + alarms. No single point of failure."},
-  {domain:"D5 – Operations",term:"SIEM",def:"Security Information and Event Management — collects and analyzes log data from across the org.",anchor:"Meridian Health's Splunk deployment in your enterprise sample — centralizes all security events."},
-  {domain:"D5 – Operations",term:"Patch Management",def:"The process of regularly updating software to fix known vulnerabilities.",anchor:"Your playbook: keeping EHR and systems updated is a Phase 1 control."},
-  {domain:"D5 – Operations",term:"Chain of Custody",def:"Documentation showing who handled evidence, when, and how — maintains integrity for legal use.",anchor:"If you discover a breach — document every step taken, by whom, in what order."},
-  {domain:"D5 – Operations",term:"Data Classification",def:"Categorizing data by sensitivity level to apply appropriate controls.",anchor:"Patient records = Confidential. Staff schedules = Internal. Marketing materials = Public."},
+  {domain:"D1",term:"CIA Triad",def:"Confidentiality, Integrity, Availability — the three core principles of information security.",anchor:"Your GRC Suite covers all three: PHI encryption (C), evidence validation (I), backup verification (A)."},
+  {domain:"D1",term:"Confidentiality",def:"Ensuring information is accessible only to those authorized to have access.",anchor:"PHI in transit — encrypted so only Dr. Santos and authorized staff can read it."},
+  {domain:"D1",term:"Integrity",def:"Ensuring data is accurate, complete, and has not been altered without authorization.",anchor:"Evidence validation step in your playbook — complete, accurate, timely."},
+  {domain:"D1",term:"Availability",def:"Ensuring authorized users can access information and systems when they need them.",anchor:"Monthly backup verification task — system must be available when the practice needs it."},
+  {domain:"D1",term:"Non-repudiation",def:"The inability to deny having performed an action — proven by digital signatures and audit logs.",anchor:"Signed Security Risk Analysis — Dr. Santos cannot deny she reviewed and signed it."},
+  {domain:"D1",term:"Risk",def:"The likelihood that a threat will exploit a vulnerability and cause harm. Calculated as Likelihood multiplied by Impact.",anchor:"Your Risk Mapper calculates this exact formula — likelihood times impact equals risk score."},
+  {domain:"D1",term:"Threat",def:"Any potential danger that could exploit a vulnerability and cause harm to an asset.",anchor:"Your Risk Mapper threat dropdown: Ransomware, Phishing, Unauthorized Access."},
+  {domain:"D1",term:"Vulnerability",def:"A weakness in a system, process, or control that a threat can exploit.",anchor:"Shared EHR login — that is the vulnerability. Ransomware is the threat that exploits it."},
+  {domain:"D1",term:"Due Care",def:"Taking reasonable precautions to protect assets — doing what a prudent person would do.",anchor:"Executing BAAs with all vendors — a reasonable HIPAA-covered practice does this."},
+  {domain:"D1",term:"Due Diligence",def:"Investigating and understanding risks before making decisions — ongoing research and care.",anchor:"Conducting the Security Risk Analysis before choosing which controls to implement."},
+  {domain:"D2",term:"RTO",def:"Recovery Time Objective — the maximum acceptable time to restore a system after failure.",anchor:"The EHR must be back online within 4 hours or patient care is impacted."},
+  {domain:"D2",term:"RPO",def:"Recovery Point Objective — the maximum acceptable amount of data loss measured in time.",anchor:"We cannot lose more than 1 hour of patient records — backup must run hourly."},
+  {domain:"D2",term:"BCP",def:"Business Continuity Plan — how an organization continues operating during a disaster.",anchor:"Your playbook Phase 3 — structure for keeping the practice functioning during an incident."},
+  {domain:"D2",term:"BIA",def:"Business Impact Analysis — identifies critical functions and the cost if they are disrupted.",anchor:"Which systems, if down, would stop Sunrise Dental from seeing patients?"},
+  {domain:"D2",term:"Hot Site",def:"A fully operational backup facility that can take over immediately. Most expensive option.",anchor:"Car with engine running. Zero delay. Costs the most to maintain."},
+  {domain:"D2",term:"Warm Site",def:"A partially configured backup facility — takes hours to activate. Moderate cost.",anchor:"Car in the garage — ready in 30 minutes. Middle cost and middle speed."},
+  {domain:"D2",term:"Cold Site",def:"An empty facility with power and connectivity but no equipment. Cheapest option.",anchor:"Empty parking space. Cheapest — but days to weeks to become operational."},
+  {domain:"D3",term:"Authentication",def:"Verifying the identity of a user or system — proving who you are before granting access.",anchor:"Grocery: clocking in with your badge. EHR: entering username and password."},
+  {domain:"D3",term:"Authorization",def:"Determining what an authenticated user is allowed to do after their identity is verified.",anchor:"Grocery: manager badge gives safe access. Cashier badge gives register access only."},
+  {domain:"D3",term:"Least Privilege",def:"Granting users only the minimum access necessary to perform their job function — nothing more.",anchor:"Cashiers cannot approve refunds over fifty dollars. They only have what they need."},
+  {domain:"D3",term:"Separation of Duties",def:"Requiring more than one person to complete a sensitive task — prevents fraud and errors.",anchor:"One person counts the cash, another verifies the count at store closing."},
+  {domain:"D3",term:"RBAC",def:"Role-Based Access Control — access is granted based on the user's role in the organization.",anchor:"Manager role equals full access. Receptionist role equals scheduling only."},
+  {domain:"D3",term:"DAC",def:"Discretionary Access Control — the data owner decides who can access their data.",anchor:"You sharing a Google Doc — you decide who gets the link. You own it, you control it."},
+  {domain:"D3",term:"MAC",def:"Mandatory Access Control — the system enforces access based on classification labels. Users cannot override.",anchor:"Military: Top Secret clearance required. The system decides — not the user."},
+  {domain:"D3",term:"MFA",def:"Multi-Factor Authentication — requires two or more authentication factors to verify identity.",anchor:"Your playbook task: Individual EHR logins with MFA for all staff."},
+  {domain:"D4",term:"Firewall",def:"A network security device that monitors and controls incoming and outgoing traffic based on defined rules.",anchor:"Bouncer at the club door — checks the list, allows or blocks entry."},
+  {domain:"D4",term:"IDS",def:"Intrusion Detection System — monitors traffic and alerts on suspicious activity. Does NOT block anything.",anchor:"Security camera — it records and alerts, but does not physically stop anyone."},
+  {domain:"D4",term:"IPS",def:"Intrusion Prevention System — monitors AND actively blocks suspicious activity in real time.",anchor:"Security guard — watches AND steps in to stop the threat."},
+  {domain:"D4",term:"VPN",def:"Virtual Private Network — creates an encrypted tunnel over a public network for secure communication.",anchor:"Armored car on a public road — contents are protected even though it travels publicly."},
+  {domain:"D4",term:"DMZ",def:"Demilitarized Zone — a network segment between the internet and the internal corporate network.",anchor:"Building lobby — public can enter, but they cannot get past reception without authorization."},
+  {domain:"D4",term:"Symmetric Encryption",def:"Uses the same key to encrypt and decrypt data. Fast. Used for bulk data encryption. Examples: AES, DES.",anchor:"One key that both locks and unlocks the same padlock."},
+  {domain:"D4",term:"Asymmetric Encryption",def:"Uses a public key to encrypt and a private key to decrypt. Slower. Used for key exchange. Examples: RSA.",anchor:"Mailbox: anyone drops mail in (public key), only you open it (private key)."},
+  {domain:"D4",term:"Hashing",def:"One-way transformation of data into a fixed-length value. Cannot be reversed. Used for password storage and integrity.",anchor:"Password storage — system stores the hash, not the actual password. SHA-256, MD5."},
+  {domain:"D5",term:"Incident Response",def:"The structured process of detecting, containing, eradicating, and recovering from a security incident.",anchor:"Prepare, Identify, Contain, Eradicate, Recover, Lessons Learned — PICRL."},
+  {domain:"D5",term:"Defense in Depth",def:"Multiple overlapping layers of security so that if one layer fails, others still protect the asset.",anchor:"Store security: cameras plus guards plus locks plus alarms. No single point of failure."},
+  {domain:"D5",term:"SIEM",def:"Security Information and Event Management — collects and analyzes log data from across the organization.",anchor:"Meridian Health's Splunk deployment in your enterprise sample report."},
+  {domain:"D5",term:"Patch Management",def:"The process of regularly updating software to fix known security vulnerabilities.",anchor:"Your playbook: keeping EHR and systems updated is a core Phase 1 control."},
+  {domain:"D5",term:"Chain of Custody",def:"Documentation showing who handled evidence, when, and how — maintains integrity for legal proceedings.",anchor:"If a breach occurs, document every step, by whom, in what order — do not skip any."},
+  {domain:"D5",term:"Data Classification",def:"Categorizing data by sensitivity level to apply appropriate protection controls.",anchor:"Patient records equal Confidential. Staff schedules equal Internal. Marketing equals Public."},
 ];
 
 const SCENARIOS=[
-  {label:"Domain 1 — Risk",story:"Sunrise Dental Group has no written Security Risk Analysis, uses shared EHR logins, and sends patient appointment reminders via the dentist's personal Gmail account.",q:"Which principle of the CIA Triad is MOST at risk from the shared EHR login issue?",answer:"Confidentiality. Shared logins mean there is no way to verify which individual accessed patient records — anyone with the shared credential can see all PHI with no accountability. This directly violates the principle that only authorized individuals should access protected information."},
-  {label:"Domain 3 — Access Controls",story:"A hospital IT director needs to ensure that nurses can view patient records but cannot modify billing information, and billing staff can modify invoices but cannot view clinical notes.",q:"Which access control model BEST fits this requirement?",answer:"RBAC (Role-Based Access Control). Access is defined by job role — nurses get a 'Clinical' role with read-only patient record access, billing staff get a 'Billing' role with invoice modification rights. Neither role has the other's permissions. This is exactly how EHR systems like Epic are configured."},
-  {label:"Domain 2 — BC/DR",story:"A dental practice's cloud backup runs nightly at midnight. On Wednesday at 3pm, ransomware encrypts the entire EHR system. The practice cannot see patients.",q:"What is the RPO in this scenario, and what does it mean for the practice?",answer:"The RPO is approximately 15 hours (midnight backup to 3pm attack). This means the practice could lose up to 15 hours of patient data — appointments booked, notes added, and billing records created that day are gone. The last known-good backup was Tuesday night."},
-  {label:"Domain 4 — Network",story:"A security analyst notices that the IDS is generating 200 alerts per hour but the SOC has been ignoring them because most are false positives. The network has never had a formal firewall rule review.",q:"Which TWO controls should be addressed first, and why?",answer:"1) Alert tuning on the IDS — 200 false positives per hour causes alert fatigue, meaning real threats get missed because analysts stop paying attention. 2) Firewall rule review — outdated or overly permissive rules create gaps that threats can exploit. An IDS that nobody trusts is effectively no IDS at all. This is exactly the gap identified in the Meridian Health gap analysis report."},
-  {label:"Domain 1 — Principles",story:"A receptionist at a clinic shares her login with a colleague who forgot their password. The colleague then accidentally deletes appointment records for the following week.",q:"Which TWO principles does this situation violate?",answer:"Integrity — appointment records were modified/deleted without authorization. Accountability/Non-repudiation — because the login was shared, it is impossible to determine whether the receptionist or her colleague made the deletion, eliminating the ability to hold anyone responsible."},
-  {label:"Domain 5 — Incident Response",story:"An employee at a healthcare practice clicks a phishing link and malware is installed on her workstation. The IT consultant detects unusual outbound traffic at 9am.",q:"List the correct incident response steps the consultant should follow in order.",answer:"1) Prepare (already done — IR plan should exist). 2) Identify — confirm this is a real incident (malware confirmed via unusual traffic). 3) Contain — disconnect the workstation from the network immediately to stop spread. 4) Eradicate — remove the malware, reimaged the workstation. 5) Recover — restore from clean backup, return to operations. 6) Lessons Learned — document what happened, how it was missed, and what changes prevent recurrence."},
-  {label:"Domain 3 — Least Privilege",story:"A small medical office gives all staff Administrator access to the EHR system because 'it's easier and they all need to do everything.' The practice manager handles billing, scheduling, and clinical notes.",q:"What principle is being violated, and what is the specific risk?",answer:"Least Privilege is being violated. Every staff member has far more access than their role requires. The risk: any compromised account — whether through phishing, weak password, or malicious insider — immediately has full system access. A threat actor who compromises the front desk receptionist's account gets the same access as the physician. Access should be scoped to each role's minimum requirements."},
-  {label:"Domain 4 — Encryption",story:"A practice manager emails a patient's lab results as a Word document attachment using her personal Gmail account. The email passes through multiple servers before reaching the patient.",q:"Which encryption gap does this scenario represent, and what is the correct solution?",answer:"Encryption in transit is missing. The email travels unencrypted across public servers, meaning anyone with access to those servers — or who intercepts the traffic — can read the PHI. The solution is a HIPAA-compliant email platform (like Microsoft 365 with a signed BAA) that enforces TLS encryption in transit. This was exactly the gap closed in the Sunrise Dental engagement."},
+  {
+    label:"Domain 1 — Risk & CIA Triad",
+    story:"Sunrise Dental Group has no written Security Risk Analysis, all front-desk staff share one EHR login, and appointment reminders are sent via the dentist's personal Gmail account.",
+    q:"Which principle of the CIA Triad is MOST at risk from the shared EHR login, and why?",
+    answer:"Confidentiality. Shared logins mean there is no way to verify which individual accessed patient records. Anyone with the shared credential can see all PHI with zero accountability. This directly violates the principle that only authorized individuals should access protected information. It also breaks Non-repudiation — you cannot prove who did what.",
+    visual:{
+      nodes:[
+        {icon:"👥",label:"All Front Desk Staff",type:"danger",badge:"⚠"},
+        {arrow:"→",danger:true,label:"one shared login"},
+        {icon:"🖥️",label:"EHR System (PHI)",type:"danger"},
+        {arrow:"→",danger:false,label:"breach risk"},
+        {icon:"📋",label:"Patient Records",type:"danger",badge:"!"},
+      ],
+      alert:"Shared login = No accountability. ANY compromised credential = FULL PHI access.",
+      fix:"Fix: Individual logins + MFA per staff member → Confidentiality restored."
+    }
+  },
+  {
+    label:"Domain 3 — Access Controls (RBAC)",
+    story:"A hospital needs nurses to view patient records but not billing data. Billing staff can modify invoices but cannot view clinical notes. Both groups need access to the same system.",
+    q:"Which access control model BEST fits this requirement, and how would you implement it?",
+    answer:"RBAC (Role-Based Access Control). Create a 'Clinical' role with read-only patient record access and no billing visibility. Create a 'Billing' role with invoice modification rights and no clinical note access. Assign each staff member to their appropriate role. This is exactly how Epic EHR is configured in hospital environments.",
+    visual:{
+      nodes:[
+        {icon:"👩‍⚕️",label:"Nurse\n(Clinical Role)",type:"safe",badge:"✓"},
+        {arrow:"→",danger:false,label:"role-based"},
+        {icon:"📋",label:"Patient Records\n(read only)",type:"safe"},
+        {arrow:"✗",danger:true,label:"blocked"},
+        {icon:"💳",label:"Billing System\n(no access)",type:"neutral",badge:"✗"},
+      ],
+      alert:"Without RBAC: any staff member could access both clinical and billing data.",
+      fix:"RBAC: Each role sees only what their job requires — nothing more."
+    }
+  },
+  {
+    label:"Domain 2 — BC/DR (RPO)",
+    story:"A dental practice runs a cloud backup nightly at midnight. On Wednesday at 3pm, ransomware encrypts the entire EHR. The practice cannot see any patients or access any records.",
+    q:"What is the RPO in this scenario, and what does it mean for the practice?",
+    answer:"The RPO is approximately 15 hours — from midnight backup to 3pm attack. This means the practice could lose up to 15 hours of patient data. Appointments booked, notes added, and billing records created that day are all gone. The last clean backup was Tuesday night at midnight.",
+    visual:{
+      nodes:[
+        {icon:"💾",label:"Midnight Backup\nTuesday",type:"safe",badge:"✓"},
+        {arrow:"→",danger:false,label:"15 hrs later"},
+        {icon:"🦠",label:"Ransomware\nWed 3pm",type:"danger",badge:"!"},
+        {arrow:"→",danger:true,label:"encrypted"},
+        {icon:"🖥️",label:"EHR System\n(DOWN)",type:"danger",badge:"✗"},
+      ],
+      alert:"RPO = 15 hours. All data created between midnight and 3pm is LOST.",
+      fix:"Fix: Hourly backups → RPO reduces to 1 hour maximum data loss."
+    }
+  },
+  {
+    label:"Domain 4 — IDS vs IPS",
+    story:"A hospital's SIEM generates 1,200+ false positive alerts per day. Analysts have started ignoring most alerts. Meanwhile, medical IoT devices (340+ units) are not onboarded to the SIEM at all.",
+    q:"Which TWO controls should be fixed first, and what is the specific risk of each gap?",
+    answer:"1) Alert tuning on the IDS/SIEM — 1,200 daily false positives causes alert fatigue. Analysts stop paying attention, meaning real threats slip through unnoticed. 2) IoT onboarding to SIEM — 340 medical devices with no monitoring is a completely blind attack surface. An attacker compromising a medical device would be invisible to the SOC. This is exactly the DE.CM-01 gap in your Meridian Health gap analysis.",
+    visual:{
+      nodes:[
+        {icon:"📡",label:"340 IoT Devices\n(unmonitored)",type:"danger",badge:"!"},
+        {arrow:"→",danger:true,label:"no visibility"},
+        {icon:"🛡️",label:"SOC / SIEM\n(alert fatigue)",type:"danger",badge:"⚠"},
+        {arrow:"→",danger:false,label:"1200+ alerts/day"},
+        {icon:"😵",label:"Analysts\n(overwhelmed)",type:"danger"},
+      ],
+      alert:"IDS alerts without tuning = ignored alerts = zero effective detection.",
+      fix:"Fix: Tune alerts + onboard IoT → SOC can actually detect real threats."
+    }
+  },
+  {
+    label:"Domain 5 — Incident Response",
+    story:"An employee clicks a phishing link at 8:45am. Malware installs silently. At 9:15am, the IT consultant detects unusual outbound traffic from her workstation to an unknown IP address.",
+    q:"List the correct incident response steps the consultant should follow, in order.",
+    answer:"1) Prepare (already done — IR plan should exist before incidents occur). 2) Identify — confirm this is a real incident by verifying the malware via traffic analysis. 3) Contain — disconnect the workstation from the network immediately to stop spread to other systems. 4) Eradicate — remove the malware, reimage the workstation from clean baseline. 5) Recover — restore from clean backup, return system to operations, monitor closely. 6) Lessons Learned — document what happened, how the phishing got through, and what prevents recurrence.",
+    visual:{
+      nodes:[
+        {icon:"📧",label:"Phishing Email\n8:45am",type:"danger",badge:"!"},
+        {arrow:"→",danger:true,label:"employee clicks"},
+        {icon:"🦠",label:"Malware\nInstalled",type:"danger",badge:"⚠"},
+        {arrow:"→",danger:true,label:"outbound traffic"},
+        {icon:"🌐",label:"Unknown IP\n(attacker C2)",type:"danger",badge:"✗"},
+      ],
+      alert:"PICRL: Prepare → Identify → Contain → Eradicate → Recover → Lessons Learned",
+      fix:"CONTAIN FIRST: Disconnect workstation immediately — stop the spread before anything else."
+    }
+  },
+  {
+    label:"Domain 4 — Encryption in Transit",
+    story:"A practice manager emails a patient's lab results as a Word document using her personal Gmail account. The email passes through multiple public servers before reaching the patient.",
+    q:"Which encryption gap does this scenario represent, and what is the HIPAA-compliant solution?",
+    answer:"Encryption in transit is missing. The email travels unencrypted across public servers, meaning anyone with access to those servers — or who intercepts the traffic — can read the PHI. The HIPAA-compliant solution is a Microsoft 365 Business account with a signed Business Associate Agreement and TLS encryption enforced for all outbound email. This is exactly the gap closed in the Sunrise Dental 90-day engagement.",
+    visual:{
+      nodes:[
+        {icon:"👩‍💼",label:"Practice Manager\n(Gmail)",type:"danger",badge:"⚠"},
+        {arrow:"→",danger:true,label:"unencrypted"},
+        {icon:"🌐",label:"Public Servers\n(interceptable)",type:"danger",badge:"!"},
+        {arrow:"→",danger:true,label:"PHI exposed"},
+        {icon:"🧑‍⚕️",label:"Patient\n(recipient)",type:"neutral"},
+      ],
+      alert:"PHI traveling unencrypted over public internet = HIPAA violation.",
+      fix:"Fix: Microsoft 365 + BAA + TLS enforcement → PHI encrypted end-to-end."
+    }
+  },
 ];
 
 const QUIZ_Q=[
-  {domain:"D1",q:"Which element of the CIA Triad ensures that data has not been altered by unauthorized parties?",opts:["Confidentiality","Integrity","Availability","Non-repudiation"],ans:1,explain:"Integrity ensures data is accurate and unaltered. Confidentiality is about who can see it. Availability is about access when needed. Non-repudiation prevents denial of actions."},
-  {domain:"D1",q:"A security professional performs an annual risk assessment and documents all identified risks. This is an example of:",opts:["Due negligence","Due care","Due diligence","Risk transference"],ans:2,explain:"Due diligence is the ongoing investigation and documentation of risks. Due care is taking action to address them. Performing the assessment is the diligence step."},
+  {domain:"D1",q:"Which element of the CIA Triad ensures that data has not been altered by unauthorized parties?",opts:["Confidentiality","Integrity","Availability","Non-repudiation"],ans:1,explain:"Integrity ensures data is accurate and unaltered. Confidentiality is about who can see it. Availability is about uptime. Non-repudiation prevents denial of actions."},
+  {domain:"D1",q:"A security professional performs an annual risk assessment and documents all identified risks. This is an example of:",opts:["Due negligence","Due care","Due diligence","Risk transference"],ans:2,explain:"Due diligence is the ongoing investigation and documentation of risks. Due care is taking action to address them. The assessment itself is the diligence step."},
   {domain:"D2",q:"A hospital's IT system must be restored within 4 hours of a failure or patient care is impacted. This 4-hour window is the:",opts:["RPO","BIA","RTO","MTD"],ans:2,explain:"RTO (Recovery Time Objective) is the maximum acceptable downtime. RPO is about data loss measured in time, not system downtime."},
-  {domain:"D2",q:"A backup site has all hardware pre-installed and data replicated in near real-time. It can take over operations within minutes. This is a:",opts:["Cold site","Warm site","Hot site","Mobile site"],ans:2,explain:"A hot site is fully operational and can take over almost immediately. Warm sites need hours of setup. Cold sites need days to weeks."},
-  {domain:"D3",q:"A user can only access files that they own or that have been explicitly shared with them by the owner. This is an example of:",opts:["MAC","RBAC","DAC","Rule-based AC"],ans:2,explain:"DAC (Discretionary Access Control) — the data OWNER controls who can access their data. Like sharing a Google Doc — you decide the permissions."},
-  {domain:"D3",q:"Which authentication factor is a fingerprint scanner?",opts:["Something you know","Something you have","Something you are","Somewhere you are"],ans:2,explain:"A fingerprint is 'something you ARE' — an inherence factor (biometric). Passwords are 'know'. Badges are 'have'. GPS location is 'are (location)'."},
-  {domain:"D3",q:"A bank requires that no single employee can both initiate AND approve a wire transfer. This is an example of:",opts:["Least Privilege","Need to Know","Separation of Duties","Job Rotation"],ans:2,explain:"Separation of Duties requires two or more people for sensitive transactions to prevent fraud. One initiates, a different person approves."},
-  {domain:"D4",q:"Which device monitors network traffic and generates alerts but does NOT block traffic?",opts:["Firewall","IPS","IDS","Proxy"],ans:2,explain:"IDS (Intrusion Detection System) detects and alerts only — like a security camera. IPS (Intrusion Prevention System) actively blocks threats."},
-  {domain:"D4",q:"AES-256 is an example of which type of encryption?",opts:["Asymmetric","Hashing","Symmetric","Elliptic curve"],ans:2,explain:"AES (Advanced Encryption Standard) is symmetric — the same key encrypts and decrypts. It's fast and used for bulk data encryption."},
-  {domain:"D4",q:"A network zone between the public internet and the internal corporate network, where public-facing servers are placed, is called a:",opts:["VLAN","DMZ","VPN","Subnet"],ans:1,explain:"A DMZ (Demilitarized Zone) places public-facing servers where they can be reached from the internet without exposing the internal network. Like a building lobby — public access stops there."},
-  {domain:"D5",q:"During an incident, a compromised workstation is immediately disconnected from the network. This action represents which IR phase?",opts:["Identification","Eradication","Containment","Recovery"],ans:2,explain:"Containment stops the spread of the incident. Disconnecting the workstation prevents the malware from reaching other systems. Eradication is removing the malware; identification is confirming an incident occurred."},
-  {domain:"D5",q:"An organization uses multiple overlapping security controls so that if one fails, others still protect the asset. This is called:",opts:["Redundancy","Defense in Depth","Segmentation","Hardening"],ans:1,explain:"Defense in Depth uses multiple layers of security. Like a grocery store with cameras, guards, locks, AND alarms — failure of one doesn't compromise everything."},
-  {domain:"D1",q:"Which term describes the potential for a threat to exploit a vulnerability?",opts:["Risk","Impact","Control","Exposure"],ans:0,explain:"Risk is the potential for harm — typically expressed as Likelihood × Impact. A threat exploiting a vulnerability is the risk scenario."},
-  {domain:"D3",q:"A military system assigns security labels (Top Secret, Secret, Confidential) to both users and data. Access is granted only when the user's clearance matches or exceeds the data's label. This is:",opts:["DAC","RBAC","MAC","ABAC"],ans:2,explain:"MAC (Mandatory Access Control) uses system-enforced labels. The system decides — users and owners cannot override the classification-based access rules."},
-  {domain:"D5",q:"Which activity should occur LAST in the incident response process?",opts:["Containment","Eradication","Recovery","Lessons Learned"],ans:3,explain:"Lessons Learned is the final phase — documenting what happened, how it was handled, and what improvements prevent recurrence. Order: Prepare → Identify → Contain → Eradicate → Recover → Lessons Learned."},
+  {domain:"D2",q:"A backup site has all hardware pre-installed and data replicated in near real-time. It can take over within minutes. This is a:",opts:["Cold site","Warm site","Hot site","Mobile site"],ans:2,explain:"A hot site is fully operational and can take over almost immediately. Warm needs hours. Cold needs days to weeks."},
+  {domain:"D3",q:"A user can only access files they own or that have been explicitly shared with them by the owner. This is:",opts:["MAC","RBAC","DAC","Rule-based AC"],ans:2,explain:"DAC (Discretionary Access Control) — the data OWNER controls who can access their data. Like sharing a Google Doc — you decide the permissions."},
+  {domain:"D3",q:"Which authentication factor is a fingerprint scanner?",opts:["Something you know","Something you have","Something you are","Somewhere you are"],ans:2,explain:"A fingerprint is 'something you ARE' — an inherence/biometric factor. Passwords are 'know'. Badges are 'have'. GPS is 'location'."},
+  {domain:"D3",q:"A bank requires that no single employee can both initiate AND approve a wire transfer. This is:",opts:["Least Privilege","Need to Know","Separation of Duties","Job Rotation"],ans:2,explain:"Separation of Duties requires two or more people for sensitive transactions to prevent fraud. One initiates, a different person approves."},
+  {domain:"D4",q:"Which device monitors network traffic and generates alerts but does NOT block traffic?",opts:["Firewall","IPS","IDS","Proxy"],ans:2,explain:"IDS (Intrusion Detection System) detects and alerts only — like a security camera. IPS (Intrusion Prevention System) actively blocks."},
+  {domain:"D4",q:"AES-256 is an example of which type of encryption?",opts:["Asymmetric","Hashing","Symmetric","Elliptic curve"],ans:2,explain:"AES (Advanced Encryption Standard) is symmetric — the same key encrypts and decrypts. Fast. Used for bulk data."},
+  {domain:"D4",q:"A network zone between the public internet and the internal corporate network where public-facing servers are placed is called a:",opts:["VLAN","DMZ","VPN","Subnet"],ans:1,explain:"A DMZ (Demilitarized Zone) places public-facing servers where they can be reached from the internet without exposing the internal network."},
+  {domain:"D5",q:"During an incident, a compromised workstation is immediately disconnected from the network. This represents which IR phase?",opts:["Identification","Eradication","Containment","Recovery"],ans:2,explain:"Containment stops the spread. Disconnecting the workstation prevents the malware from reaching other systems. Eradication is removing the malware; identification is confirming an incident occurred."},
+  {domain:"D5",q:"An organization uses multiple overlapping security controls so that if one fails, others still protect. This is called:",opts:["Redundancy","Defense in Depth","Segmentation","Hardening"],ans:1,explain:"Defense in Depth uses multiple security layers. Failure of one doesn't compromise everything."},
+  {domain:"D1",q:"Which term describes the potential for a threat to exploit a vulnerability?",opts:["Risk","Impact","Control","Exposure"],ans:0,explain:"Risk is the potential for harm — Likelihood × Impact. A threat exploiting a vulnerability is the risk scenario."},
+  {domain:"D3",q:"A military system assigns security labels to both users and data. Access is granted only when clearance matches the label. This is:",opts:["DAC","RBAC","MAC","ABAC"],ans:2,explain:"MAC (Mandatory Access Control) uses system-enforced labels. The system decides — users cannot override the classification-based access rules."},
+  {domain:"D5",q:"Which activity should occur LAST in the incident response process?",opts:["Containment","Eradication","Recovery","Lessons Learned"],ans:3,explain:"Lessons Learned is final — documenting what happened, how it was handled, and what improvements prevent recurrence."},
 ];
 
+// ── WORD SEARCH DATA ─────────────────────────────────────────────────────
+const WS_WORDS=["CONFIDENTIALITY","INTEGRITY","AVAILABILITY","FIREWALL","PHISHING",
+                "ENCRYPTION","HIPAA","BACKUP","MALWARE","INCIDENT","RBAC",
+                "AUTHENTICATION","COMPLIANCE","VULNERABILITY","HASHING"];
+
+const FOUND_COLORS=["#2563eb","#059669","#d97706","#7c3aed","#dc2626",
+                    "#0891b2","#65a30d","#9333ea","#e11d48","#0d9488",
+                    "#f59e0b","#3b82f6","#10b981","#8b5cf6","#ef4444"];
+
+let wsGrid=[],wsFound=[],wsSelection=[],wsPlaced=[];
+let matchSelected=null,matchScore=0,matchAttempts=0,matchPairs=[];
+
 // ── NAVIGATION ───────────────────────────────────────────────────────────
-function show(id){
+function show(id,btn){
+  stopSpeech();
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  if(btn)btn.classList.add('active');
   if(id==='flashcards'&&!fcInit)initFC();
   if(id==='scenarios')renderScenarios();
   if(id==='quiz')loadQuiz('all');
+  if(id==='wordgames'){showGame('wordsearch');if(!wsGrid.length)newWordSearch();}
   if(id==='overview')renderDomainBars();
 }
 
 // ── DOMAIN BARS ──────────────────────────────────────────────────────────
 function renderDomainBars(){
-  const el=document.getElementById('domain-bars');
-  if(!el)return;
+  const el=document.getElementById('domain-bars');if(!el)return;
   el.innerHTML=DOMAINS.map(d=>`
     <div style="margin-bottom:12px;">
       <div style="display:flex;justify-content:space-between;font-size:10pt;margin-bottom:4px;">
         <span style="color:#e2e8f0;">${d.name}</span>
         <span style="color:#94a3b8;font-weight:bold;">${d.pct}%</span>
       </div>
-      <div class="prog-bar"><div class="prog-fill" style="width:${d.pct*3.8}px;background:${d.color};"></div></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${d.pct*3.5}px;background:${d.color};max-width:100%;"></div></div>
     </div>`).join('');
 }
 renderDomainBars();
 
 // ── FLASHCARDS ───────────────────────────────────────────────────────────
-let fcIndex=0,fcKnown=0,fcReview=0,fcDeck=[],fcInit=false,fcFlipped=false;
+let fcIndex=0,fcKnown=0,fcReview=0,fcDeck=[],fcInit=false;
 function initFC(){
   fcDeck=[...CARDS].sort(()=>Math.random()-.5);
-  fcIndex=0;fcKnown=0;fcReview=0;fcFlipped=false;fcInit=true;
-  showCard();
+  fcIndex=0;fcKnown=0;fcReview=0;fcInit=true;showCard();
 }
 function showCard(){
+  stopSpeech();
   if(fcIndex>=fcDeck.length){
     document.getElementById('fc-term').textContent='Session Complete!';
     document.getElementById('fc-def').textContent=`Known: ${fcKnown} · Review: ${fcReview}`;
@@ -586,8 +682,7 @@ function showCard(){
     return;
   }
   const c=fcDeck[fcIndex];
-  const card=document.getElementById('flashcard');
-  card.classList.remove('flipped');fcFlipped=false;
+  document.getElementById('flashcard').classList.remove('flipped');
   document.getElementById('fc-domain').textContent=c.domain;
   document.getElementById('fc-term').textContent=c.term;
   document.getElementById('fc-def').textContent=c.def;
@@ -596,31 +691,64 @@ function showCard(){
   document.getElementById('fc-known').textContent=fcKnown;
   document.getElementById('fc-review').textContent=fcReview;
   document.getElementById('fc-left').textContent=fcDeck.length-fcIndex;
+  // auto-speak the term
+  setTimeout(()=>speak(c.term),400);
 }
-function flipCard(){document.getElementById('flashcard').classList.toggle('flipped');fcFlipped=!fcFlipped;}
+function flipCard(){
+  document.getElementById('flashcard').classList.toggle('flipped');
+  const isBack=document.getElementById('flashcard').classList.contains('flipped');
+  if(isBack&&fcIndex<fcDeck.length){const c=fcDeck[fcIndex];speak(c.def+'. Memory anchor: '+c.anchor);}
+}
 function markCard(known){if(known)fcKnown++;else fcReview++;fcIndex++;showCard();}
 function skipCard(){fcIndex++;showCard();}
 function resetCards(){fcInit=false;initFC();}
 
 // ── SCENARIOS ────────────────────────────────────────────────────────────
+function arrowSVG(danger){
+  const col=danger?'#ef4444':'#60a5fa';
+  return `<svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="2" y1="12" x2="32" y2="12" stroke="${col}" stroke-width="2"/>
+    <polyline points="26,6 36,12 26,18" fill="none" stroke="${col}" stroke-width="2"/>
+  </svg>`;
+}
+function buildDiagram(v){
+  const nodes=v.nodes.map(n=>{
+    if(n.arrow!==undefined){
+      const lbl=n.label?`<div style="font-size:7.5pt;color:${n.danger?'#ef4444':'#60a5fa'};text-align:center;margin-top:2px;">${n.label}</div>`:'';
+      return `<div class="d-arrow" style="flex-direction:column;">${arrowSVG(n.danger)}${lbl}</div>`;
+    }
+    const badge=n.badge?`<div class="d-badge" style="background:${n.type==='danger'?'#dc2626':n.type==='safe'?'#059669':'#475569'};color:white;">${n.badge}</div>`:'';
+    return `<div class="d-node">
+      <div class="d-icon ${n.type}" style="position:relative;font-size:22pt;">${n.icon}${badge}</div>
+      <div class="d-label">${(n.label||'').replace(/\n/g,'<br>')}</div>
+    </div>`;
+  }).join('');
+  const alert=v.alert?`<div class="d-alert">⚠ ${v.alert}</div>`:'';
+  const fix=v.fix?`<div class="d-fix">✓ ${v.fix}</div>`:'';
+  return `<div class="s-visual">
+    <div class="diagram">${nodes}</div>
+    ${alert}${fix}
+  </div>`;
+}
 function renderScenarios(){
   document.getElementById('scenarios-list').innerHTML=SCENARIOS.map((s,i)=>`
     <div class="scenario">
       <div class="s-label">${s.label}</div>
+      ${buildDiagram(s.visual)}
       <div class="s-story">${s.story}</div>
       <div class="s-q">${s.q}</div>
       <button class="toggle-answer" onclick="toggleAns(${i})">Reveal Answer</button>
+      <button class="toggle-answer" onclick="speakScenario(${i})" style="background:#1d4ed8;">&#128266; Read</button>
       <div class="s-answer" id="ans-${i}">${s.answer}</div>
     </div>`).join('');
 }
-function toggleAns(i){
-  const el=document.getElementById('ans-'+i);
-  el.style.display=el.style.display==='block'?'none':'block';
-}
+function toggleAns(i){const el=document.getElementById('ans-'+i);el.style.display=el.style.display==='block'?'none':'block';}
+function speakScenario(i){const s=SCENARIOS[i];speak(s.story+'. Question: '+s.q);}
 
 // ── QUIZ ─────────────────────────────────────────────────────────────────
-let quizAnswered=0,quizCorrect=0,quizTotal=0;
+let quizAnswered=0,quizCorrect=0,quizTotal=0,quizFilter='all';
 function loadQuiz(filter){
+  quizFilter=filter;
   const qs=filter==='all'?QUIZ_Q:QUIZ_Q.filter(q=>q.domain===filter);
   quizAnswered=0;quizCorrect=0;quizTotal=qs.length;
   document.getElementById('quiz-score').style.display='none';
@@ -637,23 +765,178 @@ function loadQuiz(filter){
 function answerQ(qi,chosen,correct,filter){
   const qs=filter==='all'?QUIZ_Q:QUIZ_Q.filter(q=>q.domain===filter);
   const opts=document.querySelectorAll(`#qq-${qi} .q-opt`);
-  opts.forEach((o,i)=>{
-    o.disabled=true;
-    if(i===correct)o.classList.add('correct');
-    else if(i===chosen&&chosen!==correct)o.classList.add('wrong');
-    else o.classList.add('reveal');
-  });
+  opts.forEach((o,i)=>{o.disabled=true;if(i===correct)o.classList.add('correct');else if(i===chosen&&chosen!==correct)o.classList.add('wrong');else o.classList.add('reveal');});
   document.getElementById('qe-'+qi).style.display='block';
-  quizAnswered++;
-  if(chosen===correct)quizCorrect++;
+  quizAnswered++;if(chosen===correct)quizCorrect++;
   if(quizAnswered===quizTotal){
     const pct=Math.round(quizCorrect/quizTotal*100);
     const sc=document.getElementById('quiz-score');
-    sc.style.display='block';
-    sc.className=`card ${pct>=70?'green':'red'}`;
-    sc.innerHTML=`<h3 style="text-align:center;">Score: ${quizCorrect}/${quizTotal} (${pct}%)</h3><p style="text-align:center;">${pct>=70?'Good work — keep going.':'Review the domains where you missed and try again.'}</p>`;
+    sc.style.display='block';sc.className=`card ${pct>=70?'green':'red'}`;
+    sc.innerHTML=`<h3 style="text-align:center;">Score: ${quizCorrect}/${quizTotal} (${pct}%)</h3><p style="text-align:center;">${pct>=70?'Good work — keep going.':'Review the missed domains and retry.'}</p>`;
     sc.scrollIntoView({behavior:'smooth'});
   }
+}
+
+// ── WORD SEARCH ───────────────────────────────────────────────────────────
+const GRID_SIZE=18;
+function newWordSearch(){
+  wsFound=[];wsSelection=[];
+  wsGrid=Array.from({length:GRID_SIZE},()=>Array(GRID_SIZE).fill(''));
+  wsPlaced=[];
+  const dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  const words=[...WS_WORDS].sort((a,b)=>b.length-a.length);
+  words.forEach(w=>{
+    let placed=false;
+    for(let tries=0;tries<200&&!placed;tries++){
+      const dir=dirs[Math.floor(Math.random()*dirs.length)];
+      const r=Math.floor(Math.random()*GRID_SIZE);
+      const c=Math.floor(Math.random()*GRID_SIZE);
+      const cells=[];let ok=true;
+      for(let i=0;i<w.length;i++){
+        const nr=r+dir[0]*i,nc=c+dir[1]*i;
+        if(nr<0||nr>=GRID_SIZE||nc<0||nc>=GRID_SIZE){ok=false;break;}
+        if(wsGrid[nr][nc]&&wsGrid[nr][nc]!==w[i]){ok=false;break;}
+        cells.push([nr,nc]);
+      }
+      if(ok){cells.forEach(([nr,nc],i)=>wsGrid[nr][nc]=w[i]);wsPlaced.push({word:w,cells});placed=true;}
+    }
+  });
+  const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<GRID_SIZE;r++)for(let c=0;c<GRID_SIZE;c++)if(!wsGrid[r][c])wsGrid[r][c]=alpha[Math.floor(Math.random()*26)];
+  renderWSGrid();renderWSWords();
+  document.getElementById('ws-congrats').style.display='none';
+  document.getElementById('ws-status').textContent=`Find ${WS_WORDS.length} terms`;
+}
+function renderWSGrid(){
+  const g=document.getElementById('ws-grid');
+  g.style.gridTemplateColumns=`repeat(${GRID_SIZE},32px)`;
+  g.innerHTML=wsGrid.map((row,r)=>row.map((ch,c)=>`<div class="ws-cell" id="wc-${r}-${c}" onclick="wsClick(${r},${c})">${ch}</div>`).join('')).join('');
+  applyFoundColors();
+}
+function renderWSWords(){
+  document.getElementById('ws-words').innerHTML=WS_WORDS.map((w,i)=>`<div class="ws-word ${wsFound.includes(w)?'found':''}" id="wsw-${i}">${w}</div>`).join('');
+}
+function wsClick(r,c){
+  if(wsSelection.length===0){wsSelection=[[r,c]];highlightSel();}
+  else{
+    wsSelection.push([r,c]);
+    checkWSWord();wsSelection=[];highlightSel();
+  }
+}
+function highlightSel(){
+  document.querySelectorAll('.ws-cell.selected').forEach(el=>el.classList.remove('selected'));
+  wsSelection.forEach(([r,c])=>document.getElementById(`wc-${r}-${c}`)?.classList.add('selected'));
+}
+function checkWSWord(){
+  const [r1,c1]=wsSelection[0],[r2,c2]=wsSelection[1];
+  const dr=Math.sign(r2-r1),dc=Math.sign(c2-c1);
+  const len=Math.max(Math.abs(r2-r1),Math.abs(c2-c1))+1;
+  let str='',cells=[];
+  for(let i=0;i<len;i++){const r=r1+dr*i,c=c1+dc*i;str+=wsGrid[r][c];cells.push([r,c]);}
+  const rev=str.split('').reverse().join('');
+  const match=wsPlaced.find(p=>(p.word===str||p.word===rev)&&!wsFound.includes(p.word));
+  if(match){
+    wsFound.push(match.word);
+    const ci=wsFound.length-1;
+    match.cells.forEach(([r,c])=>{
+      const el=document.getElementById(`wc-${r}-${c}`);
+      if(el){el.classList.add('found');el.style.background=FOUND_COLORS[ci%FOUND_COLORS.length];el.style.color='white';}
+    });
+    document.getElementById(`wsw-${WS_WORDS.indexOf(match.word)}`)?.classList.add('found');
+    document.getElementById('ws-status').textContent=`Found ${wsFound.length}/${WS_WORDS.length}`;
+    speak(match.word);
+    if(wsFound.length===wsPlaced.length)document.getElementById('ws-congrats').style.display='block';
+  }
+}
+function applyFoundColors(){
+  wsFound.forEach((w,ci)=>{
+    const p=wsPlaced.find(x=>x.word===w);if(!p)return;
+    p.cells.forEach(([r,c])=>{
+      const el=document.getElementById(`wc-${r}-${c}`);
+      if(el){el.classList.add('found');el.style.background=FOUND_COLORS[ci%FOUND_COLORS.length];el.style.color='white';}
+    });
+  });
+}
+function revealAll(){
+  wsPlaced.forEach((p,ci)=>{
+    if(!wsFound.includes(p.word)){
+      wsFound.push(p.word);
+      p.cells.forEach(([r,c])=>{
+        const el=document.getElementById(`wc-${r}-${c}`);
+        if(el){el.classList.add('found');el.style.background=FOUND_COLORS[ci%FOUND_COLORS.length];el.style.color='white';}
+      });
+      document.getElementById(`wsw-${WS_WORDS.indexOf(p.word)}`)?.classList.add('found');
+    }
+  });
+  document.getElementById('ws-status').textContent='All words revealed';
+}
+
+// ── MATCH GAME ───────────────────────────────────────────────────────────
+const MATCH_PAIRS=[
+  ["CIA Triad","Confidentiality, Integrity, Availability"],
+  ["Authentication","Proving who you are"],
+  ["Authorization","What you are allowed to do"],
+  ["Least Privilege","Minimum access for the job"],
+  ["Separation of Duties","Two people required for sensitive task"],
+  ["IDS","Detects and alerts — does NOT block"],
+  ["IPS","Detects AND blocks threats"],
+  ["RTO","Maximum acceptable downtime"],
+  ["RPO","Maximum acceptable data loss"],
+  ["RBAC","Access based on job role"],
+  ["MAC","System enforces access via classification labels"],
+  ["DAC","Data owner controls access"],
+  ["Firewall","Filters traffic based on rules"],
+  ["VPN","Encrypted tunnel over public network"],
+  ["Hashing","One-way — cannot be reversed"],
+  ["DMZ","Network zone between internet and internal"],
+  ["Hot Site","Fully operational backup — immediate failover"],
+  ["Due Diligence","Investigating risks before acting"],
+];
+function newMatchGame(){
+  matchSelected=null;matchScore=0;matchAttempts=0;
+  document.getElementById('match-score').textContent='0';
+  document.getElementById('match-attempts').textContent='0';
+  document.getElementById('match-congrats').style.display='none';
+  const pool=[...MATCH_PAIRS].sort(()=>Math.random()-.5).slice(0,8);
+  matchPairs=pool;
+  const terms=pool.map((p,i)=>({id:i,type:'term',text:p[0]})).sort(()=>Math.random()-.5);
+  const defs=pool.map((p,i)=>({id:i,type:'def',text:p[1]})).sort(()=>Math.random()-.5);
+  const g=document.getElementById('match-grid');
+  g.innerHTML='';
+  terms.forEach(t=>{const d=document.createElement('div');d.className='match-card';d.textContent=t.text;d.dataset.id=t.id;d.dataset.type='term';d.onclick=()=>matchClick(d);g.appendChild(d);});
+  defs.forEach(d=>{const el=document.createElement('div');el.className='match-card';el.textContent=d.text;el.dataset.id=d.id;el.dataset.type='def';el.onclick=()=>matchClick(el);g.appendChild(el);});
+}
+function matchClick(el){
+  if(el.classList.contains('matched'))return;
+  if(matchSelected===el){matchSelected.classList.remove('selected');matchSelected=null;return;}
+  if(matchSelected&&matchSelected.dataset.type===el.dataset.type){matchSelected.classList.remove('selected');matchSelected=el;el.classList.add('selected');return;}
+  if(!matchSelected){matchSelected=el;el.classList.add('selected');return;}
+  matchAttempts++;
+  document.getElementById('match-attempts').textContent=matchAttempts;
+  if(matchSelected.dataset.id===el.dataset.id){
+    [matchSelected,el].forEach(c=>{c.classList.remove('selected');c.classList.add('matched');});
+    matchScore++;document.getElementById('match-score').textContent=matchScore;
+    speak(matchSelected.dataset.type==='term'?matchSelected.textContent:el.textContent);
+    matchSelected=null;
+    if(matchScore===matchPairs.length){
+      document.getElementById('match-congrats').style.display='block';
+      document.getElementById('match-final').textContent=`All ${matchScore} pairs matched in ${matchAttempts} attempts!`;
+    }
+  } else {
+    [matchSelected,el].forEach(c=>c.classList.add('wrong'));
+    const prev=matchSelected;
+    setTimeout(()=>{[prev,el].forEach(c=>{c.classList.remove('wrong','selected');});},600);
+    matchSelected=null;
+  }
+}
+
+// ── GAME SWITCHER ─────────────────────────────────────────────────────────
+function showGame(id){
+  document.getElementById('wordsearch-game').style.display=id==='wordsearch'?'block':'none';
+  document.getElementById('match-game').style.display=id==='match'?'block':'none';
+  document.getElementById('ws-tab-btn').className=`btn${id==='wordsearch'?'':' gray'}`;
+  document.getElementById('match-tab-btn').className=`btn${id==='match'?'':' gray'}`;
+  if(id==='match'&&matchPairs.length===0)newMatchGame();
 }
 </script>
 </body>
