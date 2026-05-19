@@ -185,12 +185,10 @@ input[type=radio].no-r{accent-color:#ef4444;}
       <div class="step" id="step4"><div class="step-num">4</div> Submit</div>
     </div>
 
-    <form id="assessment-form" method="POST" action="https://formsubmit.co/logicalcoders@outlook.com">
-      <input type="hidden" name="_subject" id="form-subject" value="Compliance Assessment Submission">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+    <form id="assessment-form">
+      <input type="hidden" name="access_key" value="fc33ac27-8302-4190-b6cf-14b0f12fba42">
+      <input type="hidden" name="subject" id="form-subject" value="Compliance Assessment Submission">
       <input type="hidden" name="Framework" id="hidden-framework" value="">
-      <input type="hidden" name="_next" value="https://anelhenning2-collab.github.io/grc-suite/governance/?submitted=true">
 
       <!-- CLIENT DETAILS -->
       <h2>Your Contact Details</h2>
@@ -666,9 +664,10 @@ function updateScore() {
 }
 
 // ── FORM SUBMIT ───────────────────────────────────────────────────────────
-document.getElementById('assessment-form').addEventListener('submit', function(e) {
-  const fw = FRAMEWORKS[selectedFramework];
-  // Append score summary as hidden field
+document.getElementById('assessment-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Attach score summary
   const scoreEl = document.getElementById('score-display');
   let scoreInput = document.getElementById('hidden-score');
   if (!scoreInput) {
@@ -679,13 +678,37 @@ document.getElementById('assessment-form').addEventListener('submit', function(e
     this.appendChild(scoreInput);
   }
   scoreInput.value = scoreEl.textContent;
-});
 
-// ── CHECK IF RETURNED AFTER SUBMIT ───────────────────────────────────────
-if (window.location.search.includes('submitted=true')) {
-  document.getElementById('landing').style.display = 'none';
-  document.getElementById('thankyou').style.display = 'block';
-}
+  // Disable submit button while sending
+  const submitBtn = this.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData);
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('assessment').style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+      window.scrollTo(0, 0);
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Assessment →';
+      alert('There was a problem submitting. Please try again.');
+    }
+  } catch(err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Assessment →';
+    alert('Network error. Please check your connection and try again.');
+  }
+});
 </script>
 </body>
 </html>
