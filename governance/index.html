@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compliance Assessment — Logical Coders</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:Arial,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.7;font-size:15px;}
@@ -663,50 +664,57 @@ function updateScore() {
                            'linear-gradient(90deg,#b91c1c,#ef4444)';
 }
 
+// ── EMAILJS INIT ──────────────────────────────────────────────────────────
+emailjs.init('eNqe8da4upozA7C6Z');
+
 // ── FORM SUBMIT ───────────────────────────────────────────────────────────
 document.getElementById('assessment-form').addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  // Attach score summary
-  const scoreEl = document.getElementById('score-display');
-  let scoreInput = document.getElementById('hidden-score');
-  if (!scoreInput) {
-    scoreInput = document.createElement('input');
-    scoreInput.type = 'hidden';
-    scoreInput.name = 'Score Summary';
-    scoreInput.id = 'hidden-score';
-    this.appendChild(scoreInput);
-  }
-  scoreInput.value = scoreEl.textContent;
-
-  // Disable submit button while sending
   const submitBtn = this.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
   submitBtn.textContent = 'Sending...';
 
   const formData = new FormData(this);
-  const data = Object.fromEntries(formData);
+  const fw = FRAMEWORKS[selectedFramework];
+
+  // Build readable answers block
+  let answersText = '';
+  fw.sections.forEach((sec, si) => {
+    answersText += `\n${sec.name}:\n`;
+    sec.questions.forEach((q, qi) => {
+      const radios = document.getElementsByName(`S${si}_Q${qi}`);
+      let answer = 'Not answered';
+      radios.forEach(r => { if(r.checked) answer = r.value; });
+      answersText += `  ${qi+1}. ${q}\n     -> ${answer}\n`;
+    });
+  });
+
+  const templateParams = {
+    framework: formData.get('Framework') || '',
+    name:      formData.get('Full Name') || '',
+    email:     formData.get('Email') || '',
+    phone:     formData.get('Phone') || '',
+    company:   formData.get('Company Name') || '',
+    industry:  formData.get('Industry') || '',
+    size:      formData.get('Company Size') || '',
+    deadline:  formData.get('Deadline') || '',
+    driver:    formData.get('Driver') || '',
+    score:     document.getElementById('score-display').textContent,
+    notes:     formData.get('Additional Notes') || '',
+    answers:   answersText
+  };
 
   try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify(data)
-    });
-    const json = await res.json();
-    if (json.success) {
-      document.getElementById('assessment').style.display = 'none';
-      document.getElementById('thankyou').style.display = 'block';
-      window.scrollTo(0, 0);
-    } else {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Assessment →';
-      alert('There was a problem submitting. Please try again.');
-    }
+    await emailjs.send('LogicalCoders', 'v4txmla', templateParams);
+    document.getElementById('assessment').style.display = 'none';
+    document.getElementById('thankyou').style.display = 'block';
+    window.scrollTo(0, 0);
   } catch(err) {
+    console.error(err);
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit Assessment →';
-    alert('Network error. Please check your connection and try again.');
+    alert('There was a problem sending. Please try again or email logicalcoders@outlook.com directly.');
   }
 });
 </script>
