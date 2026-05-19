@@ -714,7 +714,8 @@ document.getElementById('assessment-form').addEventListener('submit', async func
     console.error(err);
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit Assessment →';
-    alert('There was a problem sending. Please try again or email logicalcoders@outlook.com directly.');
+    const msg = err && err.text ? err.text : JSON.stringify(err);
+    alert('EmailJS error: ' + msg);
   }
 });
 </script>
