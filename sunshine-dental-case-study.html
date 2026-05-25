@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunshine Dental Group — GRC Case Study | Logical Coders</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: #1a202c;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: #fff; }
+    .no-print { display: none !important; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; }
+    .cover { page-break-after: always; }
+    section { page-break-inside: avoid; }
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 4px 32px rgba(0,0,0,.12);
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    background: linear-gradient(160deg, #0f172a 0%, #1e3a5f 60%, #0e4d6e 100%);
+    color: #fff;
+    padding: 72px 64px 56px;
+    min-height: 480px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(56,189,248,.08);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 40%;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(16,185,129,.06);
+  }
+  .cover-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid rgba(56,189,248,.5);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .cover h1 {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .cover h1 span { color: #38bdf8; }
+  .cover-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,.65);
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-bottom: 40px;
+  }
+  .cover-meta-item label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+  .cover-meta-item span {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,.9);
+  }
+  .cover-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cover-tag {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-blue  { background: rgba(56,189,248,.15); color: #38bdf8; border: 1px solid rgba(56,189,248,.3); }
+  .tag-green { background: rgba(16,185,129,.15); color: #10b981; border: 1px solid rgba(16,185,129,.3); }
+  .tag-red   { background: rgba(239,68,68,.15);  color: #f87171; border: 1px solid rgba(239,68,68,.3); }
+
+  .cover-consultant {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .cover-consultant-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .cover-consultant-title {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    margin-top: 2px;
+  }
+  .cover-consultant-contact {
+    font-size: 11px;
+    color: rgba(255,255,255,.5);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .cover-consultant-contact a { color: #38bdf8; text-decoration: none; }
+
+  /* ── CONTENT BODY ── */
+  .body-content { padding: 52px 64px; }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #38bdf8;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  section { margin-bottom: 48px; }
+
+  /* ── OVERVIEW GRID ── */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .overview-card {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+  .overview-card label {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+  }
+  .overview-card span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* ── CHALLENGE BOX ── */
+  .challenge-box {
+    background: #fef9f0;
+    border: 1px solid #fed7aa;
+    border-left: 4px solid #f97316;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .challenge-box p { color: #374151; margin-bottom: 14px; }
+  .gap-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .gap-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #374151;
+  }
+  .gap-list li::before {
+    content: '✗';
+    color: #ef4444;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── PHASE CARDS ── */
+  .phases { display: flex; flex-direction: column; gap: 16px; }
+  .phase {
+    display: flex;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+  }
+  .phase-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 14px;
+    flex-shrink: 0;
+    color: #fff;
+  }
+  .phase-1 { background: #0ea5e9; border-color: rgba(14,165,233,.2); background-color: rgba(14,165,233,.05); }
+  .phase-2 { background: rgba(168,85,247,.05); border-color: rgba(168,85,247,.2); }
+  .phase-3 { background: rgba(16,185,129,.05); border-color: rgba(16,185,129,.2); }
+  .phase-num-1 { background: #0ea5e9; }
+  .phase-num-2 { background: #a855f7; }
+  .phase-num-3 { background: #10b981; }
+  .phase-title { font-size: 13px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .phase-items li { font-size: 12px; color: #475569; padding-left: 14px; position: relative; }
+  .phase-items li::before { content: '—'; position: absolute; left: 0; color: #94a3b8; }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead tr { background: #0f172a; color: #fff; }
+  thead th { padding: 10px 12px; font-weight: 700; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody td { padding: 9px 12px; color: #374151; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .b-critical { background: #fee2e2; color: #dc2626; }
+  .b-high     { background: #ffedd5; color: #ea580c; }
+  .b-medium   { background: #fef9c3; color: #ca8a04; }
+  .b-low      { background: #dcfce7; color: #16a34a; }
+  .b-done     { background: #dcfce7; color: #16a34a; }
+  .b-progress { background: #fef9c3; color: #ca8a04; }
+  .b-notstart { background: #fee2e2; color: #dc2626; }
+
+  /* ── PLAYBOOK ── */
+  .playbook { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+  .playbook-phase {
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+  }
+  .playbook-header {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .ph1 { background: #0ea5e9; }
+  .ph2 { background: #a855f7; }
+  .ph3 { background: #10b981; }
+  .playbook-items { padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .playbook-items li { font-size: 11px; color: #374151; list-style: none; padding-left: 14px; position: relative; }
+  .playbook-items li::before { content: '☐'; position: absolute; left: 0; color: #94a3b8; }
+
+  /* ── RESULTS ── */
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .result-card {
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(16,185,129,.25);
+    background: rgba(16,185,129,.04);
+  }
+  .result-card .icon { font-size: 20px; margin-bottom: 6px; }
+  .result-card .value { font-size: 22px; font-weight: 900; color: #059669; }
+  .result-card .label { font-size: 11px; color: #475569; margin-top: 2px; line-height: 1.4; }
+
+  /* ── ABOUT BOX ── */
+  .about-box {
+    background: linear-gradient(135deg, #0f172a, #1e3a5f);
+    color: #fff;
+    border-radius: 12px;
+    padding: 32px 36px;
+  }
+  .about-name { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 4px; }
+  .about-title { font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 20px; }
+  .creds { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .cred { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: rgba(255,255,255,.8); }
+  .cred-icon { flex-shrink: 0; font-size: 14px; }
+  .about-contact {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .about-contact a {
+    font-size: 12px;
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* ── PRINT BUTTON ── */
+  .print-bar {
+    background: #0f172a;
+    padding: 14px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .print-bar span { color: rgba(255,255,255,.6); font-size: 12px; }
+  .print-btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    background: #38bdf8;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .print-btn:hover { background: #0ea5e9; }
+  .disclaimer {
+    padding: 12px 64px;
+    font-size: 10px;
+    color: #94a3b8;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+  }
+</style>
+</head>
+<body>
+
+<!-- PRINT BAR (hidden when printing) -->
+<div class="print-bar no-print">
+  <span>Logical Coders GRC Consulting — Portfolio Case Study</span>
+  <button class="print-btn" onclick="window.print()">⬇ Save as PDF (Ctrl+P)</button>
+</div>
+
+<div class="page">
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <div class="cover-badge">Portfolio · Sample Engagement</div>
+    <h1>HIPAA Security Risk Analysis<br>&amp; GRC Program Buildout<br><span>Sunshine Dental Group</span></h1>
+    <p class="cover-sub">A complete 4-week GRC engagement — Risk Mapping · Evidence Gap Analysis · 90-Day Playbook</p>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <label>Client (Fictional)</label>
+        <span>Sunshine Dental Group</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Industry</label>
+        <span>Healthcare / Dental (HIPAA CE)</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Engagement Length</label>
+        <span>4 Weeks</span>
+      </div>
+      <div class="cover-meta-item">
+        <label>Date</label>
+        <span>May 2026</span>
+      </div>
+    </div>
+
+    <div class="cover-tags">
+      <span class="cover-tag tag-blue">HIPAA Security Rule</span>
+      <span class="cover-tag tag-blue">NIST CSF 2.0</span>
+      <span class="cover-tag tag-green">Risk Assessment</span>
+      <span class="cover-tag tag-green">Evidence Gap Analysis</span>
+      <span class="cover-tag tag-red">23 Risks Documented</span>
+      <span class="cover-tag tag-blue">90-Day Playbook</span>
+      <span class="cover-tag tag-green">OCR Audit-Ready</span>
+    </div>
+
+    <div class="cover-consultant">
+      <div>
+        <div class="cover-consultant-name">Anél Henning</div>
+        <div class="cover-consultant-title">GRC Consultant &amp; Compliance Designer · Logical Coders</div>
+      </div>
+      <div class="cover-consultant-contact">
+        <a href="mailto:logicalcoders@outlook.com">logicalcoders@outlook.com</a><br>
+        813.743.1661<br>
+        <a href="https://anelhenning2-collab.github.io/grc-suite/">grc-suite ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="body-content">
+
+    <!-- 1. CLIENT OVERVIEW -->
+    <section>
+      <div class="section-label">Section 01</div>
+      <div class="section-title">Client Overview</div>
+      <div class="overview-grid">
+        <div class="overview-card"><label>Client</label><span>Sunshine Dental Group</span></div>
+        <div class="overview-card"><label>Type</label><span>HIPAA Covered Entity</span></div>
+        <div class="overview-card"><label>Locations</label><span>4 Offices · Tampa, FL</span></div>
+        <div class="overview-card"><label>Staff</label><span>22 Employees</span></div>
+        <div class="overview-card"><label>Patient Records</label><span>9,800 Active (PHI)</span></div>
+        <div class="overview-card"><label>Frameworks</label><span>HIPAA · NIST CSF 2.0</span></div>
+      </div>
+      <p style="color:#475569;font-size:13px">Sunshine Dental Group is a fictional mid-size dental practice used to demonstrate a complete HIPAA Security Risk Analysis and GRC program buildout engagement. All data, risks, and findings are representative of real-world small healthcare organizations.</p>
+    </section>
+
+    <!-- 2. THE CHALLENGE -->
+    <section>
+      <div class="section-label">Section 02</div>
+      <div class="section-title">The Challenge</div>
+      <div class="challenge-box">
+        <p>Sunshine Dental Group had never conducted a formal HIPAA Security Risk Analysis — a requirement under 45 CFR §164.308(a)(1). An OCR audit inquiry triggered urgent action. The practice used cloud-based EHR software, personal devices for scheduling, and had no written information security policies in place.</p>
+        <ul class="gap-list">
+          <li>No documented Security Risk Analysis (OCR §164.308 requirement)</li>
+          <li>No written Information Security Policy</li>
+          <li>No Business Associate Agreements (BAAs) on file</li>
+          <li>Personal devices accessing PHI without MDM or encryption</li>
+          <li>No staff security awareness training in 3+ years</li>
+          <li>Shared login credentials in use at front-desk workstations</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. WHAT I DID -->
+    <section>
+      <div class="section-label">Section 03</div>
+      <div class="section-title">Engagement Approach</div>
+      <div class="phases">
+        <div class="phase phase-1">
+          <div class="phase-num phase-num-1">1</div>
+          <div>
+            <div class="phase-title">Phase 1 — Discovery &amp; Risk Mapping · Weeks 1–2</div>
+            <ul class="phase-items">
+              <li>Inventoried 14 asset categories (EHR, patient portal, PACS, workstations, mobile, email, VPN, physical records)</li>
+              <li>Mapped 9 threat types against each asset using a 5×5 likelihood × impact risk matrix</li>
+              <li>Identified 23 risk pairings — 3 Critical, 8 High, 9 Medium, 3 Low</li>
+              <li>Assigned risk owners by role: Office Manager, IT Vendor, Dentist-Owner</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase phase-2">
+          <div class="phase-num phase-num-2">2</div>
+          <div>
+            <div class="phase-title">Phase 2 — Evidence &amp; Gap Analysis · Week 3</div>
+            <ul class="phase-items">
+              <li>Evaluated all 12 applicable HIPAA Security Rule controls</li>
+              <li>Found 7 controls with zero documentation (Not Started)</li>
+              <li>Found 3 controls partially implemented but completely undocumented</li>
+              <li>Built prioritized evidence collection log with ownership and due dates</li>
+            </ul>
+          </div>
+        </div>
+        <div class="phase phase-3">
+          <div class="phase-num phase-num-3">3</div>
+          <div>
+            <div class="phase-title">Phase 3 — Remediation Playbook &amp; Reporting · Week 4</div>
+            <ul class="phase-items">
+              <li>Delivered 90-Day Playbook with 3 structured phases and measurable milestones</li>
+              <li>Generated OCR-ready HIPAA Security Risk Analysis PDF with Security Official attestation</li>
+              <li>Delivered non-technical Executive Summary for practice owner decision-making</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. THREAT RISK MATRIX -->
+    <section>
+      <div class="section-label">Section 04</div>
+      <div class="section-title">Threat Risk Matrix — 5×5 Likelihood × Impact</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Threat</th>
+              <th style="text-align:center">Likelihood</th>
+              <th style="text-align:center">Impact</th>
+              <th style="text-align:center">Score</th>
+              <th>Level</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>EHR System</td><td>Ransomware</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center;font-weight:800">20</td><td><span class="badge b-critical">Critical</span></td><td>IT Vendor</td></tr>
+            <tr><td>Patient Portal</td><td>Unauthorized Access (External)</td><td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center;font-weight:800">20</td><td><span class="badge b-critical">Critical</span></td><td>IT Vendor</td></tr>
+            <tr><td>Mobile Devices</td><td>Lost / Stolen Device</td><td style="text-align:center">5</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">20</td><td><span class="badge b-critical">Critical</span></td><td>Office Manager</td></tr>
+            <tr><td>Email System</td><td>Phishing</td><td style="text-align:center">5</td><td style="text-align:center">3</td><td style="text-align:center;font-weight:800">15</td><td><span class="badge b-high">High</span></td><td>Office Manager</td></tr>
+            <tr><td>Workstations</td><td>Unpatched Software</td><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">16</td><td><span class="badge b-high">High</span></td><td>IT Vendor</td></tr>
+            <tr><td>Physical Records</td><td>Physical Theft</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">12</td><td><span class="badge b-high">High</span></td><td>Front Desk Lead</td></tr>
+            <tr><td>Backup Systems</td><td>Ransomware</td><td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center;font-weight:800">15</td><td><span class="badge b-high">High</span></td><td>IT Vendor</td></tr>
+            <tr><td>Remote Access / VPN</td><td>Unauthorized Access (Insider)</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">12</td><td><span class="badge b-high">High</span></td><td>Dentist-Owner</td></tr>
+            <tr><td>Cloud Storage</td><td>Third-Party Compromise</td><td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">12</td><td><span class="badge b-high">High</span></td><td>IT Vendor</td></tr>
+            <tr><td>PACS Imaging</td><td>PHI Disclosure</td><td style="text-align:center">2</td><td style="text-align:center">5</td><td style="text-align:center;font-weight:800">10</td><td><span class="badge b-medium">Medium</span></td><td>IT Vendor</td></tr>
+            <tr><td>Active Directory</td><td>Unauthorized Access (Insider)</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:center;font-weight:800">8</td><td><span class="badge b-medium">Medium</span></td><td>IT Vendor</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:11px;color:#94a3b8;margin-top:6px">Scoring: 1–4 Low · 5–9 Medium · 10–14 High · 15–25 Critical</p>
+    </section>
+
+    <!-- 5. EVIDENCE GAP ANALYSIS -->
+    <section>
+      <div class="section-label">Section 05</div>
+      <div class="section-title">Evidence Gap Analysis — HIPAA Security Rule</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>HIPAA Control</th>
+              <th>Status</th>
+              <th>Owner</th>
+              <th>Remediation Due</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Multi-Factor Authentication</td><td><span class="badge b-progress">In Progress</span></td><td>IT Vendor</td><td>Day 14</td></tr>
+            <tr><td>Role-Based Access Control</td><td><span class="badge b-notstart">Not Started</span></td><td>Office Manager</td><td>Day 21</td></tr>
+            <tr><td>Encryption (At Rest &amp; In Transit)</td><td><span class="badge b-progress">In Progress</span></td><td>IT Vendor</td><td>Day 30</td></tr>
+            <tr><td>Audit Logging &amp; Monitoring</td><td><span class="badge b-notstart">Not Started</span></td><td>IT Vendor</td><td>Day 30</td></tr>
+            <tr><td>Business Associate Agreements</td><td><span class="badge b-notstart">Not Started</span></td><td>Dentist-Owner</td><td>Day 7</td></tr>
+            <tr><td>Security Awareness Training</td><td><span class="badge b-notstart">Not Started</span></td><td>Office Manager</td><td>Day 45</td></tr>
+            <tr><td>Incident Response Plan</td><td><span class="badge b-notstart">Not Started</span></td><td>Office Manager</td><td>Day 60</td></tr>
+            <tr><td>Patch Management Program</td><td><span class="badge b-progress">In Progress</span></td><td>IT Vendor</td><td>Day 30</td></tr>
+            <tr><td>Physical Access Controls</td><td><span class="badge b-done">Implemented</span></td><td>Front Desk Lead</td><td>✓ Complete</td></tr>
+            <tr><td>Automatic Session Logoff</td><td><span class="badge b-notstart">Not Started</span></td><td>IT Vendor</td><td>Day 21</td></tr>
+            <tr><td>Data Backup &amp; Recovery</td><td><span class="badge b-progress">In Progress</span></td><td>IT Vendor</td><td>Day 45</td></tr>
+            <tr><td>Written Information Security Policy</td><td><span class="badge b-notstart">Not Started</span></td><td>Dentist-Owner</td><td>Day 60</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. 90-DAY PLAYBOOK -->
+    <section>
+      <div class="section-label">Section 06</div>
+      <div class="section-title">90-Day Remediation Playbook</div>
+      <div class="playbook">
+        <div class="playbook-phase">
+          <div class="playbook-header ph1">Phase 1 · Days 1–30<br><span style="font-weight:400;font-size:11px">Foundation &amp; Quick Wins</span></div>
+          <ul class="playbook-items">
+            <li>Inventory all PHI-touching systems</li>
+            <li>Collect &amp; review all BAAs</li>
+            <li>Enable MFA on EHR, email, portal</li>
+            <li>Access review — remove termed staff</li>
+            <li>Enable screen auto-lockout (all PCs)</li>
+            <li>Patch all workstations &amp; servers</li>
+          </ul>
+        </div>
+        <div class="playbook-phase">
+          <div class="playbook-header ph2">Phase 2 · Days 31–60<br><span style="font-weight:400;font-size:11px">Policy &amp; Documentation</span></div>
+          <ul class="playbook-items">
+            <li>Draft Information Security Policy</li>
+            <li>Draft Incident Response Plan</li>
+            <li>Draft Data Classification Policy</li>
+            <li>Implement RBAC in EHR system</li>
+            <li>Enable audit logging (all PHI systems)</li>
+            <li>Configure encrypted backup + test restore</li>
+          </ul>
+        </div>
+        <div class="playbook-phase">
+          <div class="playbook-header ph3">Phase 3 · Days 61–90<br><span style="font-weight:400;font-size:11px">Training &amp; Validation</span></div>
+          <ul class="playbook-items">
+            <li>HIPAA Security Awareness Training (all 22 staff)</li>
+            <li>Collect signed training attestations</li>
+            <li>Tabletop incident response exercise</li>
+            <li>Final evidence review &amp; audit binder</li>
+            <li>Risk register sign-off (Security Official)</li>
+            <li>Submit completed SRA to file</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. RESULTS -->
+    <section>
+      <div class="section-label">Section 07</div>
+      <div class="section-title">Engagement Outcomes</div>
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="icon">📋</div>
+          <div class="value">23</div>
+          <div class="label">Risks formally documented &amp; scored — OCR audit requirement satisfied</div>
+        </div>
+        <div class="result-card">
+          <div class="icon">🔴</div>
+          <div class="value">3</div>
+          <div class="label">Critical risks assigned owners with 30-day remediation deadlines</div>
+        </div>
+        <div class="result-card">
+          <div class="icon">📅</div>
+          <div class="value">90</div>
+          <div class="label">Day playbook approved by practice owner &amp; IT vendor</div>
+        </div>
+        <div class="result-card">
+          <div class="icon">📝</div>
+          <div class="value">7</div>
+          <div class="label">Missing policies queued for drafting — delivered as editable Word/PDF</div>
+        </div>
+        <div class="result-card">
+          <div class="icon">⏱</div>
+          <div class="value">4 wks</div>
+          <div class="label">From "No Program" to "Documented &amp; In Progress"</div>
+        </div>
+        <div class="result-card">
+          <div class="icon">✅</div>
+          <div class="value">Ready</div>
+          <div class="label">Audit-ready binder: evidence log, risk register &amp; OCR attestation</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ABOUT -->
+    <section>
+      <div class="section-label">Section 08</div>
+      <div class="section-title">About the Consultant</div>
+      <div class="about-box">
+        <div class="about-name">Anél Henning</div>
+        <div class="about-title">GRC Consultant · Compliance Designer · Logical Coders LLC</div>
+        <div class="creds">
+          <div class="cred"><span class="cred-icon">🎓</span><span>MS Cybersecurity Management — Purdue Global (GPA 3.86, 2026)</span></div>
+          <div class="cred"><span class="cred-icon">✅</span><span>HIPAA Business Associate Certificate — HIPAA Exams (May 2026)</span></div>
+          <div class="cred"><span class="cred-icon">📘</span><span>ISC2 CC (Certified in Cybersecurity) — Exam June 30, 2026</span></div>
+          <div class="cred"><span class="cred-icon">🎨</span><span>20+ years graphic design experience — Adobe InDesign, Illustrator, Photoshop</span></div>
+          <div class="cred"><span class="cred-icon">🛡</span><span>Specialties: HIPAA, NIST CSF, ISO 27001, SOC 2, policy writing, GRC documentation design</span></div>
+        </div>
+        <div class="about-contact">
+          <a href="mailto:logicalcoders@outlook.com">📧 logicalcoders@outlook.com</a>
+          <a href="tel:8137431661">📞 813.743.1661</a>
+          <a href="https://anelhenning2-collab.github.io/grc-suite/" target="_blank">🌐 GRC Suite</a>
+          <a href="https://www.linkedin.com/in/anel-henning-quantum/" target="_blank">🔗 LinkedIn</a>
+          <a href="https://www.upwork.com" target="_blank">💼 Upwork Profile</a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /body-content -->
+
+  <div class="disclaimer">
+    This is a sample portfolio engagement created for demonstration purposes. Sunshine Dental Group is a fictional client. All risks, findings, and outcomes are representative examples.
+    Built using the <a href="https://anelhenning2-collab.github.io/grc-suite/" style="color:#38bdf8">Logical Coders GRC Suite</a> · © 2026 Anél Henning · Logical Coders LLC
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>
