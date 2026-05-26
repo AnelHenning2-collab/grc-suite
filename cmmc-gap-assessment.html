@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMMC 2.0 Gap Assessment — Sample Case Study | GRC Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #1a202c; font-size: 14px; line-height: 1.6; }
+  @media print {
+    body { background: #fff; }
+    .no-print { display: none !important; }
+    .page { box-shadow: none; margin: 0; border-radius: 0; }
+    section { page-break-inside: avoid; }
+  }
+  .page { max-width: 880px; margin: 0 auto; background: #fff; box-shadow: 0 4px 32px rgba(0,0,0,.12); }
+  .cover {
+    background: linear-gradient(160deg, #0f172a 0%, #1a2f4e 55%, #0f2d4a 100%);
+    color: #fff; padding: 72px 64px 56px; min-height: 500px; position: relative; overflow: hidden;
+  }
+  .cover::before { content:''; position:absolute; top:-80px; right:-80px; width:320px; height:320px; border-radius:50%; background:rgba(99,102,241,.08); }
+  .cover::after  { content:''; position:absolute; bottom:-60px; left:40%; width:240px; height:240px; border-radius:50%; background:rgba(16,185,129,.06); }
+  .badge { display:inline-block; padding:5px 14px; border:1px solid rgba(99,102,241,.5); border-radius:20px; font-size:11px; font-weight:700; color:#818cf8; letter-spacing:1px; text-transform:uppercase; margin-bottom:28px; }
+  .cover h1 { font-size:34px; font-weight:900; line-height:1.15; margin-bottom:12px; color:#fff; }
+  .cover h1 span { color:#818cf8; }
+  .cover-sub { font-size:16px; color:rgba(255,255,255,.6); margin-bottom:36px; }
+  .cover-meta { display:flex; flex-wrap:wrap; gap:28px; margin-bottom:36px; }
+  .cover-meta-item label { display:block; font-size:9px; font-weight:700; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:1px; margin-bottom:3px; }
+  .cover-meta-item span { font-size:13px; font-weight:600; color:rgba(255,255,255,.9); }
+  .cover-tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:36px; }
+  .cover-tag { padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600; }
+  .tag-indigo { background:rgba(99,102,241,.15); color:#818cf8; border:1px solid rgba(99,102,241,.3); }
+  .tag-green  { background:rgba(16,185,129,.15);  color:#10b981; border:1px solid rgba(16,185,129,.3); }
+  .tag-red    { background:rgba(239,68,68,.15);   color:#f87171; border:1px solid rgba(239,68,68,.3); }
+  .tag-amber  { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+  .cover-footer { margin-top:36px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12); display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; }
+  .cover-footer-left .title { font-size:15px; font-weight:800; color:#fff; }
+  .cover-footer-left .sub { font-size:11px; color:rgba(255,255,255,.4); margin-top:2px; }
+  .cover-footer-right { font-size:11px; color:rgba(255,255,255,.4); text-align:right; }
+  .body-content { padding:52px 64px; }
+  .section-label { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:#818cf8; margin-bottom:6px; }
+  .section-title { font-size:20px; font-weight:800; color:#0f172a; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid #e2e8f0; }
+  section { margin-bottom:48px; }
+  .overview-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; margin-bottom:20px; }
+  .overview-card { padding:14px 16px; border-radius:10px; border:1px solid #e2e8f0; background:#f8fafc; }
+  .overview-card label { display:block; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#94a3b8; margin-bottom:4px; }
+  .overview-card span { font-size:13px; font-weight:700; color:#1e293b; }
+  .score-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
+  .score-card { padding:16px; border-radius:10px; text-align:center; }
+  .score-card .num { font-size:28px; font-weight:900; }
+  .score-card .lbl { font-size:11px; color:#475569; margin-top:4px; }
+  .table-wrap { overflow-x:auto; margin-bottom:8px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  thead tr { background:#0f172a; color:#fff; }
+  thead th { padding:10px 12px; font-weight:700; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.5px; }
+  tbody tr:nth-child(even) { background:#f8fafc; }
+  tbody tr:nth-child(odd)  { background:#fff; }
+  tbody td { padding:9px 12px; color:#374151; vertical-align:middle; border-bottom:1px solid #f1f5f9; }
+  .badge2 { display:inline-block; padding:2px 10px; border-radius:20px; font-size:10px; font-weight:800; white-space:nowrap; }
+  .b-met      { background:#dcfce7; color:#16a34a; }
+  .b-partial  { background:#fef9c3; color:#ca8a04; }
+  .b-notmet   { background:#fee2e2; color:#dc2626; }
+  .b-na       { background:#f1f5f9; color:#64748b; }
+  .b-critical { background:#fee2e2; color:#dc2626; }
+  .b-high     { background:#ffedd5; color:#ea580c; }
+  .b-medium   { background:#fef9c3; color:#ca8a04; }
+  .b-low      { background:#dcfce7; color:#16a34a; }
+  .family-row { background:rgba(99,102,241,.04) !important; }
+  .family-name { font-weight:800; color:#4338ca; }
+  .roadmap { display:flex; flex-direction:column; gap:14px; }
+  .roadmap-item { display:flex; gap:14px; padding:16px 18px; border-radius:10px; border:1px solid #e2e8f0; }
+  .roadmap-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff; flex-shrink:0; }
+  .rn1{background:#ef4444;} .rn2{background:#f97316;} .rn3{background:#eab308;} .rn4{background:#10b981;}
+  .rp1{background:rgba(239,68,68,.05);border-color:rgba(239,68,68,.2);}
+  .rp2{background:rgba(249,115,22,.05);border-color:rgba(249,115,22,.2);}
+  .rp3{background:rgba(234,179,8,.05);border-color:rgba(234,179,8,.2);}
+  .rp4{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.2);}
+  .roadmap-title { font-size:13px; font-weight:800; color:#1e293b; margin-bottom:6px; }
+  .roadmap-items { list-style:none; display:flex; flex-direction:column; gap:4px; }
+  .roadmap-items li { font-size:12px; color:#475569; padding-left:14px; position:relative; }
+  .roadmap-items li::before { content:'—'; position:absolute; left:0; color:#94a3b8; }
+  .results-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; }
+  .result-card { padding:16px; border-radius:10px; border:1px solid rgba(16,185,129,.25); background:rgba(16,185,129,.04); }
+  .result-card .icon { font-size:20px; margin-bottom:6px; }
+  .result-card .value { font-size:22px; font-weight:900; color:#059669; }
+  .result-card .label { font-size:11px; color:#475569; margin-top:2px; line-height:1.4; }
+  .about-box { background:linear-gradient(135deg,#0f172a,#1e3a5f); color:#fff; border-radius:12px; padding:32px 36px; }
+  .about-name { font-size:20px; font-weight:900; color:#fff; margin-bottom:4px; }
+  .about-title { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:20px; }
+  .creds { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .cred { display:flex; align-items:flex-start; gap:10px; font-size:12px; color:rgba(255,255,255,.8); }
+  .about-contact { display:flex; flex-wrap:wrap; gap:16px; padding-top:20px; border-top:1px solid rgba(255,255,255,.1); }
+  .about-contact a { font-size:12px; color:#818cf8; text-decoration:none; font-weight:600; }
+  .print-bar { background:#0f172a; padding:14px 64px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .print-bar span { color:rgba(255,255,255,.6); font-size:12px; }
+  .print-btn { padding:10px 24px; border-radius:8px; border:none; background:#818cf8; color:#fff; font-size:13px; font-weight:800; cursor:pointer; font-family:inherit; }
+  .print-btn:hover { background:#6366f1; }
+  .disclaimer { padding:12px 64px; font-size:10px; color:#94a3b8; text-align:center; border-top:1px solid #f1f5f9; }
+  .score-meter { height:12px; background:#f1f5f9; border-radius:6px; overflow:hidden; margin-top:10px; }
+  .score-meter-fill { height:100%; border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <span>GRC Consulting — CMMC 2.0 Gap Assessment · Sample Portfolio Case Study</span>
+  <button class="print-btn" onclick="window.print()">⬇ Save as PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="badge">Portfolio · Sample Engagement</div>
+    <h1>CMMC 2.0 Level 2<br>Gap Assessment<br><span>Sample Defense Subcontractor</span></h1>
+    <p class="cover-sub">110 Controls · 14 Families · NIST SP 800-171 Rev 2 · Full remediation roadmap</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>Client (Fictional)</label><span>Precision Manufacturing LLC</span></div>
+      <div class="cover-meta-item"><label>Industry</label><span>Defense Subcontractor (CUI)</span></div>
+      <div class="cover-meta-item"><label>CMMC Target</label><span>Level 2 (DoD Contract)</span></div>
+      <div class="cover-meta-item"><label>Controls Assessed</label><span>110 (All Families)</span></div>
+      <div class="cover-meta-item"><label>Engagement</label><span>3 Weeks</span></div>
+      <div class="cover-meta-item"><label>Date</label><span>May 2026</span></div>
+    </div>
+    <div class="cover-tags">
+      <span class="cover-tag tag-indigo">CMMC 2.0 Level 2</span>
+      <span class="cover-tag tag-indigo">NIST SP 800-171 Rev 2</span>
+      <span class="cover-tag tag-red">42 Controls Not Met</span>
+      <span class="cover-tag tag-amber">38 Controls Partial</span>
+      <span class="cover-tag tag-green">30 Controls Met</span>
+      <span class="cover-tag tag-green">SSP + POA&amp;M Delivered</span>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">
+        <div class="title">GRC Consultant &amp; Compliance Designer</div>
+        <div class="sub">MS Cybersecurity Management · HIPAA BA Certified · ISC2 CC · CMMC CCP (In Progress)</div>
+      </div>
+      <div class="cover-footer-right">Contact available via Upwork<br>GRC Suite: anelhenning2-collab.github.io/grc-suite</div>
+    </div>
+  </div>
+
+  <div class="body-content">
+
+    <!-- 1. CLIENT OVERVIEW -->
+    <section>
+      <div class="section-label">Section 01</div>
+      <div class="section-title">Client Overview</div>
+      <div class="overview-grid">
+        <div class="overview-card"><label>Client</label><span>Precision Mfg LLC</span></div>
+        <div class="overview-card"><label>Type</label><span>DoD Subcontractor</span></div>
+        <div class="overview-card"><label>Employees</label><span>47 Staff</span></div>
+        <div class="overview-card"><label>Data Type</label><span>CUI (Controlled Unclassified)</span></div>
+        <div class="overview-card"><label>Contract</label><span>Tier-2 DoD Prime</span></div>
+        <div class="overview-card"><label>CMMC Required</label><span>Level 2 by 2025</span></div>
+      </div>
+      <p style="color:#475569;font-size:13px">Precision Manufacturing LLC is a fictional Tier-2 defense subcontractor handling Controlled Unclassified Information (CUI) under a DoD prime contract. Required to achieve CMMC Level 2 certification — equivalent to all 110 controls in NIST SP 800-171 Rev 2. This engagement assessed readiness across all 14 control families and produced a prioritized remediation roadmap.</p>
+    </section>
+
+    <!-- 2. OVERALL SCORE -->
+    <section>
+      <div class="section-label">Section 02</div>
+      <div class="section-title">Overall Assessment Score</div>
+      <div class="score-grid">
+        <div class="score-card" style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25)">
+          <div class="num" style="color:#10b981">30</div>
+          <div class="lbl">✅ Controls Met</div>
+        </div>
+        <div class="score-card" style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25)">
+          <div class="num" style="color:#f59e0b">38</div>
+          <div class="lbl">⚠️ Partially Met</div>
+        </div>
+        <div class="score-card" style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25)">
+          <div class="num" style="color:#ef4444">42</div>
+          <div class="lbl">❌ Not Met</div>
+        </div>
+        <div class="score-card" style="background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.25)">
+          <div class="num" style="color:#818cf8">27%</div>
+          <div class="lbl">📊 Compliance Score</div>
+        </div>
+        <div class="score-card" style="background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.25)">
+          <div class="num" style="color:#60a5fa">110</div>
+          <div class="lbl">🛡️ Total Controls</div>
+        </div>
+        <div class="score-card" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25)">
+          <div class="num" style="color:#a855f7">14</div>
+          <div class="lbl">📋 Families Assessed</div>
+        </div>
+      </div>
+      <div style="padding:14px 18px;background:#fef2f2;border:1px solid #fecaca;border-left:4px solid #ef4444;border-radius:10px;font-size:13px;color:#374151">
+        ⚠️ <strong>Assessment finding:</strong> At 27% compliance, Precision Manufacturing LLC cannot pass a CMMC Level 2 certification assessment without significant remediation. The highest-risk gaps are in Access Control (AC), Audit & Accountability (AU), and System & Communications Protection (SC). A structured 12-month remediation program is required before assessment.
+      </div>
+    </section>
+
+    <!-- 3. FAMILY-BY-FAMILY RESULTS -->
+    <section>
+      <div class="section-label">Section 03</div>
+      <div class="section-title">Control Family Assessment Results</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Control Family</th><th style="text-align:center">Controls</th>
+              <th style="text-align:center">Met</th><th style="text-align:center">Partial</th>
+              <th style="text-align:center">Not Met</th><th>Score</th><th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>AC</strong></td><td>Access Control</td><td style="text-align:center">22</td><td style="text-align:center;color:#10b981;font-weight:700">4</td><td style="text-align:center;color:#f59e0b;font-weight:700">7</td><td style="text-align:center;color:#ef4444;font-weight:700">11</td><td><span class="badge2 b-notmet">18%</span></td><td><span class="badge2 b-critical">Critical</span></td></tr>
+            <tr><td><strong>AT</strong></td><td>Awareness &amp; Training</td><td style="text-align:center">3</td><td style="text-align:center;color:#10b981;font-weight:700">0</td><td style="text-align:center;color:#f59e0b;font-weight:700">1</td><td style="text-align:center;color:#ef4444;font-weight:700">2</td><td><span class="badge2 b-notmet">0%</span></td><td><span class="badge2 b-high">High</span></td></tr>
+            <tr><td><strong>AU</strong></td><td>Audit &amp; Accountability</td><td style="text-align:center">9</td><td style="text-align:center;color:#10b981;font-weight:700">1</td><td style="text-align:center;color:#f59e0b;font-weight:700">3</td><td style="text-align:center;color:#ef4444;font-weight:700">5</td><td><span class="badge2 b-notmet">11%</span></td><td><span class="badge2 b-critical">Critical</span></td></tr>
+            <tr><td><strong>CM</strong></td><td>Configuration Management</td><td style="text-align:center">9</td><td style="text-align:center;color:#10b981;font-weight:700">2</td><td style="text-align:center;color:#f59e0b;font-weight:700">4</td><td style="text-align:center;color:#ef4444;font-weight:700">3</td><td><span class="badge2 b-partial">22%</span></td><td><span class="badge2 b-high">High</span></td></tr>
+            <tr><td><strong>IA</strong></td><td>Identification &amp; Authentication</td><td style="text-align:center">11</td><td style="text-align:center;color:#10b981;font-weight:700">4</td><td style="text-align:center;color:#f59e0b;font-weight:700">5</td><td style="text-align:center;color:#ef4444;font-weight:700">2</td><td><span class="badge2 b-partial">36%</span></td><td><span class="badge2 b-high">High</span></td></tr>
+            <tr><td><strong>IR</strong></td><td>Incident Response</td><td style="text-align:center">3</td><td style="text-align:center;color:#10b981;font-weight:700">0</td><td style="text-align:center;color:#f59e0b;font-weight:700">2</td><td style="text-align:center;color:#ef4444;font-weight:700">1</td><td><span class="badge2 b-partial">0%</span></td><td><span class="badge2 b-high">High</span></td></tr>
+            <tr><td><strong>MA</strong></td><td>Maintenance</td><td style="text-align:center">6</td><td style="text-align:center;color:#10b981;font-weight:700">3</td><td style="text-align:center;color:#f59e0b;font-weight:700">2</td><td style="text-align:center;color:#ef4444;font-weight:700">1</td><td><span class="badge2 b-partial">50%</span></td><td><span class="badge2 b-medium">Medium</span></td></tr>
+            <tr><td><strong>MP</strong></td><td>Media Protection</td><td style="text-align:center">9</td><td style="text-align:center;color:#10b981;font-weight:700">3</td><td style="text-align:center;color:#f59e0b;font-weight:700">4</td><td style="text-align:center;color:#ef4444;font-weight:700">2</td><td><span class="badge2 b-partial">33%</span></td><td><span class="badge2 b-medium">Medium</span></td></tr>
+            <tr><td><strong>PS</strong></td><td>Personnel Security</td><td style="text-align:center">2</td><td style="text-align:center;color:#10b981;font-weight:700">2</td><td style="text-align:center;color:#f59e0b;font-weight:700">0</td><td style="text-align:center;color:#ef4444;font-weight:700">0</td><td><span class="badge2 b-met">100%</span></td><td><span class="badge2 b-low">Met</span></td></tr>
+            <tr><td><strong>PE</strong></td><td>Physical Protection</td><td style="text-align:center">6</td><td style="text-align:center;color:#10b981;font-weight:700">5</td><td style="text-align:center;color:#f59e0b;font-weight:700">1</td><td style="text-align:center;color:#ef4444;font-weight:700">0</td><td><span class="badge2 b-met">83%</span></td><td><span class="badge2 b-low">Met</span></td></tr>
+            <tr><td><strong>RA</strong></td><td>Risk Assessment</td><td style="text-align:center">3</td><td style="text-align:center;color:#10b981;font-weight:700">1</td><td style="text-align:center;color:#f59e0b;font-weight:700">1</td><td style="text-align:center;color:#ef4444;font-weight:700">1</td><td><span class="badge2 b-partial">33%</span></td><td><span class="badge2 b-medium">Medium</span></td></tr>
+            <tr><td><strong>CA</strong></td><td>Security Assessment</td><td style="text-align:center">4</td><td style="text-align:center;color:#10b981;font-weight:700">1</td><td style="text-align:center;color:#f59e0b;font-weight:700">2</td><td style="text-align:center;color:#ef4444;font-weight:700">1</td><td><span class="badge2 b-partial">25%</span></td><td><span class="badge2 b-medium">Medium</span></td></tr>
+            <tr><td><strong>SC</strong></td><td>System &amp; Comms Protection</td><td style="text-align:center">16</td><td style="text-align:center;color:#10b981;font-weight:700">3</td><td style="text-align:center;color:#f59e0b;font-weight:700">4</td><td style="text-align:center;color:#ef4444;font-weight:700">9</td><td><span class="badge2 b-notmet">19%</span></td><td><span class="badge2 b-critical">Critical</span></td></tr>
+            <tr><td><strong>SI</strong></td><td>System &amp; Info Integrity</td><td style="text-align:center">7</td><td style="text-align:center;color:#10b981;font-weight:700">1</td><td style="text-align:center;color:#f59e0b;font-weight:700">2</td><td style="text-align:center;color:#ef4444;font-weight:700">4</td><td><span class="badge2 b-notmet">14%</span></td><td><span class="badge2 b-high">High</span></td></tr>
+            <tr style="background:#0f172a!important"><td colspan="3" style="color:#fff;font-weight:800;padding:10px 12px">TOTALS</td><td style="text-align:center;color:#10b981;font-weight:900;font-size:15px">30</td><td style="text-align:center;color:#f59e0b;font-weight:900;font-size:15px">38</td><td style="text-align:center;color:#ef4444;font-weight:900;font-size:15px">42</td><td><span class="badge2 b-notmet">27%</span></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. TOP CRITICAL GAPS -->
+    <section>
+      <div class="section-label">Section 04</div>
+      <div class="section-title">Critical Gaps — Immediate Remediation Required</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Control ID</th><th>Requirement</th><th>Family</th><th>Status</th><th>Risk</th><th>Remediation</th></tr></thead>
+          <tbody>
+            <tr><td><strong>AC.1.001</strong></td><td>Limit system access to authorized users only</td><td>AC</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Implement RBAC + access review process</td></tr>
+            <tr><td><strong>AC.2.006</strong></td><td>Use non-privileged accounts for non-security functions</td><td>AC</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Separate admin accounts from daily-use accounts</td></tr>
+            <tr><td><strong>AU.2.041</strong></td><td>Ensure actions of individual users can be uniquely traced</td><td>AU</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Enable audit logging on all CUI systems</td></tr>
+            <tr><td><strong>AU.2.042</strong></td><td>Create and retain system audit logs</td><td>AU</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Deploy centralized SIEM / log management</td></tr>
+            <tr><td><strong>IA.3.083</strong></td><td>Use multifactor authentication for local and network access</td><td>IA</td><td><span class="badge2 b-partial">Partial</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Roll out MFA to all users on all systems</td></tr>
+            <tr><td><strong>SC.3.177</strong></td><td>Employ FIPS-validated cryptography to protect CUI</td><td>SC</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Enable FIPS 140-2 mode on all endpoints</td></tr>
+            <tr><td><strong>SC.3.187</strong></td><td>Establish and manage cryptographic keys</td><td>SC</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-critical">Critical</span></td><td>Implement key management policy + tool</td></tr>
+            <tr><td><strong>SI.2.214</strong></td><td>Check media containing diagnostic programs for malicious code</td><td>SI</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-high">High</span></td><td>Deploy EDR on all endpoints; scan all media</td></tr>
+            <tr><td><strong>AT.2.056</strong></td><td>Ensure personnel are aware of security risks</td><td>AT</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-high">High</span></td><td>Implement annual security awareness training</td></tr>
+            <tr><td><strong>CM.2.061</strong></td><td>Establish and maintain baseline configurations</td><td>CM</td><td><span class="badge2 b-notmet">Not Met</span></td><td><span class="badge2 b-high">High</span></td><td>Document and enforce hardened baseline configs</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. REMEDIATION ROADMAP -->
+    <section>
+      <div class="section-label">Section 05</div>
+      <div class="section-title">Remediation Roadmap — 12-Month Plan to CMMC Level 2</div>
+      <div class="roadmap">
+        <div class="roadmap-item rp1">
+          <div class="roadmap-num rn1">1</div>
+          <div>
+            <div class="roadmap-title">Phase 1 · Months 1–3 · Critical Foundation</div>
+            <ul class="roadmap-items">
+              <li>Enable MFA on all systems accessing CUI (IA.3.083)</li>
+              <li>Implement RBAC — remove shared accounts and standing admin access (AC.1.001)</li>
+              <li>Deploy centralized audit logging on all CUI-touching systems (AU.2.041–042)</li>
+              <li>Enable FIPS 140-2 mode on all endpoints and servers (SC.3.177)</li>
+              <li>Conduct initial security awareness training for all 47 staff (AT.2.056)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="roadmap-item rp2">
+          <div class="roadmap-num rn2">2</div>
+          <div>
+            <div class="roadmap-title">Phase 2 · Months 4–6 · Policy &amp; Configuration</div>
+            <ul class="roadmap-items">
+              <li>Document hardened baseline configurations for all system types (CM.2.061)</li>
+              <li>Write Incident Response Plan — with CUI breach notification procedures (IR family)</li>
+              <li>Draft System Security Plan (SSP) — document all 110 controls (CA.2.157)</li>
+              <li>Implement key management policy and tooling (SC.3.187)</li>
+              <li>Deploy EDR solution on all workstations and servers (SI.2.214)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="roadmap-item rp3">
+          <div class="roadmap-num rn3">3</div>
+          <div>
+            <div class="roadmap-title">Phase 3 · Months 7–9 · Evidence &amp; POA&amp;M</div>
+            <ul class="roadmap-items">
+              <li>Complete Plan of Action &amp; Milestones (POA&amp;M) for all remaining gaps</li>
+              <li>Conduct vulnerability scans on all in-scope systems (RA.2.141–142)</li>
+              <li>Implement patch management program with defined SLAs (SI family)</li>
+              <li>Complete media protection controls — marking, transport, sanitization (MP family)</li>
+              <li>Collect and organize evidence for all 110 controls in audit binder</li>
+            </ul>
+          </div>
+        </div>
+        <div class="roadmap-item rp4">
+          <div class="roadmap-num rn4">4</div>
+          <div>
+            <div class="roadmap-title">Phase 4 · Months 10–12 · Pre-Assessment Readiness</div>
+            <ul class="roadmap-items">
+              <li>Conduct internal mock CMMC assessment against all 110 controls</li>
+              <li>Remediate any remaining gaps identified in mock assessment</li>
+              <li>Deliver tabletop incident response exercise (IR.2.092–093)</li>
+              <li>Final review of SSP, POA&amp;M, and evidence binder</li>
+              <li>Engage C3PAO (Certified Third-Party Assessment Organization) for official assessment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. RESULTS -->
+    <section>
+      <div class="section-label">Section 06</div>
+      <div class="section-title">Engagement Outcomes</div>
+      <div class="results-grid">
+        <div class="result-card"><div class="icon">📋</div><div class="value">110</div><div class="label">Controls assessed across all 14 NIST SP 800-171 families</div></div>
+        <div class="result-card"><div class="icon">🔴</div><div class="value">42</div><div class="label">Critical gaps documented with specific remediation steps</div></div>
+        <div class="result-card"><div class="icon">📄</div><div class="value">SSP</div><div class="label">System Security Plan drafted — all 110 controls documented</div></div>
+        <div class="result-card"><div class="icon">📅</div><div class="value">POA&M</div><div class="label">Plan of Action &amp; Milestones with assigned owners and deadlines</div></div>
+        <div class="result-card"><div class="icon">🗓</div><div class="value">12mo</div><div class="label">Structured remediation roadmap to CMMC Level 2 certification</div></div>
+        <div class="result-card"><div class="icon">✅</div><div class="value">Ready</div><div class="label">Audit-ready evidence binder organized for C3PAO assessment</div></div>
+      </div>
+    </section>
+
+    <!-- 7. ABOUT -->
+    <section>
+      <div class="section-label">Section 07</div>
+      <div class="section-title">About the Consultant</div>
+      <div class="about-box">
+        <div class="about-name">GRC Consultant &amp; Compliance Designer</div>
+        <div class="about-title">Cybersecurity Management MS · HIPAA BA Certified · ISC2 CC · CMMC CCP (In Progress)</div>
+        <div class="creds">
+          <div class="cred"><span>🎓</span><span>MS Cybersecurity Management (GPA 3.86, 2026)</span></div>
+          <div class="cred"><span>✅</span><span>HIPAA Business Associate Certificate (May 2026)</span></div>
+          <div class="cred"><span>📘</span><span>ISC2 CC — Exam June 30, 2026</span></div>
+          <div class="cred"><span>🛡️</span><span>CMMC CCP in progress — NIST SP 800-171 specialization</span></div>
+          <div class="cred"><span>🎨</span><span>20+ years graphic design — audit-ready documents that get read</span></div>
+          <div class="cred"><span>📋</span><span>Specialties: HIPAA · NIST CSF · NIST 800-171 · CMMC · SSP/POA&amp;M writing · Gap assessments</span></div>
+        </div>
+        <div class="about-contact">
+          <span style="color:rgba(255,255,255,.5);font-size:12px">📧 Available via Upwork messaging</span>
+          <a href="https://anelhenning2-collab.github.io/grc-suite/" target="_blank">🌐 GRC Suite</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="disclaimer">
+    Sample portfolio engagement — fictional client. All findings are representative examples for demonstration purposes only.
+    Built using the <a href="https://anelhenning2-collab.github.io/grc-suite/" style="color:#818cf8">Logical Coders GRC Suite</a> · © 2026
+  </div>
+
+</div>
+</body>
+</html>
