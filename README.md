@@ -111,7 +111,7 @@ Logical Coders GRC Suite was built to close that gap — giving a solo cybersecu
 
 <div align="center">
 
-**Anél Henning** &nbsp;|&nbsp; Logical Coders  
+**Anèl Henning** &nbsp;|&nbsp; Logical Coders  
 MS Cybersecurity Management · Purdue Global &nbsp;|&nbsp; ISC2 &nbsp;|&nbsp; ISACA
 
 📧 logicalcoders@outlook.com &nbsp;&nbsp; 📞 813.743.1661

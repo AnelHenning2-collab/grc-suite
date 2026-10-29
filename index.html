@@ -750,7 +750,7 @@
 
                 <div class="success-box" id="success-box">
                     <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
-                    <h3>Intake submitted — Anél will follow up within 1 business day</h3>
+                    <h3>Intake submitted — Anèl will follow up within 1 business day</h3>
                     <p style="margin-bottom:1.25rem;"><strong>Direct contact:</strong> logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</p>
                     <div style="background:white;border:1px solid #d1fae5;border-radius:10px;padding:1.25rem;text-align:left;margin-bottom:1.25rem;">
                         <div style="font-size:0.78rem;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.85rem;">Complete these steps to generate your reports</div>
@@ -800,7 +800,7 @@
                     <div style="display:flex;gap:0.75rem;align-items:flex-start;"><span style="font-size:1.2rem;">🤝</span><div><strong>Embedded support.</strong><span style="color:#93c5fd;"> We work alongside your team, not just hand over a report.</span></div></div>
                 </div>
                 <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.2);font-size:0.85rem;color:#93c5fd;">
-                    Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
+                    Anèl Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>
                     MS Cybersecurity Management · Purdue Global · ISC2 · ISACA
                 </div>
             </div>
@@ -827,7 +827,7 @@
 <div id="toast-container"></div>
 
 <footer>
-    <div>GRC Governance Suite by <span>Logical Coders</span> &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
+    <div>GRC Governance Suite by <span>Logical Coders</span> &nbsp;|&nbsp; Anèl Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
     <div style="margin-top:0.5rem;font-size:0.75rem;opacity:0.7;">Frameworks: NIST CSF 2.0 · ISO 27001:2022 · HIPAA · SOC 2 · FedRAMP Moderate · FISMA</div>
 </footer>
 
@@ -1067,7 +1067,7 @@ function getResponse(msg){
     if(m.includes('executive')||m.includes('non-technical')||m.includes('explain'))return responses.executive;
     if(m.includes('soc 2')||m.includes('iso 27001')||m.includes('difference'))return responses.soc2;
     if(m.includes('hipaa')&&(m.includes('evidence')||m.includes('compliance')))return responses.hipaa;
-    return`Great question about <strong>"${msg}"</strong>.<br><br>For a tailored answer, use the tools above — or contact <strong>Anél Henning</strong> directly:<br>logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661`;
+    return`Great question about <strong>"${msg}"</strong>.<br><br>For a tailored answer, use the tools above — or contact <strong>Anèl Henning</strong> directly:<br>logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661`;
 }
 function addMessage(text,isUser){
     const msgs=document.getElementById('chat-messages');
@@ -1154,7 +1154,7 @@ const RPT_NAV=(title)=>`<div class="no-print" style="background:#0f2557;padding:
   <div><button class="btn" onclick="window.print()">Print / Save as PDF</button>
   <button class="btn" style="background:white;color:#0f2557;" onclick="window.close()">← Close</button></div></div>`;
 
-const RPT_FOOTER=(refs)=>`<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>${refs}</div>`;
+const RPT_FOOTER=(refs)=>`<div class="footer-note">Logical Coders GRC Suite &nbsp;|&nbsp; Anèl Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661<br>${refs}</div>`;
 
 function openReport(html){const w=window.open('','_blank');w.document.write(html);w.document.close();}
 
@@ -1186,7 +1186,7 @@ ${RPT_NAV('HIPAA Security Risk Analysis')}
   <div class="meta-item"><label>Organization</label><span>${org}</span></div>
   <div class="meta-item"><label>Industry</label><span>${savedIntake.industry||'Healthcare'}</span></div>
   <div class="meta-item"><label>Assessment Date</label><span>${date}</span></div>
-  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anèl Henning</span></div>
   <div class="meta-item"><label>Methodology</label><span>NIST SP 800-30 Rev. 1</span></div>
   <div class="meta-item"><label>Review Cycle</label><span>Annual + upon material change</span></div>
 </div>
@@ -1254,7 +1254,7 @@ ${RPT_NAV('Evidence Gap Analysis')}
   <div class="meta-item"><label>Organization</label><span>${org}</span></div>
   <div class="meta-item"><label>Framework</label><span>${fw.name}</span></div>
   <div class="meta-item"><label>Report Date</label><span>${date}</span></div>
-  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anèl Henning</span></div>
   <div class="meta-item"><label>Controls Assessed</label><span>${rows.length}</span></div>
   <div class="meta-item"><label>Gaps Identified</label><span>${counts.gap}</span></div>
 </div>
@@ -1306,7 +1306,7 @@ function generateProposal(){
 </style></head><body>
 ${RPT_NAV('Engagement Proposal & Scope of Work')}
 <h1>Engagement Proposal &amp; Scope of Work</h1>
-<div class="subtitle">Prepared by Logical Coders | Anél Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
+<div class="subtitle">Prepared by Logical Coders | Anèl Henning &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661</div>
 <div class="meta-grid">
   <div class="meta-item"><label>Prepared For</label><span>${org}</span></div>
   <div class="meta-item"><label>Contact</label><span>${contact.trim()||'[Contact Name]'}</span></div>
@@ -1349,7 +1349,7 @@ ${riskSummary}
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
   <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">${org} — Authorized Signatory</div>
   <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
-  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anél Henning</div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anèl Henning</div>
   <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
 </div></div>
 ${RPT_FOOTER('MS Cybersecurity Management · Purdue Global · ISC2 · ISACA &nbsp;|&nbsp; logicalcoders@outlook.com &nbsp;|&nbsp; 813.743.1661')}
@@ -1408,7 +1408,7 @@ ${RPT_NAV('90-Day Pilot Outcomes Report')}
 <div class="meta-grid">
   <div class="meta-item"><label>Organization</label><span>${org}</span></div>
   <div class="meta-item"><label>Report Date</label><span>${date}</span></div>
-  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anél Henning</span></div>
+  <div class="meta-item"><label>Prepared By</label><span>Logical Coders | Anèl Henning</span></div>
   <div class="meta-item"><label>Tasks Completed</label><span>${checked.length} of ${boxes.length}</span></div>
   <div class="meta-item"><label>Overall Progress</label><span>${pct}%</span></div>
   <div class="meta-item"><label>Framework</label><span>${frameworks[currentFramework].name}</span></div>
@@ -1436,7 +1436,7 @@ ${evSelects.length?`<h2>3. Evidence Collection Summary</h2>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
   <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Client Security Official — Name &amp; Title</div>
   <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
-  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anél Henning</div>
+  <div><div class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Logical Coders — Anèl Henning</div>
   <div style="margin-top:12px;" class="sig-line"></div><div style="font-size:9pt;color:#64748b;">Date</div></div>
 </div></div>
 ${RPT_FOOTER('NIST CSF 2.0 · HIPAA §164.308 · ISO 27001 &nbsp;|&nbsp; Retain all deliverables per applicable regulatory retention requirements')}
